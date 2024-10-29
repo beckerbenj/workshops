@@ -50,4 +50,4 @@ rsconnect/
 
 # Quarto
 /.quarto/
-/quarto_eatGADS_files/*
+quarto_eatGADS_files/
