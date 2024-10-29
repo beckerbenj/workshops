@@ -10,7 +10,8 @@
 <link href="quarto_eatGADS_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <meta name="author" content="Benjamin Becker">
+  <meta name="author" content="Benjamin Becker, Annika Liebelt &amp; Jule Burblies">
+  <meta name="dcterms.date" content="2024-11-12">
   <title>eatGADS - Datenaufbereitung</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -390,17 +391,28 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" data-background-image="eatGADS.png" data-background-position="95% 5%" data-background-repeat="no-repeat" data-background-size="25%" class="quarto-title-block center">
   <h1 class="title">eatGADS - Datenaufbereitung</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Benjamin Becker 
+Benjamin Becker, Annika Liebelt &amp; Jule Burblies 
 </div>
 </div>
 </div>
 
+  <p class="date">2024-11-12</p>
+</section>
+<section id="eatgads" class="slide level2">
+<h2>eatGADS</h2>
+<p><strong>Scope</strong></p>
+<ul>
+<li>Datenbankerstellung</li>
+<li>Datenbanknutzung</li>
+<li>Datenaufbereitung</li>
+<li>Datenprüfung</li>
+</ul>
 </section>
 <section id="ursprüngliche-idee" class="slide level2">
 <h2>Ursprüngliche Idee</h2>
@@ -408,13 +420,13 @@ Benjamin Becker
 <ul>
 <li>keine proprietäre Software</li>
 <li>bessere Automatisierungsmöglichkeiten</li>
-<li>bessere Integration mit dem eatversum</li>
+<li>bessere Integration mit dem eat-Versum</li>
 </ul>
 </section>
-<section id="eatgads" class="slide level2">
+<section id="eatgads-1" class="slide level2">
 <h2>eatGADS</h2>
 
-<img data-src="eatGADS_CRAN.jpg" class="r-stretch quarto-figure-center"><p class="caption">eatGADS</p><div class="cell">
+<img data-src="eatGADS_CRAN.jpg" class="r-stretch"><div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Stabile Version</span></span>
 <span id="cb1-2"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"eatGADS"</span>)</span>
 <span id="cb1-3"><a href=""></a></span>
@@ -422,17 +434,25 @@ Benjamin Becker
 <span id="cb1-5"><a href=""></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"beckerbenj/eatGADS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="grundsätzliche-funktionsweise" class="slide level2">
-<h2>grundsätzliche Funktionsweise</h2>
-<p>eatGADS-Datenstruktur: Liste bestehend aus rohen Daten und Meta-Daten</p>
-
-<img data-src="GADSdat_dat.jpg" class="r-stretch quarto-figure-center"><p class="caption">dat</p></section>
-<section id="grundsätzliche-funktionsweise-1" class="slide level2">
-<h2>grundsätzliche Funktionsweise</h2>
-<p>eatGADS-Datenstruktur: Liste bestehend aus rohen Daten und Meta-Daten</p>
-
-<img data-src="GADSdat_labels.jpg" class="r-stretch quarto-figure-center"><p class="caption">labels</p></section>
 <section id="gadsdat-objekte" class="slide level2">
+<h2>GADSdat-Objekte</h2>
+<p>Liste bestehend aus</p>
+<ul>
+<li>rohen Daten (<code>dat</code>)</li>
+<li>und Meta-Daten (<code>labels</code>)</li>
+</ul>
+</section>
+<section id="gadsdat-objekte-1" class="slide level2">
+<h2>GADSdat-Objekte</h2>
+<p><strong>Daten</strong></p>
+<p><img data-src="GADSdat_dat.jpg" style="height:50.0%"></p>
+</section>
+<section id="gadsdat-objekte-2" class="slide level2">
+<h2>GADSdat-Objekte</h2>
+<p><strong>Meta-Daten</strong></p>
+<p><img data-src="GADSdat_labels.jpg" style="height:50.0%"></p>
+</section>
+<section id="gadsdat-objekte-3" class="slide level2">
 <h2>GADSdat-Objekte</h2>
 <p>Import und Export</p>
 <div class="cell">
@@ -445,9 +465,9 @@ Benjamin Becker
 <span id="cb2-7"><a href=""></a><span class="fu">write_stata</span>(pisa, <span class="at">filePath =</span> <span class="st">"pisa.dat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="gadsdat-objekte-1" class="slide level2">
-<h2>GADSdat-Objekte</h2>
-<p>Meta-Daten</p>
+<section id="meta-daten" class="slide level2">
+<h2>Meta-Daten</h2>
+<p>Extraktion von Meta-Daten via <code>extractMeta()</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">extractMeta</span>(pisa, <span class="at">vars =</span> <span class="st">"schtype"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -462,8 +482,8 @@ Benjamin Becker
 </div>
 </div>
 </section>
-<section id="gadsdat-objekte-2" class="slide level2">
-<h2>GADSdat-Objekte</h2>
+<section id="meta-daten-1" class="slide level2">
+<h2>Meta-Daten</h2>
 <p>Änderung von Meta-Daten</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Variablenlabel</span></span>
@@ -479,9 +499,8 @@ Benjamin Becker
 <span id="cb5-11"><a href=""></a>                         <span class="at">value =</span> <span class="sc">-</span><span class="dv">99</span>, <span class="at">missings =</span> <span class="st">"miss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="gadsdat-objekte-3" class="slide level2">
-<h2>GADSdat-Objekte</h2>
-<p>Meta-Daten</p>
+<section id="meta-daten-2" class="slide level2">
+<h2>Meta-Daten</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">extractMeta</span>(pisa2, <span class="at">vars =</span> <span class="st">"schtype"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -498,8 +517,8 @@ Benjamin Becker
 </div>
 </div>
 </section>
-<section id="gadsdat-objekte-4" class="slide level2">
-<h2>GADSdat-Objekte</h2>
+<section id="daten" class="slide level2">
+<h2>Daten</h2>
 <p>Änderung von Daten</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Variable duplizieren</span></span>
@@ -517,9 +536,8 @@ Benjamin Becker
 <span id="cb8-13"><a href=""></a>                     <span class="at">value =</span> <span class="dv">2</span>, <span class="at">valLabel =</span> <span class="st">"Nicht-Gymnasium"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="gadsdat-objekte-5" class="slide level2">
-<h2>GADSdat-Objekte</h2>
-<p>Meta-Daten</p>
+<section id="daten-1" class="slide level2">
+<h2>Daten</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">extractMeta</span>(pisa3, <span class="at">vars =</span> <span class="st">"schtype_dich"</span>)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -537,8 +555,76 @@ Benjamin Becker
 </div>
 </div>
 </section>
-<section id="automatisierte-features" class="slide level2">
-<h2>Automatisierte Features</h2>
+<section id="übung" class="slide level2">
+<h2>Übung</h2>
+<ul>
+<li>Lade den Datensatz x.</li>
+<li>Inspiziere die Meta-Daten der Variablen y und z.</li>
+<li>Vergebe sinnvolle …</li>
+</ul>
+</section>
+<section id="übersicht-funktionalität-i" class="slide level2">
+<h2>Übersicht Funktionalität I</h2>
+<p>Import-Funktionen</p>
+<ul>
+<li>import_spss()</li>
+<li>import_stata()</li>
+<li>import_DF()</li>
+<li>import_RDS()</li>
+<li>import_raw()</li>
+</ul>
+<p>Export-Funktionen</p>
+<ul>
+<li>write_spss()</li>
+<li>write_stata()</li>
+<li>extractData2()</li>
+</ul>
+</section>
+<section id="übersicht-funktionalität-ii" class="slide level2">
+<h2>Übersicht Funktionalität II</h2>
+<p>Meta-Daten bearbeiten</p>
+<ul>
+<li>getChangeMeta()</li>
+<li>applyChangeMeta()</li>
+<li>changeVarLabels()</li>
+<li>changeValLabels()</li>
+<li>changeMissings()</li>
+<li>changeVarNames()</li>
+<li>changeSPSSformat()</li>
+<li>reuseMeta()</li>
+<li>updateMeta()</li>
+</ul>
+</section>
+<section id="übersicht-funktionalität-iii" class="slide level2">
+<h2>Übersicht Funktionalität III</h2>
+<p>Grundlegende Daten-Struktur bearbeiten</p>
+<ul>
+<li>extractVars()</li>
+<li>removeVars()</li>
+<li>cloneVar()</li>
+<li>relocateVariable()</li>
+<li>orderLike()</li>
+<li>insertVariable()</li>
+</ul>
+</section>
+<section id="übersicht-funktionalität-iv" class="slide level2">
+<h2>Übersicht Funktionalität IV</h2>
+<p>Semi-automatisierte Funktionen</p>
+<ul>
+<li>collapseMC_Text()</li>
+<li>collapseMultiMC_Text()</li>
+<li>…</li>
+</ul>
+</section>
+<section id="übung-1" class="slide level2">
+<h2>Übung</h2>
+<ul>
+<li>Welche Funktionen sind geeignet um…?</li>
+<li>Welche Funktionen sind geeignet um…?</li>
+</ul>
+</section>
+<section id="check-funktionen" class="slide level2">
+<h2>Check-Funktionen</h2>
 <ul>
 <li>Konventionen Variablennamen</li>
 <li>Umlaute &amp; Sonderzeichen</li>

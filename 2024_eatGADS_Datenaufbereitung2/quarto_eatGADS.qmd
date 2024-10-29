@@ -1,11 +1,27 @@
 ---
 title: "eatGADS - Datenaufbereitung"
-author: "Benjamin Becker"
+author: "Benjamin Becker, Annika Liebelt & Jule Burblies"
+date: "2024-11-12"
+title-slide-attributes:
+  data-background-image: eatGADS.png
+  data-background-size: 25%
+  data-background-repeat: no-repeat
+  data-background-position: 95% 5%
 format: revealjs
 editor: visual
 execute:
   echo: true
 ---
+
+## eatGADS
+
+**Scope**
+
+-   Datenbankerstellung
+-   Datenbanknutzung
+-   Datenaufbereitung
+-   Datenprüfung
+
 
 ## Ursprüngliche Idee
 
@@ -13,7 +29,7 @@ R statt SPSS in der Datenaufbereitung
 
 -   keine proprietäre Software
 -   bessere Automatisierungsmöglichkeiten
--   bessere Integration mit dem eatversum
+-   bessere Integration mit dem eat-Versum
 
 ```{r}
 #| eval: true
@@ -24,7 +40,7 @@ library(eatGADS)
 
 ## eatGADS
 
-![eatGADS](eatGADS_CRAN.jpg)
+![](eatGADS_CRAN.jpg)
 
 ```{r}
 #| eval: false
@@ -37,17 +53,24 @@ install.packages("eatGADS")
 remotes::install_github("beckerbenj/eatGADS")
 ```
 
-## grundsätzliche Funktionsweise
+## GADSdat-Objekte
 
-eatGADS-Datenstruktur: Liste bestehend aus rohen Daten und Meta-Daten
+Liste bestehend aus 
 
-![dat](GADSdat_dat.jpg)
+- rohen Daten (`dat`) 
+- und Meta-Daten (`labels`)
 
-## grundsätzliche Funktionsweise
+## GADSdat-Objekte
 
-eatGADS-Datenstruktur: Liste bestehend aus rohen Daten und Meta-Daten
+**Daten**
 
-![labels](GADSdat_labels.jpg)
+![](GADSdat_dat.jpg){ height=50% }
+
+## GADSdat-Objekte
+
+**Meta-Daten**
+
+![](GADSdat_labels.jpg){ height=50% }
 
 ## GADSdat-Objekte
 
@@ -66,9 +89,9 @@ write_spss(pisa, filePath = "pisa.sav")
 write_stata(pisa, filePath = "pisa.dat")
 ```
 
-## GADSdat-Objekte
+## Meta-Daten
 
-Meta-Daten
+Extraktion von Meta-Daten via `extractMeta()`
 
 ```{r}
 #| eval: true
@@ -77,7 +100,7 @@ extractMeta(pisa, vars = "schtype")
 
 ```
 
-## GADSdat-Objekte
+## Meta-Daten
 
 Änderung von Meta-Daten
 
@@ -98,9 +121,7 @@ pisa2 <- changeMissings(pisa2, varName = "schtype",
 
 ```
 
-## GADSdat-Objekte
-
-Meta-Daten
+## Meta-Daten
 
 ```{r}
 #| eval: true
@@ -109,7 +130,7 @@ extractMeta(pisa2, vars = "schtype")
 
 ```
 
-## GADSdat-Objekte
+## Daten
 
 Änderung von Daten
 
@@ -131,9 +152,7 @@ pisa3 <- changeValLabels(pisa3, varName = "schtype_dich",
                      value = 2, valLabel = "Nicht-Gymnasium")
 ```
 
-## GADSdat-Objekte
-
-Meta-Daten
+## Daten
 
 ```{r}
 #| eval: true
@@ -143,7 +162,71 @@ extractMeta(pisa3, vars = "schtype_dich")[, 7:8]
 
 ```
 
-## Automatisierte Features
+## Übung
+
+- Lade den Datensatz x.
+- Inspiziere die Meta-Daten der Variablen y und z.
+- Vergebe sinnvolle ...
+
+
+## Übersicht Funktionalität I
+
+Import-Funktionen
+
+-   import_spss()
+-   import_stata()
+-   import_DF()
+-   import_RDS()
+-   import_raw()
+
+Export-Funktionen
+
+-   write_spss()
+-   write_stata()
+-   extractData2()
+
+## Übersicht Funktionalität II
+
+Meta-Daten bearbeiten
+
+-   getChangeMeta()
+-   applyChangeMeta()
+-   changeVarLabels()
+-   changeValLabels()
+-   changeMissings()
+-   changeVarNames()
+-   changeSPSSformat()
+-   reuseMeta()
+-   updateMeta()
+
+## Übersicht Funktionalität III
+
+Grundlegende Daten-Struktur bearbeiten
+
+-   extractVars()
+-   removeVars()
+-   cloneVar()
+-   relocateVariable()
+-   orderLike()
+-   insertVariable()
+
+
+## Übersicht Funktionalität IV
+
+Semi-automatisierte Funktionen
+
+-   collapseMC_Text()
+-   collapseMultiMC_Text()
+-   ...
+
+
+## Übung
+
+- Welche Funktionen sind geeignet um...?
+- Welche Funktionen sind geeignet um...?
+
+
+## Check-Funktionen
 
 -   Konventionen Variablennamen
 -   Umlaute & Sonderzeichen
