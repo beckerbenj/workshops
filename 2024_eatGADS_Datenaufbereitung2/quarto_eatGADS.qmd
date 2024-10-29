@@ -1,0 +1,277 @@
+---
+title: "eatGADS - Datenaufbereitung"
+author: "Benjamin Becker"
+format: revealjs
+editor: visual
+execute:
+  echo: true
+---
+
+## Ursprüngliche Idee
+
+R statt SPSS in der Datenaufbereitung
+
+- keine proprietäre Software
+- bessere Automatisierungsmöglichkeiten
+- bessere Integration mit dem eatversum
+
+```{r}
+#| eval: true
+#| echo: false
+#| 
+library(eatGADS)
+```  
+
+## eatGADS
+
+![eatGADS](eatGADS_CRAN.jpg)
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Stabile Version
+install.packages("eatGADS")
+
+# Development Version
+remotes::install_github("beckerbenj/eatGADS")
+```
+
+## grundsätzliche Funktionsweise
+
+eatGADS-Datenstruktur:
+Liste bestehend aus rohen Daten und Meta-Daten
+
+![dat](GADSdat_dat.jpg)
+
+## grundsätzliche Funktionsweise
+
+eatGADS-Datenstruktur:
+Liste bestehend aus rohen Daten und Meta-Daten
+
+![labels](GADSdat_labels.jpg)
+
+
+## GADSdat-Objekte
+
+Import und Export
+
+```{r}  
+#| eval: false
+#| echo: true
+
+# Import von .sav/.dta files
+pisa <- import_spss("pisa.sav")
+pisa <- import_stata("pisa.dat")
+
+# Export von .sav/.dta files
+write_spss(pisa, filePath = "pisa.sav")
+write_stata(pisa, filePath = "pisa.dat")
+```
+
+## GADSdat-Objekte
+
+Meta-Daten
+
+```{r}
+#| eval: true
+
+extractMeta(pisa, vars = "schtype")
+
+```  
+
+## GADSdat-Objekte
+
+Änderung von Meta-Daten
+
+```{r}
+#| eval: true
+
+# Variablenlabel
+pisa2 <- changeVarLabels(pisa, varName = "schtype",
+                         varLabel = "Schulart")
+
+# Wertelabel
+pisa2 <- changeValLabels(pisa2, varName = "schtype",
+                         value = 1, valLabel = "Gymnasium")
+
+# Missingtag
+pisa2 <- changeMissings(pisa2, varName = "schtype",
+                         value = -99, missings = "miss")
+
+```  
+
+## GADSdat-Objekte
+
+Meta-Daten
+
+```{r}
+#| eval: true
+
+extractMeta(pisa2, vars = "schtype")
+
+```  
+
+## GADSdat-Objekte
+
+Änderung von Daten
+
+```{r}
+#| eval: true
+
+# Variable duplizieren
+pisa3 <- cloneVariable(pisa2, varName = "schtype",
+                       new_varName = "schtype_dich")
+
+# Rekodierung
+pisa3 <- recodeGADS(pisa3, varName = "schtype_dich",
+                    oldValues = c(1, 2, 3),
+                    newValues = c(1, 2, 2),
+                    existingMeta = "drop")
+
+# Anpassung Wertelabel
+pisa3 <- changeValLabels(pisa3, varName = "schtype_dich",
+                     value = 2, valLabel = "Nicht-Gymnasium")
+``` 
+
+## GADSdat-Objekte
+
+Meta-Daten
+
+```{r}
+#| eval: true
+
+extractMeta(pisa3, vars = "schtype_dich")[, 1:6]
+extractMeta(pisa3, vars = "schtype_dich")[, 7:8]
+
+```  
+
+## Automatisierte Features
+
+- Konventionen Variablennamen
+- Umlaute & Sonderzeichen
+- Abgleich Wertelabels & Missingtags
+- Abgleich Daten & Wertelabels
+
+
+## Variablennamen
+
+**Konventionen Variablennamen**
+
+- → Automatisch beim Import
+  - `_` vs `.`
+  - Geschützte Wörter
+
+![](aepfel_spss.JPG){width=80%}
+
+## Variablennamen
+
+**Konventionen Variablennamen**
+
+- → Automatisch beim Import
+  - `_` vs `.`
+  - Geschützte Wörter
+
+```{r}
+# Import SPSS data
+aepfel <- import_spss("aepfel.sav")
+
+```  
+
+## Test-Datensatz
+
+**Test-Daten**
+
+```{r}
+# Display the dataset
+aepfel$dat
+```
+
+## Test-Datensatz
+
+**Test-Daten**
+
+```{r}
+aepfel$labels[, c("varName", "varLabel", "value", "valLabel", "missings")]
+```  
+
+## Sonderzeichen
+
+**Umlaute & Sonderzeichen umwandeln**
+
+- Variablenlabel, Wertelabel, Daten
+- `ß` zu `ss`, `ä` zu `ae` usw.
+- Vorbeugen von Encoding-Problemen
+
+```{r}
+# Fix encoding issues
+aepfel <- fixEncoding(aepfel)
+```
+
+## Sonderzeichen
+
+**Umlaute & Sonderzeichen umwandeln**
+
+```{r}
+# Display the dataset after fixing encoding
+aepfel$dat
+```  
+
+## Sonderzeichen
+
+**Umlaute & Sonderzeichen umwandeln**
+
+```{r}
+# Display specific columns of the labels data
+aepfel$labels[, c("varName", "varLabel", "value", "valLabel", "missings")]
+```  
+
+## Abgleich Missingtags
+
+**Abgleich Wertelabels und Missingtags**
+
+- Alle Werte mit spezifischen Labels auch als Missing getagged?
+- Alle als Missing getaggeden Werte auch spezifische Labels?
+
+→ Reporting und/oder Anpassung
+
+```{r}
+# Check and adjust missing tags
+aepfel <- checkMissings(aepfel, missingLabel = "Missing|missing")
+```
+
+## Abgleich Wertelabels
+
+**Abgleich Daten und Wertelabels**
+
+- Alle Werte mit Wertelabels auch in Daten?
+
+```{r}
+# Check if all value labels are present in the data
+checkEmptyValLabels(aepfel)
+```
+
+## Abgleich Wertelabels
+
+**Abgleich Daten und Wertelabels**
+
+- Alle Werte in den Daten auch mit Wertelabels?
+
+```{r}
+# Check if all values in the data have value labels for specific variables
+checkMissingValLabels(aepfel, vars = c("Ae_Groesse", "Ae_Qualitaet"))
+```
+
+## 
+
+<div style="text-align: center;">
+  <h1 style="font-size: 2em;">Danke für Eure</h1>
+  <h1 style="font-size: 2em;">Aufmerksamkeit!</h1>
+</div>
+
+\vspace{2cm}
+
+<div style="font-size: small;">
+  [https://CRAN.R-project.org/package=eatGADS](https://CRAN.R-project.org/package=eatGADS)  
+  [https://github.com/beckerbenj/eatFDZ](https://github.com/beckerbenj/eatFDZ)
+</div>
