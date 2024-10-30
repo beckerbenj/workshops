@@ -4,7 +4,7 @@ author: "Benjamin Becker, Annika Liebelt & Jule Burblies"
 date: "2024-11-12"
 title-slide-attributes:
   data-background-image: eatGADS.png
-  data-background-size: 25%
+  data-background-size: 20%
   data-background-repeat: no-repeat
   data-background-position: 95% 5%
 format: revealjs
@@ -13,14 +13,17 @@ execute:
   echo: true
 ---
 
-## eatGADS
-
-**Scope**
+## eatGADS - Scope
 
 -   Datenbankerstellung
 -   Datenbanknutzung
--   Datenaufbereitung
--   Datenprüfung
+
+
+## eatGADS - Scope
+
+-   Datenbankerstellung
+-   Datenbanknutzung
+-   **(teil-automatisierte) Datenaufbereitung**
 
 
 ## Ursprüngliche Idee
@@ -53,24 +56,45 @@ install.packages("eatGADS")
 remotes::install_github("beckerbenj/eatGADS")
 ```
 
+## Ressourcen
+
+-   [Comprehensive Data Cleaning Guide (BT-Perspektive)](https://beckerbenj.github.io/eatGADS/articles/data_cleaning.html)
+-   [FDZ Data Cleaning](https://beckerbenj.github.io/eatFDZ/articles/FDZ_Data_Cleaning.html)
+-   [komplette Funktionsübersicht](https://beckerbenj.github.io/eatGADS/reference/index.html)
+
 ## GADSdat-Objekte
 
-Liste bestehend aus 
+Liste bestehend aus
 
-- rohen Daten (`dat`) 
-- und Meta-Daten (`labels`)
+-   rohen Daten (`dat`)
+-   und Meta-Daten (`labels`)
+
+## GADSdat-Objekte {.smaller}
+
+Liste bestehend aus
+
+* rohen Daten (`dat`)
+  + numerische Variablen
+  + character Variablen (Zeichenfolgen)
+  
+* Meta-Daten (`labels`)
+  + Variablenlabel
+  + SPSS-Format
+  + Wertelabel
+  + Missingtags
+  
 
 ## GADSdat-Objekte
 
 **Daten**
 
-![](GADSdat_dat.jpg){ height=50% }
+![](GADSdat_dat.jpg){height="50%"}
 
 ## GADSdat-Objekte
 
 **Meta-Daten**
 
-![](GADSdat_labels.jpg){ height=50% }
+![](GADSdat_labels.jpg){height="50%"}
 
 ## GADSdat-Objekte
 
@@ -87,6 +111,17 @@ pisa <- import_stata("pisa.dat")
 # Export von .sav/.dta files
 write_spss(pisa, filePath = "pisa.sav")
 write_stata(pisa, filePath = "pisa.dat")
+```
+
+## Variablennamen
+
+Anzeigen von Variablennamen im Datensatz via `namesGADS()`
+
+```{r}
+#| eval: true
+
+namesGADS(pisa)[1:10]
+
 ```
 
 ## Meta-Daten
@@ -157,81 +192,109 @@ pisa3 <- changeValLabels(pisa3, varName = "schtype_dich",
 ```{r}
 #| eval: true
 
-extractMeta(pisa3, vars = "schtype_dich")[, 1:6]
-extractMeta(pisa3, vars = "schtype_dich")[, 7:8]
+extractMeta(pisa3, vars = "schtype_dich")
 
 ```
 
 ## Übung
 
-- Lade den Datensatz x.
-- Inspiziere die Meta-Daten der Variablen y und z.
-- Vergebe sinnvolle ...
+-   Lade den Datensatz `example_data.sav` aus dem [eatFDZ](https://github.com/beckerbenj/eatFDZ) Paket (© [Annegret Rucker](https://github.com/ruckeran)).
 
+```{r}
+#| eval: false
+remotes::install_github("beckerbenj/eatFDZ")
+```
 
-## Übersicht Funktionalität I
+```{r}  
+sav_path <- system.file("extdata", "example_data.sav", package = "eatFDZ")
+example_gads <- import_spss(sav_path)
+```
+
+-   Inspiziere die Meta-Daten der Variable `"books"`.
+-   Vergebe sinnvolle Wertelabel und Missingtags, wo diese bisher fehlen.
+
+## Übersicht Funktionalität I {.smaller}
 
 Import-Funktionen
 
--   import_spss()
--   import_stata()
--   import_DF()
--   import_RDS()
--   import_raw()
+-   [`import_spss()`](https://beckerbenj.github.io/eatGADS/reference/import_spss.html) - Import von `.sav` 
+-   [`import_stata()`](https://beckerbenj.github.io/eatGADS/reference/import_stata.html) - Import von `.dta` 
+-   [`import_DF()`](https://beckerbenj.github.io/eatGADS/reference/import_DF.html) - Import von `data.frames`
+-   [`import_RDS()`](https://beckerbenj.github.io/eatGADS/reference/import_RDS.html) - Import von `.RDS` Dateien 
+-   [`import_raw()`](https://beckerbenj.github.io/eatGADS/reference/import_raw.html) - Direkt-Import von Rohdaten & Metadaten
+
 
 Export-Funktionen
 
--   write_spss()
--   write_stata()
--   extractData2()
+-   [`write_spss()`](https://beckerbenj.github.io/eatGADS/reference/write_spss.html) - Export von `.sav` 
+-   [`write_spss2()`](https://beckerbenj.github.io/eatGADS/reference/write_spss2.html) - Alternativer Export von `.sav`
+-   [`write_stata()`](https://beckerbenj.github.io/eatGADS/reference/write_stata.html) - Export von `.dta`
+-   [`extractData2()`](https://beckerbenj.github.io/eatGADS/reference/extractData2.html) - Extraktion von Datensätzen innerhalb `R`
 
-## Übersicht Funktionalität II
+## Übersicht Funktionalität II {.smaller}
 
-Meta-Daten bearbeiten
+### Meta-Daten bearbeiten
 
--   getChangeMeta()
--   applyChangeMeta()
--   changeVarLabels()
--   changeValLabels()
--   changeMissings()
--   changeVarNames()
--   changeSPSSformat()
--   reuseMeta()
--   updateMeta()
-
-## Übersicht Funktionalität III
-
-Grundlegende Daten-Struktur bearbeiten
-
--   extractVars()
--   removeVars()
--   cloneVar()
--   relocateVariable()
--   orderLike()
--   insertVariable()
+-   [`getChangeMeta()`](https://beckerbenj.github.io/eatGADS/reference/getChangeMeta.html) - Extrahiert Änderungen in den Meta-Daten
+-   [`applyChangeMeta()`](https://beckerbenj.github.io/eatGADS/reference/applyChangeMeta.html) - Wendet Änderungen in den Meta-Daten an
+-   [`changeVarLabels()`](https://beckerbenj.github.io/eatGADS/reference/changeVarLabels.html) - Änderungen Variablenlabel
+-   [`changeValLabels()`](https://beckerbenj.github.io/eatGADS/reference/changeValLabels.html) - Änderungen Wertelabel
+-   [`changeMissings()`](https://beckerbenj.github.io/eatGADS/reference/changeMissings.html) - Änderungen Missing-Tags
+-   [`changeVarNames()`](https://beckerbenj.github.io/eatGADS/reference/changeVarNames.html)- Änderungen Variablennamen
+-   [`changeSPSSformat()`](https://beckerbenj.github.io/eatGADS/reference/changeSPSSformat.html) - Änderungen SPSS-Format
+-   [`reuseMeta()`](https://beckerbenj.github.io/eatGADS/reference/reuseMeta.html) - Wiederverwendung von Meta-Daten
+-   [`updateMeta()`](https://beckerbenj.github.io/eatGADS/reference/updateMeta.html) - Aktualisiert Meta-Daten im Datensatz
 
 
-## Übersicht Funktionalität IV
+## Übersicht Funktionalität III {.smaller}
+
+### Grundlegende Daten-Struktur bearbeiten
+
+-   [`extractVars()`](https://beckerbenj.github.io/eatGADS/reference/extractVars.html) - Extraktion ausgewählter Variablen
+-   [`removeVars()`](https://beckerbenj.github.io/eatGADS/reference/removeVars.html) - Entfernen bestimmter Variablen
+-   [`cloneVar()`](https://beckerbenj.github.io/eatGADS/reference/cloneVar.html) - Kopiert eine Variable
+-   [`relocateVariable()`](https://beckerbenj.github.io/eatGADS/reference/relocateVariable.html) - Verschiebt eine Variable an eine neue Position
+-   [`orderLike()`](https://beckerbenj.github.io/eatGADS/reference/orderLike.html) - Anordnung aller Variablen
+-   [`insertVariable()`](https://beckerbenj.github.io/eatGADS/reference/insertVariable.html) - Fügt eine neue Variable in den Datensatz ein
+
+
+## Übersicht Funktionalität IV {.smaller}
 
 Semi-automatisierte Funktionen
 
--   collapseMC_Text()
--   collapseMultiMC_Text()
+-   [`calculateScale()`](https://beckerbenj.github.io/eatGADS/reference/calculateScale.html) - Erstellen einer Skala
+-   [`collapseMC_Text()`](https://beckerbenj.github.io/eatGADS/reference/collapseMC_Text.html) - Rekodierung eines forced Choice Items mit Freitextmöglichkeit 
+-   [`collapseMultiMC_Text()`](https://beckerbenj.github.io/eatGADS/reference/collapseMultiMC_Text().html) - Rekodierung eines multiple Choice Items mit Freitextmöglichkeit 
+-   [`composeVar()`](https://beckerbenj.github.io/eatGADS/reference/composeVar.html) - Kombination unterschiedlicher Informationsquellen
+-   [`convertCase()`](https://beckerbenj.github.io/eatGADS/reference/convertCase.html) - Änderung Groß-/Kleinschreibung
+-   [`dummies2char()`](https://beckerbenj.github.io/eatGADS/reference/dummies2char.html) 
+-   [`fac2dummies()`](https://beckerbenj.github.io/eatGADS/reference/fac2dummies.html) 
+-   [`multiChar2fac()`](https://beckerbenj.github.io/eatGADS/reference/multiChar2fac.html) 
 -   ...
-
 
 ## Übung
 
-- Welche Funktionen sind geeignet um...?
-- Welche Funktionen sind geeignet um...?
+-   Entferne die Variablen `"ID_name"` und `"info"` aus Anonymisierungsgründen vollständig aus dem Datensatz.
+-   Bilde den Notendurchschnitt aus den bestehenden Notenvariablen (`"grade_<fach>"`).
 
+## Übersicht Funktionalität V {.smaller}
 
-## Check-Funktionen
+Vergleichs-Funktionen
 
--   Konventionen Variablennamen
--   Umlaute & Sonderzeichen
--   Abgleich Wertelabels & Missingtags
--   Abgleich Daten & Wertelabels
+-   [`equalGADS()`](https://beckerbenj.github.io/eatGADS/reference/equalGADS.html) - tbd
+-   [`compareGADS()`](https://beckerbenj.github.io/eatGADS/reference/compareGADS.html) - tbd
+-   [`inspectDifferences()`](https://beckerbenj.github.io/eatGADS/reference/inspectDifferences.html) - tbd
+-   [`inspectMetaDifferences()`](https://beckerbenj.github.io/eatGADS/reference/inspectMetaDifferences.html) - tbd
+
+## Übersicht Funktionalität VI {.smaller}
+
+Check-Funktionen
+
+-   [`import_spss()`](https://beckerbenj.github.io/eatGADS/reference/import_spss.html) - Konventionen Variablennamen
+-   [`fixEncoding()`](https://beckerbenj.github.io/eatGADS/reference/fixEncoding.html) - Umlaute & Sonderzeichen
+-   [`checkMissings()`](https://beckerbenj.github.io/eatGADS/reference/checkMissings.html) - Abgleich Wertelabels & Missingtags
+-   [`checkEmptyValLabels()`](https://beckerbenj.github.io/eatGADS/reference/checkEmptyValLabels.html) - Abgleich Wertelabels & Daten
+-   [`checkMissingValLabels()`](https://beckerbenj.github.io/eatGADS/reference/checkMissingValLabels.html) - Abgleich Daten & Wertelabels
 
 ## Variablennamen
 

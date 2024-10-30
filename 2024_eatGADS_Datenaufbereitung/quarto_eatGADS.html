@@ -391,7 +391,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="eatGADS.png" data-background-position="95% 5%" data-background-repeat="no-repeat" data-background-size="25%" class="quarto-title-block center">
+<section id="title-slide" data-background-image="eatGADS.png" data-background-position="95% 5%" data-background-repeat="no-repeat" data-background-size="20%" class="quarto-title-block center">
   <h1 class="title">eatGADS - Datenaufbereitung</h1>
 
 <div class="quarto-title-authors">
@@ -404,14 +404,19 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 
   <p class="date">2024-11-12</p>
 </section>
-<section id="eatgads" class="slide level2">
-<h2>eatGADS</h2>
-<p><strong>Scope</strong></p>
+<section id="eatgads---scope" class="slide level2">
+<h2>eatGADS - Scope</h2>
 <ul>
 <li>Datenbankerstellung</li>
 <li>Datenbanknutzung</li>
-<li>Datenaufbereitung</li>
-<li>Datenprüfung</li>
+</ul>
+</section>
+<section id="eatgads---scope-1" class="slide level2">
+<h2>eatGADS - Scope</h2>
+<ul>
+<li>Datenbankerstellung</li>
+<li>Datenbanknutzung</li>
+<li><strong>(teil-automatisierte) Datenaufbereitung</strong></li>
 </ul>
 </section>
 <section id="ursprüngliche-idee" class="slide level2">
@@ -423,7 +428,7 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <li>bessere Integration mit dem eat-Versum</li>
 </ul>
 </section>
-<section id="eatgads-1" class="slide level2">
+<section id="eatgads" class="slide level2">
 <h2>eatGADS</h2>
 
 <img data-src="eatGADS_CRAN.jpg" class="r-stretch"><div class="cell">
@@ -434,6 +439,14 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <span id="cb1-5"><a href=""></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"beckerbenj/eatGADS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="ressourcen" class="slide level2">
+<h2>Ressourcen</h2>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatGADS/articles/data_cleaning.html">Comprehensive Data Cleaning Guide (BT-Perspektive)</a></li>
+<li><a href="https://beckerbenj.github.io/eatFDZ/articles/FDZ_Data_Cleaning.html">FDZ Data Cleaning</a></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/index.html">komplette Funktionsübersicht</a></li>
+</ul>
+</section>
 <section id="gadsdat-objekte" class="slide level2">
 <h2>GADSdat-Objekte</h2>
 <p>Liste bestehend aus</p>
@@ -442,17 +455,35 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <li>und Meta-Daten (<code>labels</code>)</li>
 </ul>
 </section>
-<section id="gadsdat-objekte-1" class="slide level2">
+<section id="gadsdat-objekte-1" class="slide level2 smaller">
+<h2>GADSdat-Objekte</h2>
+<p>Liste bestehend aus</p>
+<ul>
+<li>rohen Daten (<code>dat</code>)
+<ul>
+<li>numerische Variablen</li>
+<li>character Variablen (Zeichenfolgen)</li>
+</ul></li>
+<li>Meta-Daten (<code>labels</code>)
+<ul>
+<li>Variablenlabel</li>
+<li>SPSS-Format</li>
+<li>Wertelabel</li>
+<li>Missingtags</li>
+</ul></li>
+</ul>
+</section>
+<section id="gadsdat-objekte-2" class="slide level2">
 <h2>GADSdat-Objekte</h2>
 <p><strong>Daten</strong></p>
 <p><img data-src="GADSdat_dat.jpg" style="height:50.0%"></p>
 </section>
-<section id="gadsdat-objekte-2" class="slide level2">
+<section id="gadsdat-objekte-3" class="slide level2">
 <h2>GADSdat-Objekte</h2>
 <p><strong>Meta-Daten</strong></p>
 <p><img data-src="GADSdat_labels.jpg" style="height:50.0%"></p>
 </section>
-<section id="gadsdat-objekte-3" class="slide level2">
+<section id="gadsdat-objekte-4" class="slide level2">
 <h2>GADSdat-Objekte</h2>
 <p>Import und Export</p>
 <div class="cell">
@@ -465,11 +496,22 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <span id="cb2-7"><a href=""></a><span class="fu">write_stata</span>(pisa, <span class="at">filePath =</span> <span class="st">"pisa.dat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="variablennamen" class="slide level2">
+<h2>Variablennamen</h2>
+<p>Anzeigen von Variablennamen im Datensatz via <code>namesGADS()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">namesGADS</span>(pisa)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "idstud"    "idschool"  "idclass"   "schtype"   "sameteach" "g8g9"     
+ [7] "ganztag"   "classsize" "repeated"  "gender"   </code></pre>
+</div>
+</div>
+</section>
 <section id="meta-daten" class="slide level2">
 <h2>Meta-Daten</h2>
 <p>Extraktion von Meta-Daten via <code>extractMeta()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">extractMeta</span>(pisa, <span class="at">vars =</span> <span class="st">"schtype"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">extractMeta</span>(pisa, <span class="at">vars =</span> <span class="st">"schtype"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  varName     varLabel format display_width labeled value
 5 schtype School track   F8.0            NA     yes     1
@@ -486,23 +528,23 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <h2>Meta-Daten</h2>
 <p>Änderung von Meta-Daten</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Variablenlabel</span></span>
-<span id="cb5-2"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeVarLabels</span>(pisa, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
-<span id="cb5-3"><a href=""></a>                         <span class="at">varLabel =</span> <span class="st">"Schulart"</span>)</span>
-<span id="cb5-4"><a href=""></a></span>
-<span id="cb5-5"><a href=""></a><span class="co"># Wertelabel</span></span>
-<span id="cb5-6"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeValLabels</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
-<span id="cb5-7"><a href=""></a>                         <span class="at">value =</span> <span class="dv">1</span>, <span class="at">valLabel =</span> <span class="st">"Gymnasium"</span>)</span>
-<span id="cb5-8"><a href=""></a></span>
-<span id="cb5-9"><a href=""></a><span class="co"># Missingtag</span></span>
-<span id="cb5-10"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeMissings</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
-<span id="cb5-11"><a href=""></a>                         <span class="at">value =</span> <span class="sc">-</span><span class="dv">99</span>, <span class="at">missings =</span> <span class="st">"miss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Variablenlabel</span></span>
+<span id="cb7-2"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeVarLabels</span>(pisa, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
+<span id="cb7-3"><a href=""></a>                         <span class="at">varLabel =</span> <span class="st">"Schulart"</span>)</span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a><span class="co"># Wertelabel</span></span>
+<span id="cb7-6"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeValLabels</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
+<span id="cb7-7"><a href=""></a>                         <span class="at">value =</span> <span class="dv">1</span>, <span class="at">valLabel =</span> <span class="st">"Gymnasium"</span>)</span>
+<span id="cb7-8"><a href=""></a></span>
+<span id="cb7-9"><a href=""></a><span class="co"># Missingtag</span></span>
+<span id="cb7-10"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeMissings</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
+<span id="cb7-11"><a href=""></a>                         <span class="at">value =</span> <span class="sc">-</span><span class="dv">99</span>, <span class="at">missings =</span> <span class="st">"miss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="meta-daten-2" class="slide level2">
 <h2>Meta-Daten</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">extractMeta</span>(pisa2, <span class="at">vars =</span> <span class="st">"schtype"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">extractMeta</span>(pisa2, <span class="at">vars =</span> <span class="st">"schtype"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  varName varLabel format display_width labeled value
 4 schtype Schulart   F8.0            NA     yes   -99
@@ -521,118 +563,143 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <h2>Daten</h2>
 <p>Änderung von Daten</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Variable duplizieren</span></span>
-<span id="cb8-2"><a href=""></a>pisa3 <span class="ot">&lt;-</span> <span class="fu">cloneVariable</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
-<span id="cb8-3"><a href=""></a>                       <span class="at">new_varName =</span> <span class="st">"schtype_dich"</span>)</span>
-<span id="cb8-4"><a href=""></a></span>
-<span id="cb8-5"><a href=""></a><span class="co"># Rekodierung</span></span>
-<span id="cb8-6"><a href=""></a>pisa3 <span class="ot">&lt;-</span> <span class="fu">recodeGADS</span>(pisa3, <span class="at">varName =</span> <span class="st">"schtype_dich"</span>,</span>
-<span id="cb8-7"><a href=""></a>                    <span class="at">oldValues =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb8-8"><a href=""></a>                    <span class="at">newValues =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
-<span id="cb8-9"><a href=""></a>                    <span class="at">existingMeta =</span> <span class="st">"drop"</span>)</span>
-<span id="cb8-10"><a href=""></a></span>
-<span id="cb8-11"><a href=""></a><span class="co"># Anpassung Wertelabel</span></span>
-<span id="cb8-12"><a href=""></a>pisa3 <span class="ot">&lt;-</span> <span class="fu">changeValLabels</span>(pisa3, <span class="at">varName =</span> <span class="st">"schtype_dich"</span>,</span>
-<span id="cb8-13"><a href=""></a>                     <span class="at">value =</span> <span class="dv">2</span>, <span class="at">valLabel =</span> <span class="st">"Nicht-Gymnasium"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># Variable duplizieren</span></span>
+<span id="cb10-2"><a href=""></a>pisa3 <span class="ot">&lt;-</span> <span class="fu">cloneVariable</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
+<span id="cb10-3"><a href=""></a>                       <span class="at">new_varName =</span> <span class="st">"schtype_dich"</span>)</span>
+<span id="cb10-4"><a href=""></a></span>
+<span id="cb10-5"><a href=""></a><span class="co"># Rekodierung</span></span>
+<span id="cb10-6"><a href=""></a>pisa3 <span class="ot">&lt;-</span> <span class="fu">recodeGADS</span>(pisa3, <span class="at">varName =</span> <span class="st">"schtype_dich"</span>,</span>
+<span id="cb10-7"><a href=""></a>                    <span class="at">oldValues =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb10-8"><a href=""></a>                    <span class="at">newValues =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb10-9"><a href=""></a>                    <span class="at">existingMeta =</span> <span class="st">"drop"</span>)</span>
+<span id="cb10-10"><a href=""></a></span>
+<span id="cb10-11"><a href=""></a><span class="co"># Anpassung Wertelabel</span></span>
+<span id="cb10-12"><a href=""></a>pisa3 <span class="ot">&lt;-</span> <span class="fu">changeValLabels</span>(pisa3, <span class="at">varName =</span> <span class="st">"schtype_dich"</span>,</span>
+<span id="cb10-13"><a href=""></a>                     <span class="at">value =</span> <span class="dv">2</span>, <span class="at">valLabel =</span> <span class="st">"Nicht-Gymnasium"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="daten-1" class="slide level2">
 <h2>Daten</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">extractMeta</span>(pisa3, <span class="at">vars =</span> <span class="st">"schtype_dich"</span>)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">extractMeta</span>(pisa3, <span class="at">vars =</span> <span class="st">"schtype_dich"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         varName varLabel format display_width labeled value
-467 schtype_dich Schulart   F8.0            NA     yes   -99
-468 schtype_dich Schulart   F8.0            NA     yes     1
-469 schtype_dich Schulart   F8.0            NA     yes     2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">extractMeta</span>(pisa3, <span class="at">vars =</span> <span class="st">"schtype_dich"</span>)[, <span class="dv">7</span><span class="sc">:</span><span class="dv">8</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           valLabel missings
-467            &lt;NA&gt;     miss
-468       Gymnasium    valid
-469 Nicht-Gymnasium    valid</code></pre>
+<pre><code>         varName varLabel format display_width labeled value        valLabel
+467 schtype_dich Schulart   F8.0            NA     yes   -99            &lt;NA&gt;
+468 schtype_dich Schulart   F8.0            NA     yes     1       Gymnasium
+469 schtype_dich Schulart   F8.0            NA     yes     2 Nicht-Gymnasium
+    missings
+467     miss
+468    valid
+469    valid</code></pre>
 </div>
 </div>
 </section>
 <section id="übung" class="slide level2">
 <h2>Übung</h2>
 <ul>
-<li>Lade den Datensatz x.</li>
-<li>Inspiziere die Meta-Daten der Variablen y und z.</li>
-<li>Vergebe sinnvolle …</li>
+<li>Lade den Datensatz <code>example_data.sav</code> aus dem <a href="https://github.com/beckerbenj/eatFDZ">eatFDZ</a> Paket (© <a href="https://github.com/ruckeran">Annegret Rucker</a>).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"beckerbenj/eatFDZ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>sav_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"example_data.sav"</span>, <span class="at">package =</span> <span class="st">"eatFDZ"</span>)</span>
+<span id="cb14-2"><a href=""></a>example_gads <span class="ot">&lt;-</span> <span class="fu">import_spss</span>(sav_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Inspiziere die Meta-Daten der Variable <code>"books"</code>.</li>
+<li>Vergebe sinnvolle Wertelabel und Missingtags, wo diese bisher fehlen.</li>
 </ul>
 </section>
-<section id="übersicht-funktionalität-i" class="slide level2">
+<section id="übersicht-funktionalität-i" class="slide level2 smaller">
 <h2>Übersicht Funktionalität I</h2>
 <p>Import-Funktionen</p>
 <ul>
-<li>import_spss()</li>
-<li>import_stata()</li>
-<li>import_DF()</li>
-<li>import_RDS()</li>
-<li>import_raw()</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/import_spss.html"><code>import_spss()</code></a> - Import von <code>.sav</code></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/import_stata.html"><code>import_stata()</code></a> - Import von <code>.dta</code></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/import_DF.html"><code>import_DF()</code></a> - Import von <code>data.frames</code></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/import_RDS.html"><code>import_RDS()</code></a> - Import von <code>.RDS</code> Dateien</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/import_raw.html"><code>import_raw()</code></a> - Direkt-Import von Rohdaten &amp; Metadaten</li>
 </ul>
 <p>Export-Funktionen</p>
 <ul>
-<li>write_spss()</li>
-<li>write_stata()</li>
-<li>extractData2()</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/write_spss.html"><code>write_spss()</code></a> - Export von <code>.sav</code></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/write_spss2.html"><code>write_spss2()</code></a> - Alternativer Export von <code>.sav</code></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/write_stata.html"><code>write_stata()</code></a> - Export von <code>.dta</code></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/extractData2.html"><code>extractData2()</code></a> - Extraktion von Datensätzen innerhalb <code>R</code></li>
 </ul>
 </section>
-<section id="übersicht-funktionalität-ii" class="slide level2">
+<section id="übersicht-funktionalität-ii" class="slide level2 smaller">
 <h2>Übersicht Funktionalität II</h2>
-<p>Meta-Daten bearbeiten</p>
+<h3 id="meta-daten-bearbeiten">Meta-Daten bearbeiten</h3>
 <ul>
-<li>getChangeMeta()</li>
-<li>applyChangeMeta()</li>
-<li>changeVarLabels()</li>
-<li>changeValLabels()</li>
-<li>changeMissings()</li>
-<li>changeVarNames()</li>
-<li>changeSPSSformat()</li>
-<li>reuseMeta()</li>
-<li>updateMeta()</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/getChangeMeta.html"><code>getChangeMeta()</code></a> - Extrahiert Änderungen in den Meta-Daten</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/applyChangeMeta.html"><code>applyChangeMeta()</code></a> - Wendet Änderungen in den Meta-Daten an</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/changeVarLabels.html"><code>changeVarLabels()</code></a> - Änderungen Variablenlabel</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/changeValLabels.html"><code>changeValLabels()</code></a> - Änderungen Wertelabel</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/changeMissings.html"><code>changeMissings()</code></a> - Änderungen Missing-Tags</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/changeVarNames.html"><code>changeVarNames()</code></a>- Änderungen Variablennamen</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/changeSPSSformat.html"><code>changeSPSSformat()</code></a> - Änderungen SPSS-Format</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/reuseMeta.html"><code>reuseMeta()</code></a> - Wiederverwendung von Meta-Daten</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/updateMeta.html"><code>updateMeta()</code></a> - Aktualisiert Meta-Daten im Datensatz</li>
 </ul>
 </section>
-<section id="übersicht-funktionalität-iii" class="slide level2">
+<section id="übersicht-funktionalität-iii" class="slide level2 smaller">
 <h2>Übersicht Funktionalität III</h2>
-<p>Grundlegende Daten-Struktur bearbeiten</p>
+<h3 id="grundlegende-daten-struktur-bearbeiten">Grundlegende Daten-Struktur bearbeiten</h3>
 <ul>
-<li>extractVars()</li>
-<li>removeVars()</li>
-<li>cloneVar()</li>
-<li>relocateVariable()</li>
-<li>orderLike()</li>
-<li>insertVariable()</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/extractVars.html"><code>extractVars()</code></a> - Extraktion ausgewählter Variablen</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/removeVars.html"><code>removeVars()</code></a> - Entfernen bestimmter Variablen</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/cloneVar.html"><code>cloneVar()</code></a> - Kopiert eine Variable</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/relocateVariable.html"><code>relocateVariable()</code></a> - Verschiebt eine Variable an eine neue Position</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/orderLike.html"><code>orderLike()</code></a> - Anordnung aller Variablen</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/insertVariable.html"><code>insertVariable()</code></a> - Fügt eine neue Variable in den Datensatz ein</li>
 </ul>
 </section>
-<section id="übersicht-funktionalität-iv" class="slide level2">
+<section id="übersicht-funktionalität-iv" class="slide level2 smaller">
 <h2>Übersicht Funktionalität IV</h2>
 <p>Semi-automatisierte Funktionen</p>
 <ul>
-<li>collapseMC_Text()</li>
-<li>collapseMultiMC_Text()</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/calculateScale.html"><code>calculateScale()</code></a> - Erstellen einer Skala</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/collapseMC_Text.html"><code>collapseMC_Text()</code></a> - Rekodierung eines forced Choice Items mit Freitextmöglichkeit</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/collapseMultiMC_Text().html"><code>collapseMultiMC_Text()</code></a> - Rekodierung eines multiple Choice Items mit Freitextmöglichkeit</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/composeVar.html"><code>composeVar()</code></a> - Kombination unterschiedlicher Informationsquellen</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/convertCase.html"><code>convertCase()</code></a> - Änderung Groß-/Kleinschreibung</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/dummies2char.html"><code>dummies2char()</code></a></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/fac2dummies.html"><code>fac2dummies()</code></a></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/multiChar2fac.html"><code>multiChar2fac()</code></a></li>
 <li>…</li>
 </ul>
 </section>
 <section id="übung-1" class="slide level2">
 <h2>Übung</h2>
 <ul>
-<li>Welche Funktionen sind geeignet um…?</li>
-<li>Welche Funktionen sind geeignet um…?</li>
+<li>Entferne die Variablen <code>"ID_name"</code> und <code>"info"</code> aus Anonymisierungsgründen vollständig aus dem Datensatz.</li>
+<li>Bilde den Notendurchschnitt aus den bestehenden Notenvariablen (<code>"grade_&lt;fach&gt;"</code>).</li>
 </ul>
 </section>
-<section id="check-funktionen" class="slide level2">
-<h2>Check-Funktionen</h2>
+<section id="übersicht-funktionalität-v" class="slide level2 smaller">
+<h2>Übersicht Funktionalität V</h2>
+<p>Vergleichs-Funktionen</p>
 <ul>
-<li>Konventionen Variablennamen</li>
-<li>Umlaute &amp; Sonderzeichen</li>
-<li>Abgleich Wertelabels &amp; Missingtags</li>
-<li>Abgleich Daten &amp; Wertelabels</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/equalGADS.html"><code>equalGADS()</code></a> - tbd</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/compareGADS.html"><code>compareGADS()</code></a> - tbd</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/inspectDifferences.html"><code>inspectDifferences()</code></a> - tbd</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/inspectMetaDifferences.html"><code>inspectMetaDifferences()</code></a> - tbd</li>
 </ul>
 </section>
-<section id="variablennamen" class="slide level2">
+<section id="übersicht-funktionalität-vi" class="slide level2 smaller">
+<h2>Übersicht Funktionalität VI</h2>
+<p>Check-Funktionen</p>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/import_spss.html"><code>import_spss()</code></a> - Konventionen Variablennamen</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/fixEncoding.html"><code>fixEncoding()</code></a> - Umlaute &amp; Sonderzeichen</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/checkMissings.html"><code>checkMissings()</code></a> - Abgleich Wertelabels &amp; Missingtags</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/checkEmptyValLabels.html"><code>checkEmptyValLabels()</code></a> - Abgleich Wertelabels &amp; Daten</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/checkMissingValLabels.html"><code>checkMissingValLabels()</code></a> - Abgleich Daten &amp; Wertelabels</li>
+</ul>
+</section>
+<section id="variablennamen-1" class="slide level2">
 <h2>Variablennamen</h2>
 <p><strong>Konventionen Variablennamen</strong></p>
 <ul>
@@ -644,7 +711,7 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 </ul>
 
 <img data-src="aepfel_spss.JPG" style="width:80.0%" class="r-stretch"></section>
-<section id="variablennamen-1" class="slide level2">
+<section id="variablennamen-2" class="slide level2">
 <h2>Variablennamen</h2>
 <p><strong>Konventionen Variablennamen</strong></p>
 <ul>
@@ -655,16 +722,16 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Import SPSS data</span></span>
-<span id="cb13-2"><a href=""></a>aepfel <span class="ot">&lt;-</span> <span class="fu">import_spss</span>(<span class="st">"aepfel.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Import SPSS data</span></span>
+<span id="cb15-2"><a href=""></a>aepfel <span class="ot">&lt;-</span> <span class="fu">import_spss</span>(<span class="st">"aepfel.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="test-datensatz" class="slide level2">
 <h2>Test-Datensatz</h2>
 <p><strong>Test-Daten</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># Display the dataset</span></span>
-<span id="cb14-2"><a href=""></a>aepfel<span class="sc">$</span>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Display the dataset</span></span>
+<span id="cb16-2"><a href=""></a>aepfel<span class="sc">$</span>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ID Ä_Größe Ä_Qualität     Ort
 1  1       1          2   unter
@@ -677,7 +744,7 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <h2>Test-Datensatz</h2>
 <p><strong>Test-Daten</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>aepfel<span class="sc">$</span>labels[, <span class="fu">c</span>(<span class="st">"varName"</span>, <span class="st">"varLabel"</span>, <span class="st">"value"</span>, <span class="st">"valLabel"</span>, <span class="st">"missings"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>aepfel<span class="sc">$</span>labels[, <span class="fu">c</span>(<span class="st">"varName"</span>, <span class="st">"varLabel"</span>, <span class="st">"value"</span>, <span class="st">"valLabel"</span>, <span class="st">"missings"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     varName   varLabel value          valLabel missings
 1         ID Identifier    NA              &lt;NA&gt;     &lt;NA&gt;
@@ -699,16 +766,16 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <li>Vorbeugen von Encoding-Problemen</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># Fix encoding issues</span></span>
-<span id="cb18-2"><a href=""></a>aepfel <span class="ot">&lt;-</span> <span class="fu">fixEncoding</span>(aepfel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="co"># Fix encoding issues</span></span>
+<span id="cb20-2"><a href=""></a>aepfel <span class="ot">&lt;-</span> <span class="fu">fixEncoding</span>(aepfel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sonderzeichen-1" class="slide level2">
 <h2>Sonderzeichen</h2>
 <p><strong>Umlaute &amp; Sonderzeichen umwandeln</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Display the dataset after fixing encoding</span></span>
-<span id="cb19-2"><a href=""></a>aepfel<span class="sc">$</span>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># Display the dataset after fixing encoding</span></span>
+<span id="cb21-2"><a href=""></a>aepfel<span class="sc">$</span>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ID Ae_Groesse Ae_Qualitaet      Ort
 1  1          1            2    unter
@@ -721,8 +788,8 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <h2>Sonderzeichen</h2>
 <p><strong>Umlaute &amp; Sonderzeichen umwandeln</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># Display specific columns of the labels data</span></span>
-<span id="cb21-2"><a href=""></a>aepfel<span class="sc">$</span>labels[, <span class="fu">c</span>(<span class="st">"varName"</span>, <span class="st">"varLabel"</span>, <span class="st">"value"</span>, <span class="st">"valLabel"</span>, <span class="st">"missings"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># Display specific columns of the labels data</span></span>
+<span id="cb23-2"><a href=""></a>aepfel<span class="sc">$</span>labels[, <span class="fu">c</span>(<span class="st">"varName"</span>, <span class="st">"varLabel"</span>, <span class="st">"value"</span>, <span class="st">"valLabel"</span>, <span class="st">"missings"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       varName   varLabel value          valLabel missings
 1           ID Identifier    NA              &lt;NA&gt;     &lt;NA&gt;
@@ -744,8 +811,8 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 </ul>
 <p>→ Reporting und/oder Anpassung</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># Check and adjust missing tags</span></span>
-<span id="cb23-2"><a href=""></a>aepfel <span class="ot">&lt;-</span> <span class="fu">checkMissings</span>(aepfel, <span class="at">missingLabel =</span> <span class="st">"Missing|missing"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="co"># Check and adjust missing tags</span></span>
+<span id="cb25-2"><a href=""></a>aepfel <span class="ot">&lt;-</span> <span class="fu">checkMissings</span>(aepfel, <span class="at">missingLabel =</span> <span class="st">"Missing|missing"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="abgleich-wertelabels" class="slide level2">
@@ -755,8 +822,8 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <li>Alle Werte mit Wertelabels auch in Daten?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="co"># Check if all value labels are present in the data</span></span>
-<span id="cb24-2"><a href=""></a><span class="fu">checkEmptyValLabels</span>(aepfel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="co"># Check if all value labels are present in the data</span></span>
+<span id="cb26-2"><a href=""></a><span class="fu">checkEmptyValLabels</span>(aepfel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$ID
 NULL
@@ -782,8 +849,8 @@ NULL</code></pre>
 <li>Alle Werte in den Daten auch mit Wertelabels?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="co"># Check if all values in the data have value labels for specific variables</span></span>
-<span id="cb26-2"><a href=""></a><span class="fu">checkMissingValLabels</span>(aepfel, <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"Ae_Groesse"</span>, <span class="st">"Ae_Qualitaet"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="co"># Check if all values in the data have value labels for specific variables</span></span>
+<span id="cb28-2"><a href=""></a><span class="fu">checkMissingValLabels</span>(aepfel, <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"Ae_Groesse"</span>, <span class="st">"Ae_Qualitaet"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Ae_Groesse
 NULL
