@@ -391,7 +391,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="eatATA.png" data-background-position="95% 5%" data-background-repeat="no-repeat" data-background-size="20%" class="quarto-title-block center">
+<section id="title-slide" data-background-image="eatATA.png" data-background-position="95% 5%" data-background-repeat="no-repeat" data-background-size="15%" class="quarto-title-block center">
   <h1 class="title">eatATA - Automatisierte Blockbesetzung</h1>
 
 <div class="quarto-title-authors">
@@ -415,7 +415,7 @@ Benjamin Becker
 <li><strong>Item</strong><br>
 → Eine Frage (kleinste Einheit)</li>
 <li><strong>Aufgabe/Unit</strong><br>
-→ Set von Items mit gemeinsamen Stimulus</li>
+→ Set von Items mit gemeinsamem Stimulus</li>
 <li><strong>Block/Cluster</strong><br>
 → Zusammenstellung von Aufgaben, meist als fixer Kontext, ca. 20 Minuten</li>
 <li><strong>Testform/Testheft</strong><br>
@@ -457,6 +457,7 @@ Benjamin Becker
 <li>(Prä)-Pilotierungen<br>
 → Bildungstrend<br>
 → VERA</li>
+<li>…</li>
 </ul>
 </section>
 <section id="parallele-blöcke" class="slide level2">
@@ -473,7 +474,7 @@ Benjamin Becker
 </section>
 <section id="blockbesetzung" class="slide level2">
 <h2>Blockbesetzung</h2>
-<p><strong>Bisher zumeist händisch via Excel, aber:</strong></p>
+<p><strong>Häufig händisch (via Excel), aber:</strong></p>
 <ul>
 <li>viele Items</li>
 <li>viele Constraints<br>
@@ -513,9 +514,8 @@ Benjamin Becker
 <li>Objective Function</li>
 </ul>
 </section>
-<section id="beispiel" class="slide level2 smaller">
-<h2>Beispiel</h2>
-<p><strong>Beispiel: Produzentenproblem</strong></p>
+<section id="beispiel-produzentenproblem" class="slide level2 smaller">
+<h2>Beispiel: Produzentenproblem</h2>
 <ul>
 <li>Anstellungsoptionen StuMis, Docs, Postdocs</li>
 <li>Maximal 8 Büroplätze</li>
@@ -526,34 +526,45 @@ Benjamin Becker
 </ul>
 <p><strong>Frage:</strong> Welche Kombination aus Personen soll eingestellt werden?</p>
 </section>
-<section id="beispiel-fortsetzung" class="slide level2 smaller">
-<h2>Beispiel (Fortsetzung)</h2>
+<section id="beispiel-produzentenproblem-1" class="slide level2 smaller">
+<h2>Beispiel: Produzentenproblem</h2>
 <p><strong>Decision Variables:</strong></p>
 <ul>
 <li>Anstellungsoptionen <strong>S</strong>tuMis, <strong>D</strong>ocs, <strong>P</strong>ostdocs</li>
 </ul>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li>Maximal 8 Büroplätze<br>
-( S + D + P )</li>
-<li>Max. Kosten 120$: StuMis (5$), Docs (18$), Postdocs (25$)<br>
-( 5S + 18D + 25P )</li>
-<li>Es braucht von jeder Statusgruppe mindestens 2 Personen<br>
-( S ), ( D ), ( P )</li>
+<li><p>Maximal 8 Büroplätze <span class="math display">\[
+( S + D + P \leq 8 )
+\]</span></p></li>
+<li><p>Max. Kosten 120$: StuMis (5$), Docs (18$), Postdocs (25$) <span class="math display">\[
+( 5S + 18D + 25P \leq 120 )
+\]</span></p></li>
+<li><p>Es braucht von jeder Statusgruppe mindestens 2 Personen <span class="math display">\[
+( S \geq 2 ), ( D \geq 2 ), ( P \geq 2 )
+\]</span></p></li>
+</ul>
+</section>
+<section id="beispiel-produzentenproblem-2" class="slide level2 smaller">
+<h2>Beispiel: Produzentenproblem</h2>
+<p><strong>Decision Variables:</strong></p>
+<ul>
+<li>Anstellungsoptionen <strong>S</strong>tuMis, <strong>D</strong>ocs, <strong>P</strong>ostdocs</li>
 </ul>
 <p><strong>Objective Function:</strong></p>
 <ul>
 <li>Publikationen: StuMis (1), Docs (2), Postdocs (3)</li>
-<li>Anzahl der Publikationen maximieren<br>
-Maximieren: ( 1S + 2D + 3P )</li>
+<li>Anzahl der Publikationen maximieren <span class="math display">\[
+Maximiere ( 1S + 2D + 3P )
+\]</span></li>
 </ul>
 </section>
 <section id="solver" class="slide level2 smaller">
 <h2>Solver</h2>
 <p><strong>Open Source</strong></p>
 <ul>
-<li>lpSolve</li>
 <li>GLPK</li>
+<li>lpSolve</li>
 <li>Symphony</li>
 <li>…</li>
 </ul>
@@ -570,10 +581,7 @@ Maximieren: ( 1S + 2D + 3P )</li>
 <img data-src="Graphs/vanderLinden_cover.JPG" class="r-stretch"></section>
 <section id="automatisierte-testhefterstellung-1" class="slide level2">
 <h2>Automatisierte Testhefterstellung</h2>
-<section id="automated-test-assembly-ata" class="block">
-<h3>Automated Test Assembly (ATA)</h3>
 <p>Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung <span class="citation" data-cites="vanderLinden.2005">[@vanderLinden.2005]</span></p>
-</section>
 <p><strong>Zentrale Konzepte</strong></p>
 <ul>
 <li>Decision Variables (0/1, Item x Block)</li>
@@ -583,7 +591,6 @@ Maximieren: ( 1S + 2D + 3P )</li>
 </section>
 <section id="minimalbeispiel-item-pool" class="slide level2">
 <h2>Minimalbeispiel: Item Pool</h2>
-<p><strong>Item Pool</strong></p>
 <ul>
 <li>30 Items</li>
 <li>Item Formate (MC, offen, Zuordnung)</li>
@@ -591,8 +598,8 @@ Maximieren: ( 1S + 2D + 3P )</li>
 <li>Schwierigkeitsparameter (1PL-Modell)</li>
 </ul>
 </section>
-<section id="minimalbeispiel-item-pool-tabelle" class="slide level2">
-<h2>Minimalbeispiel: Item Pool Tabelle</h2>
+<section id="minimalbeispiel-item-pool-1" class="slide level2">
+<h2>Minimalbeispiel: Item Pool</h2>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -661,9 +668,14 @@ Maximieren: ( 1S + 2D + 3P )</li>
 <h2>Minimalbeispiel: Decision Variables</h2>
 <p><strong>Decision Variables</strong></p>
 <ul>
-<li>Matrix mit Spalten = Anzahl Items (+ 1) und Zeilen = Anzahl Blöcke</li>
-<li>30 Items, 1 Block<br>
-( i_{1, b1}, i_{2, b1}, i_{3, b1}, , i_{30, b1} )</li>
+<li>Matrix mit
+<ul>
+<li>Spalten = Anzahl Items (+ 1)</li>
+<li>Zeilen = Anzahl Blöcke</li>
+</ul></li>
+<li>30 Items, 1 Block <span class="math display">\[
+  ( i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1} )
+\]</span></li>
 </ul>
 </section>
 <section id="minimalbeispiel-objective-function" class="slide level2">
@@ -674,8 +686,9 @@ Maximieren: ( 1S + 2D + 3P )</li>
 <li>so viel/wenig/nah wie möglich (an) …</li>
 <li>Wichtig: Exakt eine Testspezifikation muss hierfür ausgewählt werden</li>
 <li>Min/Max/Minimax/Maximin</li>
-<li>Minimale Blockzeit<br>
-minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + + 19.50i_{30, b1} )</li>
+<li>Minimale Blockzeit <span class="math display">\[
+minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} )
+\]</span></li>
 </ul>
 </section>
 <section id="minimalbeispiel-constraints" class="slide level2">
@@ -683,11 +696,22 @@ minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + + 19.50i_{30, b1} )</li>
 <p><strong>Constraints</strong></p>
 <ul>
 <li>Alle anderen Testspezifikationen</li>
-<li>Genau 10 Items pro Block<br>
-( i_{1, b1} + i_{2, b1} + + i_{30, b1} = 10 )</li>
+<li>Genau 10 Items pro Block <span class="math display">\[
+( i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 )
+\]</span></li>
 <li>Durchschnittliche Schwierigkeit<br>
-( 0.11i_{1, b1} + 0.45i_{2, b1} + + i_{30, b1} )<br>
-( 0.11i_{1, b1} + 0.45i_{2, b1} + + i_{30, b1} )</li>
+<span class="math display">\[
+( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1 )\
+\]</span> <span class="math display">\[
+( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1 )
+\]</span></li>
+</ul>
+</section>
+<section id="übung" class="slide level2">
+<h2>Übung</h2>
+<ul>
+<li>Siehe R-Syntax im i:/ Ordner (oder N:/ Ordner)</li>
+<li>Constraints/Objective Function in Gleichungsform aufschreiben</li>
 </ul>
 </section></section>
 <section>
@@ -697,20 +721,30 @@ minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + + 19.50i_{30, b1} )</li>
 </section>
 <section id="eatata" class="slide level2">
 <h2>eatATA</h2>
-<p>Developed with feedback from: - Pauline Kohrt (VERA 3 Math) - Simone Dubiel (VERA 8 German) - Karoline Sachse (BT)</p>
-<p>Package Authors: - Dries Debeer (KU Leuven) - Benjamin Becker (IQB)</p>
+<p>Entwickelt basierend auf Feedback von:</p>
+<ul>
+<li>Pauline Kohrt (VERA 3 Math)</li>
+<li>Simone Dubiel (VERA 8 German)</li>
+<li>Karoline Sachse (BT)</li>
+</ul>
+<p>Paketautoren:</p>
+<ul>
+<li>Dries Debeer (KU Leuven)</li>
+<li>Benjamin Becker (IQB)</li>
+</ul>
 </section>
 <section id="eatata-resources-i" class="slide level2">
 <h2>eatATA: Resources I</h2>
 <p>Vignettes available on CRAN:<br>
 <a href="https://CRAN.R-project.org/package=eatATA" class="uri">https://CRAN.R-project.org/package=eatATA</a></p>
+<p>or on pkgdown</p>
 </section>
 <section id="eatata-resources-ii" class="slide level2">
 <h2>eatATA: Resources II</h2>
 <p>eatATA Tutorial Paper:<br>
 <a href="https://doi.org/10.3390/psych3020010" class="uri">https://doi.org/10.3390/psych3020010</a></p>
 
-<img data-src="Graphs/psych_paper.PNG" class="r-stretch quarto-figure-center"><p class="caption">eatATA Tutorial Paper</p></section>
+<img data-src="Graphs/psych_paper.PNG" class="r-stretch"></section>
 <section id="code-objective-function" class="slide level2">
 <h2>Code: Objective Function</h2>
 <p>Minimize average block time:</p>
@@ -810,63 +844,102 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 <span id="cb8-2"><a href=""></a>    solver_out, </span>
 <span id="cb8-3"><a href=""></a>    <span class="at">items =</span> items_mini, </span>
 <span id="cb8-4"><a href=""></a>    <span class="at">idCol =</span> <span class="st">"item"</span></span>
-<span id="cb8-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href=""></a>)</span>
+<span id="cb8-6"><a href=""></a>item_mini_out[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   item format     time difficulty form_1
+1     1     mc 27.78586 -1.8809028      1
+2     2     mc 15.45258  0.8429586      1
+3     3     mc 31.01590  1.1188154      0
+4     4     mc 29.87421  0.7286774      1
+5     5     mc 23.13401 -0.4887099      1
+6     6     mc 25.19305  0.4727387      1
+7     7     mc 25.66340 -1.1805427      0
+8     8     mc 30.21856 -0.3670765      1
+9     9     mc 26.61642 -0.5687943      0
+10   10     mc 15.35510  1.3539724      1</code></pre>
+</div>
 </div>
 </section>
 <section id="item-inclusions" class="slide level2">
 <h2>Item Inclusions</h2>
-<p>Reasons: - Shared stimulus (‘task’) - Other reasons</p>
-<p>Implementation: - Tasks, not items, as assembling unit (e.g., VERA 3 Math) - Explicit item inclusions (see eatATA Tutorial)</p>
+<p>Reasons:</p>
+<ul>
+<li>Shared stimulus (‘task’)</li>
+<li>Other reasons</li>
+</ul>
+<p>Implementation:</p>
+<ul>
+<li>Tasks, not items, as assembling unit (e.g., VERA 3 Math)</li>
+<li>Explicit item inclusions (see eatATA Tutorial)</li>
+</ul>
 </section>
 <section id="item-exclusions" class="slide level2">
 <h2>Item Exclusions</h2>
-<p>Reasons: - Item contains information that could reveal another item’s solution - Items are too similar - …</p>
-<p>Implementation: - Explicit item exclusions</p>
+<p>Reasons:</p>
+<ul>
+<li>Item contains information that could reveal another item’s solution</li>
+<li>Items are too similar - …</li>
+</ul>
+<p>Implementation:</p>
+<ul>
+<li>Explicit item exclusions</li>
+</ul>
 </section>
 <section id="code-item-inclusions-input" class="slide level2">
 <h2>Code: Item Inclusions (Input)</h2>
 <p>Input: Column with grouping information:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>incluTup <span class="ot">&lt;-</span> <span class="fu">stemInclusionTuples</span>(</span>
-<span id="cb9-2"><a href=""></a>    items_lsa, </span>
-<span id="cb9-3"><a href=""></a>    <span class="at">idCol =</span> <span class="st">"item"</span>, </span>
-<span id="cb9-4"><a href=""></a>    <span class="at">stemCol =</span> <span class="st">"testlet"</span></span>
-<span id="cb9-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>incluTup <span class="ot">&lt;-</span> <span class="fu">stemInclusionTuples</span>(</span>
+<span id="cb10-2"><a href=""></a>    items_lsa, </span>
+<span id="cb10-3"><a href=""></a>    <span class="at">idCol =</span> <span class="st">"item"</span>, </span>
+<span id="cb10-4"><a href=""></a>    <span class="at">stemCol =</span> <span class="st">"testlet"</span></span>
+<span id="cb10-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-item-inclusions-constraints" class="slide level2">
 <h2>Code: Item Inclusions (Constraints)</h2>
 <p>Creating inclusion constraints:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>incluCons <span class="ot">&lt;-</span> <span class="fu">itemInclusionConstraint</span>(</span>
-<span id="cb10-2"><a href=""></a>    <span class="at">nForms =</span> <span class="dv">8</span>,  </span>
-<span id="cb10-3"><a href=""></a>    <span class="at">itemTuples =</span> incluTup,</span>
-<span id="cb10-4"><a href=""></a>    <span class="at">itemIDs =</span> items_lsa<span class="sc">$</span>item</span>
-<span id="cb10-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>incluCons <span class="ot">&lt;-</span> <span class="fu">itemInclusionConstraint</span>(</span>
+<span id="cb11-2"><a href=""></a>    <span class="at">nForms =</span> <span class="dv">8</span>,  </span>
+<span id="cb11-3"><a href=""></a>    <span class="at">itemTuples =</span> incluTup,</span>
+<span id="cb11-4"><a href=""></a>    <span class="at">itemIDs =</span> items_lsa<span class="sc">$</span>item</span>
+<span id="cb11-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-item-exclusions-input" class="slide level2">
 <h2>Code: Item Exclusions (Input)</h2>
 <p>Input: Column with exclusion listings:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>exclusionTuples <span class="ot">&lt;-</span> <span class="fu">itemTuples</span>(</span>
-<span id="cb11-2"><a href=""></a>    items_pilot, </span>
-<span id="cb11-3"><a href=""></a>    <span class="at">idCol =</span> <span class="st">"item"</span>,</span>
-<span id="cb11-4"><a href=""></a>    <span class="at">infoCol =</span> <span class="st">"exclusions"</span>, </span>
-<span id="cb11-5"><a href=""></a>    <span class="at">sepPattern =</span> <span class="st">", "</span></span>
-<span id="cb11-6"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>exclusionTuples <span class="ot">&lt;-</span> <span class="fu">itemTuples</span>(</span>
+<span id="cb12-2"><a href=""></a>    items_pilot, </span>
+<span id="cb12-3"><a href=""></a>    <span class="at">idCol =</span> <span class="st">"item"</span>,</span>
+<span id="cb12-4"><a href=""></a>    <span class="at">infoCol =</span> <span class="st">"exclusions"</span>, </span>
+<span id="cb12-5"><a href=""></a>    <span class="at">sepPattern =</span> <span class="st">", "</span></span>
+<span id="cb12-6"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-item-exclusions-constraints" class="slide level2">
 <h2>Code: Item Exclusions (Constraints)</h2>
 <p>Creating exclusion constraints:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>excl_constraints <span class="ot">&lt;-</span> <span class="fu">itemExclusionConstraint</span>(</span>
-<span id="cb12-2"><a href=""></a>    <span class="at">nForms =</span> nForms,</span>
-<span id="cb12-3"><a href=""></a>    <span class="at">itemTuples =</span> exclusionTuples, </span>
-<span id="cb12-4"><a href=""></a>    <span class="at">itemIDs =</span> items_pilot<span class="sc">$</span>item</span>
-<span id="cb12-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>excl_constraints <span class="ot">&lt;-</span> <span class="fu">itemExclusionConstraint</span>(</span>
+<span id="cb13-2"><a href=""></a>    <span class="at">nForms =</span> nForms,</span>
+<span id="cb13-3"><a href=""></a>    <span class="at">itemTuples =</span> exclusionTuples, </span>
+<span id="cb13-4"><a href=""></a>    <span class="at">itemIDs =</span> items_pilot<span class="sc">$</span>item</span>
+<span id="cb13-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="übung-1" class="slide level2">
+<h2>Übung</h2>
+<ul>
+<li>Siehe R-Syntax im i:/ Ordner (oder N:/ Ordner)</li>
+</ul>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<p>&lt;!–# ::: {#refs} &lt;!–# :::</p>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>

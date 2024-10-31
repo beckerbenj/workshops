@@ -4,9 +4,10 @@ author: "Benjamin Becker"
 date: "2024-11-5"
 title-slide-attributes:
   data-background-image: eatATA.png
-  data-background-size: 20%
+  data-background-size: 15%
   data-background-repeat: no-repeat
   data-background-position: 95% 5%
+#bibliography: references.bib
 format: revealjs
 editor: visual
 execute:
@@ -20,7 +21,7 @@ execute:
 -   **Item**\
     → Eine Frage (kleinste Einheit)
 -   **Aufgabe/Unit**\
-    → Set von Items mit gemeinsamen Stimulus
+    → Set von Items mit gemeinsamem Stimulus
 -   **Block/Cluster**\
     → Zusammenstellung von Aufgaben, meist als fixer Kontext, ca. 20 Minuten
 -   **Testform/Testheft**\
@@ -68,6 +69,7 @@ library(eatATA)
 -   (Prä)-Pilotierungen\
     → Bildungstrend\
     → VERA
+-   ...   
 
 ## Parallele Blöcke
 
@@ -82,7 +84,7 @@ library(eatATA)
 
 ## Blockbesetzung
 
-**Bisher zumeist händisch via Excel, aber:**
+**Häufig händisch (via Excel), aber:**
 
 -   viele Items
 -   viele Constraints\
@@ -116,9 +118,7 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 -   Constraints
 -   Objective Function
 
-## Beispiel {.smaller}
-
-**Beispiel: Produzentenproblem**
+## Beispiel: Produzentenproblem {.smaller}
 
 -   Anstellungsoptionen StuMis, Docs, Postdocs
 -   Maximal 8 Büroplätze
@@ -129,7 +129,7 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 
 **Frage:** Welche Kombination aus Personen soll eingestellt werden?
 
-## Beispiel (Fortsetzung) {.smaller}
+## Beispiel: Produzentenproblem {.smaller}
 
 **Decision Variables:**
 
@@ -137,25 +137,40 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 
 **Constraints:**
 
--   Maximal 8 Büroplätze\
-    ( S + D + P \leq 8 )
--   Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)\
+-   Maximal 8 Büroplätze
+$$
+( S + D + P \leq 8 )
+$$
+-   Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
+$$
     ( 5S + 18D + 25P \leq 120 )
--   Es braucht von jeder Statusgruppe mindestens 2 Personen\
+$$
+
+-   Es braucht von jeder Statusgruppe mindestens 2 Personen
+$$
     ( S \geq 2 ), ( D \geq 2 ), ( P \geq 2 )
+$$
+
+## Beispiel: Produzentenproblem {.smaller}
+
+**Decision Variables:**
+
+-   Anstellungsoptionen **S**tuMis, **D**ocs, **P**ostdocs
 
 **Objective Function:**
 
 -   Publikationen: StuMis (1), Docs (2), Postdocs (3)
--   Anzahl der Publikationen maximieren\
-    Maximieren: ( 1S + 2D + 3P )
+-   Anzahl der Publikationen maximieren
+$$
+    Maximiere ( 1S + 2D + 3P )
+$$
 
 ## Solver {.smaller}
 
 **Open Source**
 
--   lpSolve
 -   GLPK
+-   lpSolve
 -   Symphony
 -   ...
 
@@ -174,11 +189,7 @@ knitr::include_graphics("Graphs/vanderLinden_cover.JPG")
 
 ## Automatisierte Testhefterstellung
 
-::: block
-### Automated Test Assembly (ATA)
-
 Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung [@vanderLinden.2005]
-:::
 
 **Zentrale Konzepte**
 
@@ -188,14 +199,12 @@ Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur
 
 ## Minimalbeispiel: Item Pool
 
-**Item Pool**
-
 -   30 Items
 -   Item Formate (MC, offen, Zuordnung)
 -   Durchschnittliche Antwortzeiten
 -   Schwierigkeitsparameter (1PL-Modell)
 
-## Minimalbeispiel: Item Pool Tabelle
+## Minimalbeispiel: Item Pool
 
 ```{r}
 #| echo: false
@@ -223,9 +232,13 @@ kable(data.frame(
 
 **Decision Variables**
 
--   Matrix mit Spalten = Anzahl Items (+ 1) und Zeilen = Anzahl Blöcke
--   30 Items, 1 Block\
-    ( i\_{1, b1}, i\_{2, b1}, i\_{3, b1}, \ldots, i\_{30, b1} )
+- Matrix mit 
+  - Spalten = Anzahl Items (+ 1) 
+  - Zeilen = Anzahl Blöcke
+- 30 Items, 1 Block
+$$
+    ( i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1} )
+$$
 
 ## Minimalbeispiel: Objective Function
 
@@ -235,39 +248,62 @@ kable(data.frame(
 -   so viel/wenig/nah wie möglich (an) ...
 -   Wichtig: Exakt eine Testspezifikation muss hierfür ausgewählt werden
 -   Min/Max/Minimax/Maximin
--   Minimale Blockzeit\
-    minimiere ( 27.79i\_{1, b1} + 15.45i\_{2, b1} + \ldots + 19.50i\_{30, b1} )
+-   Minimale Blockzeit
+$$
+    minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} )
+$$
 
 ## Minimalbeispiel: Constraints
 
 **Constraints**
 
 -   Alle anderen Testspezifikationen
--   Genau 10 Items pro Block\
-    ( i\_{1, b1} + i\_{2, b1} + \ldots + i\_{30, b1} = 10 )
+-   Genau 10 Items pro Block
+$$
+    ( i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 )
+$$
 -   Durchschnittliche Schwierigkeit\
-    ( 0.11i\_{1, b1} + 0.45i\_{2, b1} + \ldots + i\_{30, b1} \leq 0.1 )\
-    ( 0.11i\_{1, b1} + 0.45i\_{2, b1} + \ldots + i\_{30, b1} \geq -0.1 )
+$$
+( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1 )\
+$$
+$$
+( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1 )
+$$
+
+## Übung
+
+-   Siehe R-Syntax im i:/ Ordner (oder N:/ Ordner)
+-   Constraints/Objective Function in Gleichungsform aufschreiben 
+
 
 # Umsetzung in eatATA
 
 ## eatATA
 
-Developed with feedback from: - Pauline Kohrt (VERA 3 Math) - Simone Dubiel (VERA 8 German) - Karoline Sachse (BT)
+Entwickelt basierend auf Feedback von: 
 
-Package Authors: - Dries Debeer (KU Leuven) - Benjamin Becker (IQB)
+- Pauline Kohrt (VERA 3 Math) 
+- Simone Dubiel (VERA 8 German) 
+- Karoline Sachse (BT)
+
+Paketautoren:
+
+- Dries Debeer (KU Leuven) 
+- Benjamin Becker (IQB)
 
 ## eatATA: Resources I
 
 Vignettes available on CRAN:\
 <https://CRAN.R-project.org/package=eatATA>
 
+or on pkgdown
+
 ## eatATA: Resources II
 
 eatATA Tutorial Paper:\
 <https://doi.org/10.3390/psych3020010>
 
-![eatATA Tutorial Paper](Graphs/psych_paper.PNG)
+![](Graphs/psych_paper.PNG)
 
 ## Code: Objective Function
 
@@ -340,19 +376,31 @@ item_mini_out <- appendSolution(
 	items = items_mini, 
 	idCol = "item"
 )
+item_mini_out[1:10, ]
 ```
 
 ## Item Inclusions
 
-Reasons: - Shared stimulus ('task') - Other reasons
+Reasons: 
 
-Implementation: - Tasks, not items, as assembling unit (e.g., VERA 3 Math) - Explicit item inclusions (see eatATA Tutorial)
+- Shared stimulus ('task') 
+- Other reasons
+
+Implementation: 
+
+- Tasks, not items, as assembling unit (e.g., VERA 3 Math) 
+- Explicit item inclusions (see eatATA Tutorial)
 
 ## Item Exclusions
 
-Reasons: - Item contains information that could reveal another item's solution - Items are too similar - ...
+Reasons: 
 
-Implementation: - Explicit item exclusions
+- Item contains information that could reveal another item's solution 
+- Items are too similar - ...
+
+Implementation: 
+
+- Explicit item exclusions
 
 ## Code: Item Inclusions (Input)
 
@@ -404,6 +452,15 @@ excl_constraints <- itemExclusionConstraint(
 	itemIDs = items_pilot$item
 )
 ```
+
+## Übung
+
+-   Siehe R-Syntax im i:/ Ordner (oder N:/ Ordner)
+
+## References
+<!--# ::: {#refs}
+<!--# :::
+
 
 ## 
 
