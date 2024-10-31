@@ -1,151 +1,169 @@
 ---
 title: "eatATA - Automatisierte Blockbesetzung"
 author: "Benjamin Becker"
+date: "2024-11-5"
+title-slide-attributes:
+  data-background-image: eatATA.png
+  data-background-size: 20%
+  data-background-repeat: no-repeat
+  data-background-position: 95% 5%
 format: revealjs
 editor: visual
+execute:
+  echo: true
 ---
 
-## Theoretischer Hintergrund: Begrifflichkeiten
+# Theoretischer Hintergrund
 
-- **Item**  
-  → Eine Frage (kleinste Einheit)
-- **Aufgabe/Unit**  
-  → Set von Items mit gemeinsamen Stimulus
-- **Block/Cluster**  
-  → Zusammenstellung von Aufgaben, meist als fixer Kontext, ca. 20 Minuten
-- **Testform/Testheft**  
-  → Zusammenstellung von Blöcken, eine Person bearbeitet eine Testform
+## Begrifflichkeiten {.smaller}
 
+-   **Item**\
+    → Eine Frage (kleinste Einheit)
+-   **Aufgabe/Unit**\
+    → Set von Items mit gemeinsamen Stimulus
+-   **Block/Cluster**\
+    → Zusammenstellung von Aufgaben, meist als fixer Kontext, ca. 20 Minuten
+-   **Testform/Testheft**\
+    → Zusammenstellung von Blöcken, eine Person bearbeitet eine Testform
 
-## Theoretischer Hintergrund: Parallele Testformen
+```{R}
+#| echo: false
+#| eval: true
+library(eatATA)
+
+```
+
+## Parallele Testformen {.smaller}
 
 **Wieso?**
 
-- **Low-stakes Assessments**  
-  → Breite inhaltliche Abdeckung  
-  → Messgenauigkeit auf Gruppenebene
+-   **Low-stakes Assessments**\
+    → Breite inhaltliche Abdeckung\
+    → Messgenauigkeit auf Gruppenebene
 
-- **High-stakes Assessments**  
-  → Abschreiben/Betrugsversuche verhindern  
-  → Weitergabe Testinhalte verhindern
+-   **High-stakes Assessments**\
+    → Abschreiben/Betrugsversuche verhindern\
+    → Weitergabe Testinhalte verhindern
 
-- **Pilotierungen**  
-  → Testung großer Itemzahlen
+-   **Pilotierungen**\
+    → Testung großer Itemzahlen
 
-## Theoretischer Hintergrund: Block vs. Testform
+## Block vs. Testform {.smaller}
 
-**Anforderungen Blockbesetzung**  
+**Anforderungen Blockbesetzung**
 
-- Parallelität (inhaltlich, Formate, ...)
+-   Parallelität (inhaltlich, Formate, ...)
 
 **Anforderungen Testformen**
 
-- Parallelität
-- Linking
+-   Parallelität
+-   Linking
 
-## Theoretischer Hintergrund: IQB-Anwendungen
+## IQB-Anwendungen
 
-**Blockbesetzung**  
+**Blockbesetzung**
 
-- Bildungstrend
-- VERA Module
-- (Prä)-Pilotierungen  
-  → Bildungstrend  
-  → VERA
-  
-## Theoretischer Hintergrund: Parallele Blöcke
+-   Bildungstrend
+-   VERA Module
+-   (Prä)-Pilotierungen\
+    → Bildungstrend\
+    → VERA
+
+## Parallele Blöcke
 
 **Hinsichtlich?**
 
-- Inhaltliche Bereiche
-- Aufgabenformate
-- Schwierigkeit/Testinformation
-- Itemunverträglichkeiten
-- Zeitaufwand/Speededness
-- ...
+-   Inhaltliche Bereiche
+-   Aufgabenformate
+-   Schwierigkeit/Testinformation
+-   Itemunverträglichkeiten
+-   Zeitaufwand/Speededness
+-   ...
 
-## Theoretischer Hintergrund: Blockbesetzung
+## Blockbesetzung
 
 **Bisher zumeist händisch via Excel, aber:**
 
-- viele Items
-- viele Constraints  
-  → z.B. viele Unverträglichkeiten
-- hoher Aufwand/kognitiver Load!
+-   viele Items
+-   viele Constraints\
+    → z.B. viele Unverträglichkeiten
+-   hoher Aufwand/kognitiver Load!
 
-## Mathematical Programming: Definition
+# Mathematical Programming
+
+## Definition
 
 **Synonyme**
 
-- Mathematical Optimization
-- Linear Programming/Mixed Integer Programming
+-   Mathematical Optimization
+-   Linear Programming/Mixed Integer Programming
 
 **Grundidee:**
 
 Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichungen eingeschränkt werden kann
 
-## Mathematical Programming: Zentrale Konzepte
+## Zentrale Konzepte
 
 **Branch and Bound Algorithmen**
 
-- Grundidee: Probieren aller möglichen Lösungen ("Brute Forcing")
-- Effiziente Reduktion des Lösungsraumes
-- Kombinieren von Constraints
+-   Grundidee: Probieren aller möglichen Lösungen ("Brute Forcing")
+-   Effiziente Reduktion des Lösungsraumes
+-   Kombinieren von Constraints
 
-## Mathematical Programming: Zentrale Konzepte
+## Zentrale Konzepte
 
-- Decision Variables
-- Constraints
-- Objective Function
+-   Decision Variables
+-   Constraints
+-   Objective Function
 
-## Mathematical Programming: Beispiel
+## Beispiel {.smaller}
 
 **Beispiel: Produzentenproblem**
 
-- Anstellungsoptionen StuMis, Docs, Postdocs
-- Maximal 8 Büroplätze
-- Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
-- Es braucht von jeder Statusgruppe mindestens 2 Personen
-- Publikationen: StuMis (1), Docs (2), Postdocs (3)
-- Anzahl der Publikationen maximieren
+-   Anstellungsoptionen StuMis, Docs, Postdocs
+-   Maximal 8 Büroplätze
+-   Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
+-   Es braucht von jeder Statusgruppe mindestens 2 Personen
+-   Publikationen: StuMis (1), Docs (2), Postdocs (3)
+-   Anzahl der Publikationen maximieren
 
 **Frage:** Welche Kombination aus Personen soll eingestellt werden?
 
-## Mathematical Programming: Beispiel (Fortsetzung)
+## Beispiel (Fortsetzung) {.smaller}
 
 **Decision Variables:**
 
-- Anstellungsoptionen **S**tuMis, **D**ocs, **P**ostdocs
+-   Anstellungsoptionen **S**tuMis, **D**ocs, **P**ostdocs
 
 **Constraints:**
 
-- Maximal 8 Büroplätze  
-  \( S + D + P \leq 8 \)
-- Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)  
-  \( 5S + 18D + 25P \leq 120 \)
-- Es braucht von jeder Statusgruppe mindestens 2 Personen  
-  \( S \geq 2 \), \( D \geq 2 \), \( P \geq 2 \)
+-   Maximal 8 Büroplätze\
+    ( S + D + P \leq 8 )
+-   Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)\
+    ( 5S + 18D + 25P \leq 120 )
+-   Es braucht von jeder Statusgruppe mindestens 2 Personen\
+    ( S \geq 2 ), ( D \geq 2 ), ( P \geq 2 )
 
 **Objective Function:**
 
-- Publikationen: StuMis (1), Docs (2), Postdocs (3)
-- Anzahl der Publikationen maximieren  
-  Maximieren: \( 1S + 2D + 3P \)
+-   Publikationen: StuMis (1), Docs (2), Postdocs (3)
+-   Anzahl der Publikationen maximieren\
+    Maximieren: ( 1S + 2D + 3P )
 
-## Mathematical Programming: Solver
+## Solver {.smaller}
 
 **Open Source**
 
-- lpSolve
-- GLPK
-- Symphony
-- ...
+-   lpSolve
+-   GLPK
+-   Symphony
+-   ...
 
 **Komerziell**
 
-- Gurobi
-- CPLEX
-- ...
+-   Gurobi
+-   CPLEX
+-   ...
 
 ## Automatisierte Testhefterstellung
 
@@ -154,10 +172,9 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 knitr::include_graphics("Graphs/vanderLinden_cover.JPG")
 ```
 
-
 ## Automatisierte Testhefterstellung
 
-::: {.block}
+::: block
 ### Automated Test Assembly (ATA)
 
 Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung [@vanderLinden.2005]
@@ -165,18 +182,18 @@ Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur
 
 **Zentrale Konzepte**
 
-- Decision Variables (0/1, Item x Block)
-- Constraints (Testspezifikationen)
-- Objective Function (wichtigste relative Testspezifikation)
+-   Decision Variables (0/1, Item x Block)
+-   Constraints (Testspezifikationen)
+-   Objective Function (wichtigste relative Testspezifikation)
 
 ## Minimalbeispiel: Item Pool
 
 **Item Pool**
 
-- 30 Items
-- Item Formate (MC, offen, Zuordnung)
-- Durchschnittliche Antwortzeiten
-- Schwierigkeitsparameter (1PL-Modell)
+-   30 Items
+-   Item Formate (MC, offen, Zuordnung)
+-   Durchschnittliche Antwortzeiten
+-   Schwierigkeitsparameter (1PL-Modell)
 
 ## Minimalbeispiel: Item Pool Tabelle
 
@@ -193,72 +210,64 @@ kable(data.frame(
 ), caption = "First 5 Items of the Simulated Item Pool.")
 ```
 
-
 ## Minimalbeispiel: Spezifikationen
 
 **Spezifikationen**
 
-- 1 Block
-- Minimale durchschnittliche Blockzeit
-- Exakt 10 Items im Block
-- Durchschnittliche Schwierigkeit von ca. 0 (logit-Skala)
-
+-   1 Block
+-   Minimale durchschnittliche Blockzeit
+-   Exakt 10 Items im Block
+-   Durchschnittliche Schwierigkeit von ca. 0 (logit-Skala)
 
 ## Minimalbeispiel: Decision Variables
 
 **Decision Variables**
 
-- Matrix mit Spalten = Anzahl Items (+ 1) und Zeilen = Anzahl Blöcke
-- 30 Items, 1 Block  
-  \( i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1} \)
-  
+-   Matrix mit Spalten = Anzahl Items (+ 1) und Zeilen = Anzahl Blöcke
+-   30 Items, 1 Block\
+    ( i\_{1, b1}, i\_{2, b1}, i\_{3, b1}, \ldots, i\_{30, b1} )
+
 ## Minimalbeispiel: Objective Function
 
 **Objective Function**
 
-- 'Relative Testspezifikation'
-- so viel/wenig/nah wie möglich (an) ...
-- Wichtig: Exakt eine Testspezifikation muss hierfür ausgewählt werden
-- Min/Max/Minimax/Maximin
-- Minimale Blockzeit  
-  minimiere \( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} \)
+-   'Relative Testspezifikation'
+-   so viel/wenig/nah wie möglich (an) ...
+-   Wichtig: Exakt eine Testspezifikation muss hierfür ausgewählt werden
+-   Min/Max/Minimax/Maximin
+-   Minimale Blockzeit\
+    minimiere ( 27.79i\_{1, b1} + 15.45i\_{2, b1} + \ldots + 19.50i\_{30, b1} )
 
 ## Minimalbeispiel: Constraints
 
 **Constraints**
 
-- Alle anderen Testspezifikationen
-- Genau 10 Items pro Block  
-  \( i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 \)
-- Durchschnittliche Schwierigkeit  
-  \( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1 \)  
-  \( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1 \)
+-   Alle anderen Testspezifikationen
+-   Genau 10 Items pro Block\
+    ( i\_{1, b1} + i\_{2, b1} + \ldots + i\_{30, b1} = 10 )
+-   Durchschnittliche Schwierigkeit\
+    ( 0.11i\_{1, b1} + 0.45i\_{2, b1} + \ldots + i\_{30, b1} \leq 0.1 )\
+    ( 0.11i\_{1, b1} + 0.45i\_{2, b1} + \ldots + i\_{30, b1} \geq -0.1 )
 
 # Umsetzung in eatATA
 
 ## eatATA
 
-Developed with feedback from:
-- Pauline Kohrt (VERA 3 Math)
-- Simone Dubiel (VERA 8 German)
-- Karoline Sachse (BT)
+Developed with feedback from: - Pauline Kohrt (VERA 3 Math) - Simone Dubiel (VERA 8 German) - Karoline Sachse (BT)
 
-Package Authors:
-- Dries Debeer (KU Leuven)
-- Benjamin Becker (IQB)
+Package Authors: - Dries Debeer (KU Leuven) - Benjamin Becker (IQB)
 
 ## eatATA: Resources I
 
-Vignettes available on CRAN:  
+Vignettes available on CRAN:\
 <https://CRAN.R-project.org/package=eatATA>
 
 ## eatATA: Resources II
 
-eatATA Tutorial Paper:  
+eatATA Tutorial Paper:\
 <https://doi.org/10.3390/psych3020010>
 
 ![eatATA Tutorial Paper](Graphs/psych_paper.PNG)
-
 
 ## Code: Objective Function
 
@@ -271,8 +280,6 @@ Btime <- minObjective(
 	itemIDs = items_mini$item
 )
 ```
-
-
 
 ## Code: Constraint 1
 
@@ -287,7 +294,6 @@ Blength <- itemsPerFormConstraint(
 )
 ```
 
-
 ## Code: Constraint 2
 
 Specify average difficulty:
@@ -301,7 +307,6 @@ Bdiff <- itemValuesRangeConstraint(
 )
 ```
 
-
 ## Code: Solver Call
 
 Execute the solver:
@@ -312,7 +317,6 @@ solver_out <- useSolver(
 	solver = "GLPK"
 )
 ```
-
 
 ## Code: Inspect Solution
 
@@ -325,7 +329,6 @@ inspectSolution(
 	idCol = "item"
 )
 ```
-
 
 ## Code: Append Solution
 
@@ -341,24 +344,15 @@ item_mini_out <- appendSolution(
 
 ## Item Inclusions
 
-Reasons:
-- Shared stimulus ('task')
-- Other reasons
+Reasons: - Shared stimulus ('task') - Other reasons
 
-Implementation:
-- Tasks, not items, as assembling unit (e.g., VERA 3 Math)
-- Explicit item inclusions (see eatATA Tutorial)
+Implementation: - Tasks, not items, as assembling unit (e.g., VERA 3 Math) - Explicit item inclusions (see eatATA Tutorial)
 
 ## Item Exclusions
 
-Reasons:
-- Item contains information that could reveal another item's solution
-- Items are too similar
-- ...
+Reasons: - Item contains information that could reveal another item's solution - Items are too similar - ...
 
-Implementation:
-- Explicit item exclusions
-
+Implementation: - Explicit item exclusions
 
 ## Code: Item Inclusions (Input)
 
@@ -372,7 +366,6 @@ incluTup <- stemInclusionTuples(
 )
 ```
 
-
 ## Code: Item Inclusions (Constraints)
 
 Creating inclusion constraints:
@@ -384,7 +377,6 @@ incluCons <- itemInclusionConstraint(
 	itemIDs = items_lsa$item
 )
 ```
-
 
 ## Code: Item Exclusions (Input)
 
@@ -399,12 +391,13 @@ exclusionTuples <- itemTuples(
 )
 ```
 
-
 ## Code: Item Exclusions (Constraints)
 
 Creating exclusion constraints:
 
 ```{r}
+#| eval: false
+
 excl_constraints <- itemExclusionConstraint(
 	nForms = nForms,
 	itemTuples = exclusionTuples, 
@@ -414,8 +407,4 @@ excl_constraints <- itemExclusionConstraint(
 
 ## 
 
-\begin{center}
-\begin{LARGE}
 **Thank you for your attention!**
-\end{LARGE}
-\end{center}

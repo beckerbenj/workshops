@@ -62,6 +62,8 @@ remotes::install_github("beckerbenj/eatGADS")
 -   [FDZ Data Cleaning](https://beckerbenj.github.io/eatFDZ/articles/FDZ_Data_Cleaning.html)
 -   [komplette Funktionsübersicht](https://beckerbenj.github.io/eatGADS/reference/index.html)
 
+# Grundlegendes
+
 ## GADSdat-Objekte
 
 Liste bestehend aus
@@ -212,6 +214,8 @@ example_gads <- import_spss(sav_path)
 
 -   Inspiziere die Meta-Daten der Variable `"books"`.
 -   Vergebe sinnvolle Wertelabel und Missingtags, wo diese bisher fehlen.
+
+# Übersicht Funktionalität
 
 ## Übersicht Funktionalität I {.smaller}
 
