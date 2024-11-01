@@ -95,7 +95,27 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="eatATA_2024_files/libs/revealjs/dist/theme/quarto.css">
   <link href="eatATA_2024_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="eatATA_2024_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -534,18 +554,32 @@ Benjamin Becker
 </ul>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li><p>Maximal 8 Büroplätze <span class="math display">\[
-( S + D + P \leq 8 )
-\]</span></p></li>
-<li><p>Max. Kosten 120$: StuMis (5$), Docs (18$), Postdocs (25$) <span class="math display">\[
-( 5S + 18D + 25P \leq 120 )
-\]</span></p></li>
-<li><p>Es braucht von jeder Statusgruppe mindestens 2 Personen <span class="math display">\[
-( S \geq 2 ), ( D \geq 2 ), ( P \geq 2 )
-\]</span></p></li>
+<li>Maximal 8 Büroplätze <span class="math display">\[
+S + D + P \leq 8
+\]</span></li>
+<li>Max. Kosten 120$: StuMis (5$), Docs (18$), Postdocs (25$) <span class="math display">\[
+5S + 18D + 25P \leq 120
+\]</span></li>
 </ul>
 </section>
 <section id="beispiel-produzentenproblem-2" class="slide level2 smaller">
+<h2>Beispiel: Produzentenproblem</h2>
+<p><strong>Decision Variables:</strong></p>
+<ul>
+<li>Anstellungsoptionen <strong>S</strong>tuMis, <strong>D</strong>ocs, <strong>P</strong>ostdocs</li>
+</ul>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>Es braucht von jeder Statusgruppe mindestens 2 Personen <span class="math display">\[
+S \geq 2  
+\]</span> <span class="math display">\[
+D \geq 2
+\]</span> <span class="math display">\[
+P \geq 2
+\]</span></li>
+</ul>
+</section>
+<section id="beispiel-produzentenproblem-3" class="slide level2 smaller">
 <h2>Beispiel: Produzentenproblem</h2>
 <p><strong>Decision Variables:</strong></p>
 <ul>
@@ -555,7 +589,7 @@ Benjamin Becker
 <ul>
 <li>Publikationen: StuMis (1), Docs (2), Postdocs (3)</li>
 <li>Anzahl der Publikationen maximieren <span class="math display">\[
-Maximiere ( 1S + 2D + 3P )
+Maximiere  1S + 2D + 3P
 \]</span></li>
 </ul>
 </section>
@@ -581,7 +615,7 @@ Maximiere ( 1S + 2D + 3P )
 <img data-src="Graphs/vanderLinden_cover.JPG" class="r-stretch"></section>
 <section id="automatisierte-testhefterstellung-1" class="slide level2">
 <h2>Automatisierte Testhefterstellung</h2>
-<p>Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung <span class="citation" data-cites="vanderLinden.2005">[@vanderLinden.2005]</span></p>
+<p>Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung <span class="citation" data-cites="vanderLinden.2005">(<a href="#/references" role="doc-biblioref" onclick="">Linden 2005</a>)</span></p>
 <p><strong>Zentrale Konzepte</strong></p>
 <ul>
 <li>Decision Variables (0/1, Item x Block)</li>
@@ -674,7 +708,7 @@ Maximiere ( 1S + 2D + 3P )
 <li>Zeilen = Anzahl Blöcke</li>
 </ul></li>
 <li>30 Items, 1 Block <span class="math display">\[
-  ( i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1} )
+  i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
 \]</span></li>
 </ul>
 </section>
@@ -697,21 +731,25 @@ minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} )
 <ul>
 <li>Alle anderen Testspezifikationen</li>
 <li>Genau 10 Items pro Block <span class="math display">\[
-( i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 )
+i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10
 \]</span></li>
 <li>Durchschnittliche Schwierigkeit<br>
 <span class="math display">\[
-( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1 )\
+  0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1
 \]</span> <span class="math display">\[
-( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1 )
+  0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1
 \]</span></li>
 </ul>
 </section>
 <section id="übung" class="slide level2">
 <h2>Übung</h2>
+<p>Notiert die Decision Variables, Objective Function und Constraints für folgendes ATA-Problem:</p>
 <ul>
-<li>Siehe R-Syntax im i:/ Ordner (oder N:/ Ordner)</li>
-<li>Constraints/Objective Function in Gleichungsform aufschreiben</li>
+<li>2 Blöcke</li>
+<li>beide Blöcke bzgl. Testzeit so nah wie moeglich an 450 Sekunden</li>
+<li>durschnittliche Schwierigkeit pro Block von ca. 0.3</li>
+<li>jedes Item darf maximal nur in einem Block vorkommen</li>
+<li>optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen</li>
 </ul>
 </section></section>
 <section>
@@ -741,13 +779,13 @@ minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} )
 </section>
 <section id="eatata-resources-ii" class="slide level2">
 <h2>eatATA: Resources II</h2>
-<p>eatATA Tutorial Paper:<br>
-<a href="https://doi.org/10.3390/psych3020010" class="uri">https://doi.org/10.3390/psych3020010</a></p>
+<p>eatATA Tutorial Paper:</p>
+<p><a href="https://doi.org/10.3390/psych3020010">(<span class="citation" data-cites="eatATA">Becker et al. (<span>2021</span>)</span>)</a></p>
 
 <img data-src="Graphs/psych_paper.PNG" class="r-stretch"></section>
 <section id="code-objective-function" class="slide level2">
 <h2>Code: Objective Function</h2>
-<p>Minimize average block time:</p>
+<p>Minimiere durchschnittliche Blockzeit</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>Btime <span class="ot">&lt;-</span> <span class="fu">minObjective</span>(</span>
 <span id="cb1-2"><a href=""></a>    <span class="at">nForms =</span> <span class="dv">1</span>, </span>
@@ -758,7 +796,7 @@ minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} )
 </section>
 <section id="code-constraint-1" class="slide level2">
 <h2>Code: Constraint 1</h2>
-<p>Specify number of items per block:</p>
+<p>Anzahl Items im Block</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>Blength <span class="ot">&lt;-</span> <span class="fu">itemsPerFormConstraint</span>(</span>
 <span id="cb2-2"><a href=""></a>    <span class="at">nForms =</span> <span class="dv">1</span>, </span>
@@ -770,7 +808,7 @@ minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} )
 </section>
 <section id="code-constraint-2" class="slide level2">
 <h2>Code: Constraint 2</h2>
-<p>Specify average difficulty:</p>
+<p>Durchschnittliche Schwierigkeit</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>Bdiff <span class="ot">&lt;-</span> <span class="fu">itemValuesRangeConstraint</span>(</span>
 <span id="cb3-2"><a href=""></a>    <span class="at">nForms =</span> <span class="dv">1</span>, </span>
@@ -782,7 +820,7 @@ minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} )
 </section>
 <section id="code-solver-call" class="slide level2">
 <h2>Code: Solver Call</h2>
-<p>Execute the solver:</p>
+<p>Solver Call</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>solver_out <span class="ot">&lt;-</span> <span class="fu">useSolver</span>(</span>
 <span id="cb4-2"><a href=""></a>    <span class="fu">list</span>(Btime, Blength, Bdiff),</span>
@@ -812,7 +850,7 @@ INTEGER OPTIMAL SOLUTION FOUND</code></pre>
 </section>
 <section id="code-inspect-solution" class="slide level2">
 <h2>Code: Inspect Solution</h2>
-<p>Inspect the assembled block:</p>
+<p>Zusammengestellten Block inspizieren</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">inspectSolution</span>(</span>
 <span id="cb6-2"><a href=""></a>    solver_out, </span>
@@ -838,7 +876,7 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 </section>
 <section id="code-append-solution" class="slide level2">
 <h2>Code: Append Solution</h2>
-<p>Add block allocation to item pool:</p>
+<p>Blockbesetzung zu Itempool hinzufügen</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>item_mini_out <span class="ot">&lt;-</span> <span class="fu">appendSolution</span>(</span>
 <span id="cb8-2"><a href=""></a>    solver_out, </span>
@@ -860,35 +898,114 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 10   10     mc 15.35510  1.3539724      1</code></pre>
 </div>
 </div>
+</section></section>
+<section>
+<section id="überblick-funktionalität" class="title-slide slide level1 center">
+<h1>Überblick Funktionalität</h1>
+
+</section>
+<section id="itempool-vorbereiten" class="slide level2">
+<h2>Itempool vorbereiten</h2>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/calculateIIF.html"><code>calculateIIF()</code></a> - Berechnung Item-Informationsfunktion</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/calculateIIF.html"><code>calculatExpectedRT()</code></a> - Berechnung erwarteter Antwortzeiten</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/dummiesToFactor.html"><code>dummiesToFactor()</code></a> - Transformation von Dummy-Variablen in Faktoren</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/computeTargetValues.html"><code>computeTargetValues()</code></a> - Berechnung von Zielwerten</li>
+</ul>
+</section>
+<section id="objective-function" class="slide level2">
+<h2>Objective Function</h2>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/maxObjective.html"><code>maxObjective()</code></a> - Maximieren</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/minObjective.html"><code>minObjective()</code></a> - Minimieren</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/maximinObjective.html"><code>maximinObjective()</code></a> - Maximin</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/minimaxObjective.html"><code>minimaxObjective()</code></a> - Minimax</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/cappedMaximinObjective.html"><code>cappedMaximinObjective()</code></a> - Capped Maximin</li>
+</ul>
+</section>
+<section id="constraints" class="slide level2">
+<h2>Constraints</h2>
+<p>Itemverwendung</p>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/depletePoolConstraint.html"><code>depletePoolConstraint()</code></a> - Erschöpfung des Itempools</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html"><code>itemUsageConstraint()</code></a> - Anzahl Items pro Form</li>
+</ul>
+<p>Anzahl Items pro Form</p>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html"><code>itemUsageConstraint()</code></a> - Anzahl Items pro Form</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemsPerFormConstraint.html"><code>itemsPerFormConstraint()</code></a> - Anzahl Items pro Form</li>
+</ul>
+</section>
+<section id="constraints-1" class="slide level2">
+<h2>Constraints</h2>
+<p>Kategoriale Constraints</p>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemCategoryConstraint.html"><code>itemCategoryConstraint()</code></a> - Kategoriale Constraints</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemCategoryDeviationConstraint.html"><code>itemCategoryDeviationConstraint()</code></a> - Abweichung von Zielwert</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemCategoryMaxConstraint.html"><code>itemCategoryMaxConstraint()</code></a> - Maximum</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemCategoryMinConstraint.html"><code>itemCategoryMinConstraint()</code></a> - Minimum</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemCategoryRangeConstraint.html"><code>itemCategoryRangeConstraint()</code></a> - Maximum und Minimum</li>
+</ul>
+</section>
+<section id="constraints-2" class="slide level2">
+<h2>Constraints</h2>
+<p>Metrische Constraints</p>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/autoItemValuesMinMaxConstraint.html"><code>autoItemValuesMinMaxConstraint()</code></a> - Automatische Min/Max-Berechnung</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemValuesConstraint.html"><code>itemValuesConstraint()</code></a> - Metrische Constraints</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemValuesDeviationConstraint.html"><code>itemValuesDeviationConstraint()</code></a> - Abweichung von Zielwert</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemValuesMaxConstraint.html"><code>itemValuesMaxConstraint()</code></a> - Maximum</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemValuesMinConstraint.html"><code>itemValuesMinConstraint()</code></a> - Minimum</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemValuesRangeConstraint.html"><code>itemValuesRangeConstraint()</code></a> - Maximum und Minimum</li>
+</ul>
+</section>
+<section id="constraints-3" class="slide level2">
+<h2>Constraints</h2>
+<p>Metrische Constraints über Testformen</p>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/acrossFormsConstraint.html"><code>acrossFormsConstraint()</code></a> - Über Testformen</li>
+</ul>
+<p>Iteminklusionen und -exklusionen</p>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemExclusionConstraint.html"><code>itemExclusionConstraint()</code></a> - Itemexklusionen</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemInclusionConstraint.html"><code>itemInclusionConstraint()</code></a> - Iteminklusionen</li>
+</ul>
+<p>Vorbereitung von Iteminklusionen und -exklusionen</p>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemTuples.html"><code>itemTuples()</code></a> - Vorbereitung von Iteminklusionen und -exklusionen</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/matrixExclusionTuples.html"><code>matrixExclusionTuples()</code></a> - Vorbereitung von Itemexklusionen</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/stemInclusionTuples.html"><code>stemInclusionTuples()</code></a> - Vorbereitung von Iteminklusionen</li>
+</ul>
 </section>
 <section id="item-inclusions" class="slide level2">
 <h2>Item Inclusions</h2>
-<p>Reasons:</p>
+<p>Gründe</p>
 <ul>
-<li>Shared stimulus (‘task’)</li>
-<li>Other reasons</li>
+<li>Gemeinsamer Stimulus (‘Aufgabe’)</li>
+<li>andere Gründe</li>
 </ul>
-<p>Implementation:</p>
+<p>Umsetzung</p>
 <ul>
-<li>Tasks, not items, as assembling unit (e.g., VERA 3 Math)</li>
-<li>Explicit item inclusions (see eatATA Tutorial)</li>
+<li>Aufgaben und nicht Items als Assembling Unit (e.g., VERA 3 Math)</li>
+<li>explizite Item Inclusion (siehe eatATA Tutorial)</li>
 </ul>
 </section>
 <section id="item-exclusions" class="slide level2">
 <h2>Item Exclusions</h2>
-<p>Reasons:</p>
+<p>Gründe</p>
 <ul>
-<li>Item contains information that could reveal another item’s solution</li>
-<li>Items are too similar - …</li>
+<li>Item beinhaltet Info zu Lösung eines anderen Items</li>
+<li>Items inhaltlich zu ähnlich</li>
+<li>…</li>
 </ul>
-<p>Implementation:</p>
+<p>Umsetzung</p>
 <ul>
-<li>Explicit item exclusions</li>
+<li>Explizite Item Exclusions</li>
 </ul>
 </section>
 <section id="code-item-inclusions-input" class="slide level2">
 <h2>Code: Item Inclusions (Input)</h2>
-<p>Input: Column with grouping information:</p>
+<p>Input: Spalte mit Gruppierung</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>incluTup <span class="ot">&lt;-</span> <span class="fu">stemInclusionTuples</span>(</span>
 <span id="cb10-2"><a href=""></a>    items_lsa, </span>
@@ -896,10 +1013,11 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 <span id="cb10-4"><a href=""></a>    <span class="at">stemCol =</span> <span class="st">"testlet"</span></span>
 <span id="cb10-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Output: Inclusion Tuples</p>
 </section>
 <section id="code-item-inclusions-constraints" class="slide level2">
 <h2>Code: Item Inclusions (Constraints)</h2>
-<p>Creating inclusion constraints:</p>
+<p>Erstellung von Inclusion Constraints</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>incluCons <span class="ot">&lt;-</span> <span class="fu">itemInclusionConstraint</span>(</span>
 <span id="cb11-2"><a href=""></a>    <span class="at">nForms =</span> <span class="dv">8</span>,  </span>
@@ -910,7 +1028,7 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 </section>
 <section id="code-item-exclusions-input" class="slide level2">
 <h2>Code: Item Exclusions (Input)</h2>
-<p>Input: Column with exclusion listings:</p>
+<p>Input: Spalte mit Exclusion-Listung</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>exclusionTuples <span class="ot">&lt;-</span> <span class="fu">itemTuples</span>(</span>
 <span id="cb12-2"><a href=""></a>    items_pilot, </span>
@@ -919,10 +1037,11 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 <span id="cb12-5"><a href=""></a>    <span class="at">sepPattern =</span> <span class="st">", "</span></span>
 <span id="cb12-6"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Output: Exclusion Tuples</p>
 </section>
 <section id="code-item-exclusions-constraints" class="slide level2">
 <h2>Code: Item Exclusions (Constraints)</h2>
-<p>Creating exclusion constraints:</p>
+<p>Erstellung von Exclusion COnstraints</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>excl_constraints <span class="ot">&lt;-</span> <span class="fu">itemExclusionConstraint</span>(</span>
 <span id="cb13-2"><a href=""></a>    <span class="at">nForms =</span> nForms,</span>
@@ -933,23 +1052,34 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 </section>
 <section id="übung-1" class="slide level2">
 <h2>Übung</h2>
+<p>Erstellt 2 Bloecke mit folgenden Testspezifikationen mithilfe von <code>eatATA</code>:</p>
 <ul>
-<li>Siehe R-Syntax im i:/ Ordner (oder N:/ Ordner)</li>
+<li>beide Blöcke Testzeit so nah wie moeglich an 450 Sekunden (via <code>minimaxObjective()</code> Funktion)</li>
+<li>durschnittliche Schwierigkeit pro Block von ca. 0.3</li>
+<li>jedes Item darf maximal nur in einem Block vorkommen (via <code>itemUsageConstraint()</code> Funktion)</li>
+<li>optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen</li>
 </ul>
+<p>Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!</p>
 </section>
-<section id="references" class="slide level2">
+<section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
-<p>&lt;!–# ::: {#refs} &lt;!–# :::</p>
-</section>
-<section id="section" class="slide level2">
-<h2></h2>
-<p><strong>Thank you for your attention!</strong></p>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-eatATA" class="csl-entry" role="listitem">
+Becker, Benjamin, Dries Debeer, Karoline A. Sachse, and Sebastian Weirich. 2021. <span>“Automated Test Assembly in <span>R</span>: The <span class="nocase">eatATA</span> Package.”</span> <em>Psych</em> 3 (2): 96–112. <a href="https://doi.org/10.3390/psych3020010">https://doi.org/10.3390/psych3020010</a>.
+</div>
+<div id="ref-vanderLinden.2005" class="csl-entry" role="listitem">
+Linden, Wim J. van der. 2005. <em>Linear Models for Optimal Test Assembly</em>. New York, NY: Springer. <a href="https://doi.org/10.1007/0-387-29054-0">https://doi.org/10.1007/0-387-29054-0</a>.
+</div>
+</div>
+</section></section>
+<section id="danke-für-eure-aufmerksamkeit" class="title-slide slide level1 center">
+<h1>Danke für Eure Aufmerksamkeit!</h1>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
 </div>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 

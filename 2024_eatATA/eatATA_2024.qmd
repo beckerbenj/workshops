@@ -7,7 +7,7 @@ title-slide-attributes:
   data-background-size: 15%
   data-background-repeat: no-repeat
   data-background-position: 95% 5%
-#bibliography: references.bib
+bibliography: references_dissertation.bib
 format: revealjs
 editor: visual
 execute:
@@ -139,16 +139,30 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 
 -   Maximal 8 Büroplätze
 $$
-( S + D + P \leq 8 )
+S + D + P \leq 8 
 $$
 -   Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
 $$
-    ( 5S + 18D + 25P \leq 120 )
+    5S + 18D + 25P \leq 120
 $$
+
+## Beispiel: Produzentenproblem {.smaller}
+
+**Decision Variables:**
+
+-   Anstellungsoptionen **S**tuMis, **D**ocs, **P**ostdocs
+
+**Constraints:**
 
 -   Es braucht von jeder Statusgruppe mindestens 2 Personen
 $$
-    ( S \geq 2 ), ( D \geq 2 ), ( P \geq 2 )
+    S \geq 2  
+$$
+$$
+    D \geq 2
+$$
+$$
+    P \geq 2 
 $$
 
 ## Beispiel: Produzentenproblem {.smaller}
@@ -162,7 +176,7 @@ $$
 -   Publikationen: StuMis (1), Docs (2), Postdocs (3)
 -   Anzahl der Publikationen maximieren
 $$
-    Maximiere ( 1S + 2D + 3P )
+    Maximiere  1S + 2D + 3P 
 $$
 
 ## Solver {.smaller}
@@ -237,7 +251,7 @@ kable(data.frame(
   - Zeilen = Anzahl Blöcke
 - 30 Items, 1 Block
 $$
-    ( i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1} )
+    i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
 $$
 
 ## Minimalbeispiel: Objective Function
@@ -260,20 +274,27 @@ $$
 -   Alle anderen Testspezifikationen
 -   Genau 10 Items pro Block
 $$
-    ( i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 )
+    i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 
 $$
 -   Durchschnittliche Schwierigkeit\
 $$
-( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1 )\
+  0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1 
 $$
 $$
-( 0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1 )
+  0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1 
 $$
 
 ## Übung
 
--   Siehe R-Syntax im i:/ Ordner (oder N:/ Ordner)
--   Constraints/Objective Function in Gleichungsform aufschreiben 
+Notiert die Decision Variables, Objective Function und Constraints für folgendes ATA-Problem:
+
+- 2 Blöcke
+- beide Blöcke bzgl. Testzeit so nah wie moeglich an 450 Sekunden
+- durschnittliche Schwierigkeit pro Block von ca. 0.3
+- jedes Item darf maximal nur in einem Block vorkommen 
+- optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen
+
+
 
 
 # Umsetzung in eatATA
@@ -300,14 +321,15 @@ or on pkgdown
 
 ## eatATA: Resources II
 
-eatATA Tutorial Paper:\
-<https://doi.org/10.3390/psych3020010>
+eatATA Tutorial Paper:
+
+[@eatATA](https://doi.org/10.3390/psych3020010)
 
 ![](Graphs/psych_paper.PNG)
 
 ## Code: Objective Function
 
-Minimize average block time:
+Minimiere durchschnittliche Blockzeit
 
 ```{r}
 Btime <- minObjective(
@@ -319,7 +341,7 @@ Btime <- minObjective(
 
 ## Code: Constraint 1
 
-Specify number of items per block:
+Anzahl Items im Block
 
 ```{r}
 Blength <- itemsPerFormConstraint(
@@ -332,7 +354,7 @@ Blength <- itemsPerFormConstraint(
 
 ## Code: Constraint 2
 
-Specify average difficulty:
+Durchschnittliche Schwierigkeit
 
 ```{r}
 Bdiff <- itemValuesRangeConstraint(
@@ -345,7 +367,7 @@ Bdiff <- itemValuesRangeConstraint(
 
 ## Code: Solver Call
 
-Execute the solver:
+Solver Call
 
 ```{r}
 solver_out <- useSolver(
@@ -356,7 +378,7 @@ solver_out <- useSolver(
 
 ## Code: Inspect Solution
 
-Inspect the assembled block:
+Zusammengestellten Block inspizieren
 
 ```{r}
 inspectSolution(
@@ -368,7 +390,7 @@ inspectSolution(
 
 ## Code: Append Solution
 
-Add block allocation to item pool:
+Blockbesetzung zu Itempool hinzufügen
 
 ```{r}
 item_mini_out <- appendSolution(
@@ -379,32 +401,101 @@ item_mini_out <- appendSolution(
 item_mini_out[1:10, ]
 ```
 
+# Überblick Funktionalität
+
+## Itempool vorbereiten
+
+* [`calculateIIF()`](https://beckerbenj.github.io/eatATA/reference/calculateIIF.html) - Berechnung Item-Informationsfunktion
+* [`calculatExpectedRT()`](https://beckerbenj.github.io/eatATA/reference/calculateIIF.html) - Berechnung erwarteter Antwortzeiten
+* [`dummiesToFactor()`](https://beckerbenj.github.io/eatATA/reference/dummiesToFactor.html) - Transformation von Dummy-Variablen in Faktoren
+* [`computeTargetValues()`](https://beckerbenj.github.io/eatATA/reference/computeTargetValues.html) - Berechnung von Zielwerten
+
+## Objective Function
+
+* [`maxObjective()`](https://beckerbenj.github.io/eatATA/reference/maxObjective.html) - Maximieren
+* [`minObjective()`](https://beckerbenj.github.io/eatATA/reference/minObjective.html) - Minimieren
+* [`maximinObjective()`](https://beckerbenj.github.io/eatATA/reference/maximinObjective.html) - Maximin
+* [`minimaxObjective()`](https://beckerbenj.github.io/eatATA/reference/minimaxObjective.html) - Minimax
+* [`cappedMaximinObjective()`](https://beckerbenj.github.io/eatATA/reference/cappedMaximinObjective.html) - Capped Maximin
+
+## Constraints
+
+Itemverwendung 
+
+* [`depletePoolConstraint()`](https://beckerbenj.github.io/eatATA/reference/depletePoolConstraint.html) - Erschöpfung des Itempools
+* [`itemUsageConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html) - Anzahl Items pro Form
+
+Anzahl Items pro Form
+
+* [`itemUsageConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html) - Anzahl Items pro Form
+* [`itemsPerFormConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemsPerFormConstraint.html) - Anzahl Items pro Form
+
+
+## Constraints
+
+Kategoriale Constraints
+
+* [`itemCategoryConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryConstraint.html) - Kategoriale Constraints
+* [`itemCategoryDeviationConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryDeviationConstraint.html) - Abweichung von Zielwert
+* [`itemCategoryMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryMaxConstraint.html) - Maximum
+* [`itemCategoryMinConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryMinConstraint.html) - Minimum
+* [`itemCategoryRangeConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryRangeConstraint.html) - Maximum und Minimum
+
+## Constraints
+
+Metrische Constraints
+
+* [`autoItemValuesMinMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/autoItemValuesMinMaxConstraint.html) - Automatische Min/Max-Berechnung
+* [`itemValuesConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesConstraint.html) - Metrische Constraints
+* [`itemValuesDeviationConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesDeviationConstraint.html) - Abweichung von Zielwert
+* [`itemValuesMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesMaxConstraint.html) - Maximum
+* [`itemValuesMinConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesMinConstraint.html) - Minimum
+* [`itemValuesRangeConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesRangeConstraint.html) - Maximum und Minimum
+
+## Constraints
+
+Metrische Constraints über Testformen
+
+* [`acrossFormsConstraint()`](https://beckerbenj.github.io/eatATA/reference/acrossFormsConstraint.html) - Über Testformen
+
+Iteminklusionen und -exklusionen
+
+* [`itemExclusionConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemExclusionConstraint.html) - Itemexklusionen
+* [`itemInclusionConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemInclusionConstraint.html) - Iteminklusionen
+
+Vorbereitung von Iteminklusionen und -exklusionen
+
+* [`itemTuples()`](https://beckerbenj.github.io/eatATA/reference/itemTuples.html) - Vorbereitung von Iteminklusionen und -exklusionen
+* [`matrixExclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/matrixExclusionTuples.html) - Vorbereitung von Itemexklusionen
+* [`stemInclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/stemInclusionTuples.html) - Vorbereitung von Iteminklusionen
+
 ## Item Inclusions
 
-Reasons: 
+Gründe
 
-- Shared stimulus ('task') 
-- Other reasons
+- Gemeinsamer Stimulus ('Aufgabe') 
+- andere Gründe
 
-Implementation: 
+Umsetzung 
 
-- Tasks, not items, as assembling unit (e.g., VERA 3 Math) 
-- Explicit item inclusions (see eatATA Tutorial)
+- Aufgaben und nicht Items als Assembling Unit (e.g., VERA 3 Math) 
+- explizite Item Inclusion (siehe eatATA Tutorial)
 
 ## Item Exclusions
 
-Reasons: 
+Gründe
 
-- Item contains information that could reveal another item's solution 
-- Items are too similar - ...
+- Item beinhaltet Info zu Lösung eines anderen Items
+- Items inhaltlich zu ähnlich
+- ...
 
-Implementation: 
+Umsetzung
 
-- Explicit item exclusions
+- Explizite Item Exclusions
 
 ## Code: Item Inclusions (Input)
 
-Input: Column with grouping information:
+Input: Spalte mit Gruppierung
 
 ```{r}
 incluTup <- stemInclusionTuples(
@@ -414,9 +505,11 @@ incluTup <- stemInclusionTuples(
 )
 ```
 
+Output: Inclusion Tuples
+
 ## Code: Item Inclusions (Constraints)
 
-Creating inclusion constraints:
+Erstellung von Inclusion Constraints
 
 ```{r}
 incluCons <- itemInclusionConstraint(
@@ -428,7 +521,7 @@ incluCons <- itemInclusionConstraint(
 
 ## Code: Item Exclusions (Input)
 
-Input: Column with exclusion listings:
+Input: Spalte mit Exclusion-Listung
 
 ```{r}
 exclusionTuples <- itemTuples(
@@ -439,9 +532,11 @@ exclusionTuples <- itemTuples(
 )
 ```
 
+Output: Exclusion Tuples
+
 ## Code: Item Exclusions (Constraints)
 
-Creating exclusion constraints:
+Erstellung von Exclusion COnstraints
 
 ```{r}
 #| eval: false
@@ -455,13 +550,22 @@ excl_constraints <- itemExclusionConstraint(
 
 ## Übung
 
--   Siehe R-Syntax im i:/ Ordner (oder N:/ Ordner)
+Erstellt 2 Bloecke mit folgenden Testspezifikationen mithilfe von `eatATA`:
+
+- beide Blöcke Testzeit so nah wie moeglich an 450 Sekunden (via `minimaxObjective()` Funktion)
+- durschnittliche Schwierigkeit pro Block von ca. 0.3
+- jedes Item darf maximal nur in einem Block vorkommen (via `itemUsageConstraint()` Funktion)
+- optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen
+
+Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!
+
+
+
 
 ## References
-<!--# ::: {#refs}
-<!--# :::
+::: {#refs}
+:::
 
 
-## 
+# Danke für Eure Aufmerksamkeit!
 
-**Thank you for your attention!**
