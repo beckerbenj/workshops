@@ -9,8 +9,13 @@ title-slide-attributes:
   data-background-position: 95% 5%
 bibliography: references_dissertation.bib
 csl: apa.csl
-format: revealjs
-theme: default
+format: 
+  revealjs:
+    logo: eatATA.png
+    footer: "Automatisierte Blockbesetzung"
+    toc: false
+    theme: default
+    css: logo.css
 editor: visual
 execute:
   echo: true
