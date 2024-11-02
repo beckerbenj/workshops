@@ -8,13 +8,32 @@ title-slide-attributes:
   data-background-repeat: no-repeat
   data-background-position: 95% 5%
 bibliography: references_dissertation.bib
+csl: apa.csl
 format: revealjs
 editor: visual
 execute:
   echo: true
 ---
 
-# Theoretischer Hintergrund
+## Automatisierte Blockbesetzung
+
+**Blockbesetzung**
+
+Zuordnung von Items zu Blöcken aus einem Itempool unter Berücksichtigung von Testspezifikationen
+
+**Automatisiert**
+
+Nicht händisch, sondern Verwendung von Optimierungsalgorithmen
+
+## Agenda
+
+1. Hintergrund: Wofür?
+2. Mathematical Programming
+3. Automated Test Assembly/Automatisierte Blockbesetzung
+4. eatATA
+
+
+# Wofür?
 
 ## Begrifflichkeiten {.smaller}
 
@@ -78,9 +97,12 @@ library(eatATA)
 -   Inhaltliche Bereiche
 -   Aufgabenformate
 -   Schwierigkeit/Testinformation
--   Itemunverträglichkeiten
 -   Zeitaufwand/Speededness
 -   ...
+
+**zusätzlich**
+
+-   Itemunverträglichkeiten
 
 ## Blockbesetzung
 
@@ -97,8 +119,11 @@ library(eatATA)
 
 **Synonyme**
 
--   Mathematical Optimization
--   Linear Programming/Mixed Integer Programming
+-   Mathematical Optimization/Mathematical Programming
+
+**Relevante Subklasse**
+
+-   Mixed Integer (Linear) Programming (MIP/MILP)
 
 **Grundidee:**
 
@@ -122,7 +147,7 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 
 -   Anstellungsoptionen StuMis, Docs, Postdocs
 -   Maximal 8 Büroplätze
--   Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
+-   Maximale Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
 -   Es braucht von jeder Statusgruppe mindestens 2 Personen
 -   Publikationen: StuMis (1), Docs (2), Postdocs (3)
 -   Anzahl der Publikationen maximieren
@@ -141,7 +166,7 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 $$
 S + D + P \leq 8 
 $$
--   Max. Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
+-   Maximale Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
 $$
     5S + 18D + 25P \leq 120
 $$
@@ -176,7 +201,7 @@ $$
 -   Publikationen: StuMis (1), Docs (2), Postdocs (3)
 -   Anzahl der Publikationen maximieren
 $$
-    Maximiere  1S + 2D + 3P 
+    Maximiere \quad  1S + 2D + 3P 
 $$
 
 ## Solver {.smaller}
@@ -188,22 +213,71 @@ $$
 -   Symphony
 -   ...
 
-**Komerziell**
+**Kommerziell**
 
 -   Gurobi
 -   CPLEX
 -   ...
 
-## Automatisierte Testhefterstellung
+## Übung
+
+- Löst das vorgestellte Produzentenproblem händisch!
+
+
+## Lösung mithilfe von Rglpk
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Define objective function
+obj <- c(1, 2, 3)
+max <- TRUE
+
+# Define constraints
+mat <- matrix(c(1, 5, 1, 0, 0, 1, 18, 0, 1, 0, 1, 25, 0, 0, 1), nrow = 5)
+dir <- c("<=", "<=", ">=", ">=", ">=")
+rhs <- c(8, 120, 2, 2, 2)
+
+# Define problem type (MIP)
+types <- c("I", "I", "I")
+
+# Call solver
+Rglpk::Rglpk_solve_LP(obj, mat, dir, rhs, 
+               types = types, max = max, 
+               control = list("verbose" = TRUE, "canonicalize_status" = FALSE))
+```
+
+## Lösung mithilfe von Rglpk
+
+```{r}
+#| echo: false
+#| eval: true
+
+obj <- c(1, 2, 3)
+mat <- matrix(c(1, 5, 1, 0, 0, 1, 18, 0, 1, 0, 1, 25, 0, 0, 1), nrow = 5)
+dir <- c("<=", "<=", ">=", ">=", ">=")
+rhs <- c(8, 120, 2, 2, 2)
+types <- c("I", "I", "I")
+max <- TRUE
+
+Rglpk::Rglpk_solve_LP(obj, mat, dir, rhs, 
+               types = types, max = max, 
+               control = list("verbose" = TRUE, "canonicalize_status" = FALSE))
+```
+
+# Automatisierte Blockbesetzung
+
+## Automatisierte Blockbesetzung
 
 ```{r}
 #| echo: false
 knitr::include_graphics("Graphs/vanderLinden_cover.JPG")
 ```
 
-## Automatisierte Testhefterstellung
+## Automatisierte Blockbesetzung
 
-Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung [@vanderLinden.2005]
+Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung [@vanderLinden.2005;@Kuhn.2015]
 
 **Zentrale Konzepte**
 
@@ -264,7 +338,7 @@ $$
 -   Min/Max/Minimax/Maximin
 -   Minimale Blockzeit
 $$
-    minimiere ( 27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} )
+    minimiere \quad  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} 
 $$
 
 ## Minimalbeispiel: Constraints
@@ -284,15 +358,15 @@ $$
   0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1 
 $$
 
-## Übung
+## Übung {.smaller}
 
 Notiert die Decision Variables, Objective Function und Constraints für folgendes ATA-Problem:
 
 - 2 Blöcke
-- beide Blöcke bzgl. Testzeit so nah wie moeglich an 450 Sekunden
+- beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
 - durschnittliche Schwierigkeit pro Block von ca. 0.3
 - jedes Item darf maximal nur in einem Block vorkommen 
-- optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen
+- [optional:] jedes Itemformat sollte exakt 3 Mal pro Block vorkommen
 
 
 
@@ -314,16 +388,20 @@ Paketautoren:
 
 ## eatATA: Resources I
 
-Vignettes available on CRAN:\
-<https://CRAN.R-project.org/package=eatATA>
+Vignettes available on [CRAN](https://CRAN.R-project.org/package=eatATA)
 
-or on pkgdown
+![](Graphs/eatATA_cran.JPG)
 
 ## eatATA: Resources II
 
-eatATA Tutorial Paper:
+or on [pkgdown](https://beckerbenj.github.io/eatATA/)
 
-[@eatATA](https://doi.org/10.3390/psych3020010)
+![](Graphs/eatATA_pkgdown.JPG)
+
+
+## eatATA: Resources III
+
+eatATA Tutorial Paper [@eatATA]
 
 ![](Graphs/psych_paper.PNG)
 
@@ -403,22 +481,22 @@ item_mini_out[1:10, ]
 
 # Überblick Funktionalität
 
-## Itempool vorbereiten
+## Itempool vorbereiten {.smaller}
 
 * [`calculateIIF()`](https://beckerbenj.github.io/eatATA/reference/calculateIIF.html) - Berechnung Item-Informationsfunktion
 * [`calculatExpectedRT()`](https://beckerbenj.github.io/eatATA/reference/calculateIIF.html) - Berechnung erwarteter Antwortzeiten
 * [`dummiesToFactor()`](https://beckerbenj.github.io/eatATA/reference/dummiesToFactor.html) - Transformation von Dummy-Variablen in Faktoren
-* [`computeTargetValues()`](https://beckerbenj.github.io/eatATA/reference/computeTargetValues.html) - Berechnung von Zielwerten
+* [`computeTargetValues()`](https://beckerbenj.github.io/eatATA/reference/computeTargetValues.html) - Berechnung von sinnvollen Zielwerten
 
-## Objective Function
+## Objective Function {.smaller}
 
 * [`maxObjective()`](https://beckerbenj.github.io/eatATA/reference/maxObjective.html) - Maximieren
 * [`minObjective()`](https://beckerbenj.github.io/eatATA/reference/minObjective.html) - Minimieren
-* [`maximinObjective()`](https://beckerbenj.github.io/eatATA/reference/maximinObjective.html) - Maximin
-* [`minimaxObjective()`](https://beckerbenj.github.io/eatATA/reference/minimaxObjective.html) - Minimax
+* [`maximinObjective()`](https://beckerbenj.github.io/eatATA/reference/maximinObjective.html) - Maximieren eines Minimums
+* [`minimaxObjective()`](https://beckerbenj.github.io/eatATA/reference/minimaxObjective.html) - Minimieren eines Maximums
 * [`cappedMaximinObjective()`](https://beckerbenj.github.io/eatATA/reference/cappedMaximinObjective.html) - Capped Maximin
 
-## Constraints
+## Constraints {.smaller}
 
 Itemverwendung 
 
@@ -431,7 +509,7 @@ Anzahl Items pro Form
 * [`itemsPerFormConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemsPerFormConstraint.html) - Anzahl Items pro Form
 
 
-## Constraints
+## Constraints {.smaller}
 
 Kategoriale Constraints
 
@@ -441,7 +519,7 @@ Kategoriale Constraints
 * [`itemCategoryMinConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryMinConstraint.html) - Minimum
 * [`itemCategoryRangeConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryRangeConstraint.html) - Maximum und Minimum
 
-## Constraints
+## Constraints {.smaller}
 
 Metrische Constraints
 
@@ -452,7 +530,7 @@ Metrische Constraints
 * [`itemValuesMinConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesMinConstraint.html) - Minimum
 * [`itemValuesRangeConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesRangeConstraint.html) - Maximum und Minimum
 
-## Constraints
+## Constraints {.smaller}
 
 Metrische Constraints über Testformen
 
@@ -468,6 +546,37 @@ Vorbereitung von Iteminklusionen und -exklusionen
 * [`itemTuples()`](https://beckerbenj.github.io/eatATA/reference/itemTuples.html) - Vorbereitung von Iteminklusionen und -exklusionen
 * [`matrixExclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/matrixExclusionTuples.html) - Vorbereitung von Itemexklusionen
 * [`stemInclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/stemInclusionTuples.html) - Vorbereitung von Iteminklusionen
+
+
+## Übung {.smaller}
+
+Erstellt 2 Bloecke mit folgenden Testspezifikationen mithilfe von `eatATA`:
+
+- beide Blöcke Testzeit so nah wie moeglich an 450 Sekunden (via `minimaxObjective()` Funktion)
+- durschnittliche Schwierigkeit pro Block von ca. 0.3
+- jedes Item darf maximal nur in einem Block vorkommen (via `itemUsageConstraint()` Funktion)
+- optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen
+
+Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!
+
+
+## Praktische Tipps
+
+- ATA ist ein Skill für sich
+- Es gibt häufig mehrere Wege zum Ziel
+- Pragmatisches Vorgehen: Häufig muss die Lösung nicht perfekt sein
+- Schrittweises Vorgehen: ATA-Problem aufbauen [@Proietti.2020]
+
+
+
+## References
+::: {#refs}
+:::
+
+
+# Danke für Eure Aufmerksamkeit!
+
+# Appendix
 
 ## Item Inclusions
 
@@ -547,25 +656,3 @@ excl_constraints <- itemExclusionConstraint(
 	itemIDs = items_pilot$item
 )
 ```
-
-## Übung
-
-Erstellt 2 Bloecke mit folgenden Testspezifikationen mithilfe von `eatATA`:
-
-- beide Blöcke Testzeit so nah wie moeglich an 450 Sekunden (via `minimaxObjective()` Funktion)
-- durschnittliche Schwierigkeit pro Block von ca. 0.3
-- jedes Item darf maximal nur in einem Block vorkommen (via `itemUsageConstraint()` Funktion)
-- optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen
-
-Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!
-
-
-
-
-## References
-::: {#refs}
-:::
-
-
-# Danke für Eure Aufmerksamkeit!
-
