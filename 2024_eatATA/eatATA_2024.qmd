@@ -10,6 +10,7 @@ title-slide-attributes:
 bibliography: references_dissertation.bib
 csl: apa.csl
 format: revealjs
+theme: default
 editor: visual
 execute:
   echo: true
