@@ -29,15 +29,25 @@ Zuordnung von Items zu Blöcken aus einem Itempool unter Berücksichtigung von T
 
 **Automatisiert**
 
-Nicht händisch, sondern Verwendung von Optimierungsalgorithmen
+Nicht händisch, sondern unter Verwendung von Optimierungsalgorithmen
+
+
+## Vorstellungsrunde
+
+30 Sekunden pro Person:
+
+- Name
+- Projekt
+- Habt ihr schon mal selbst eine Blockbesetzung umgesetzt?
+- Wenn ja, händisch oder mit eatATA?
+
 
 ## Agenda
 
 1. Hintergrund: Wofür?
-2. Mathematical Programming
-3. Automated Test Assembly/Automatisierte Blockbesetzung
-4. eatATA
-
+2. Grundlagen: Mathematical Programming
+3. Theorie: Automated Test Assembly/Automatisierte Blockbesetzung
+4. Praxis: eatATA
 
 # Wofür?
 
@@ -85,18 +95,8 @@ library(eatATA)
 -   Parallelität
 -   Linking
 
-## IQB-Anwendungen
 
-**Blockbesetzung**
-
--   Bildungstrend
--   VERA Module
--   (Prä)-Pilotierungen\
-    → Bildungstrend\
-    → VERA
--   ...   
-
-## Parallele Blöcke
+## Parallele Blöcke {.smaller}
 
 **Hinsichtlich?**
 
@@ -110,7 +110,7 @@ library(eatATA)
 
 -   Itemunverträglichkeiten
 
-## Blockbesetzung
+## Blockbesetzung {.smaller}
 
 **Häufig händisch (via Excel), aber:**
 
@@ -149,7 +149,7 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 -   Constraints
 -   Objective Function
 
-## Beispiel: Produzentenproblem {.smaller}
+## Beispiel: Variiertes Rucksackproblem {.smaller}
 
 -   Anstellungsoptionen StuMis, Docs, Postdocs
 -   Maximal 8 Büroplätze
@@ -160,7 +160,7 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 
 **Frage:** Welche Kombination aus Personen soll eingestellt werden?
 
-## Beispiel: Produzentenproblem {.smaller}
+## Beispiel: Variiertes Rucksackproblem {.smaller}
 
 **Decision Variables:**
 
@@ -177,7 +177,7 @@ $$
     5S + 18D + 25P \leq 120
 $$
 
-## Beispiel: Produzentenproblem {.smaller}
+## Beispiel: Variiertes Rucksackproblem {.smaller}
 
 **Decision Variables:**
 
@@ -196,7 +196,7 @@ $$
     P \geq 2 
 $$
 
-## Beispiel: Produzentenproblem {.smaller}
+## Beispiel: Variiertes Rucksackproblem {.smaller}
 
 **Decision Variables:**
 
@@ -227,7 +227,7 @@ $$
 
 ## Übung
 
-- Löst das vorgestellte Produzentenproblem händisch!
+- Versucht das vorgestellte Beispiel händisch zu lösen!
 
 
 ## Lösung mithilfe von Rglpk
@@ -304,13 +304,8 @@ Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur
 #| echo: false
 # LaTeX table generated using xtable package in R.
 library(knitr)
-kable(data.frame(
-  item = 1:5,
-  format = c("mc", "mc", "mc", "mc", "mc"),
-  time = c(27.79, 15.45, 31.02, 29.87, 23.13),
-  difficulty = c(-1.88, 0.84, 1.12, 0.73, -0.49),
-  IIF_0 = c(0.11, 0.45, 0.33, 0.5, 0.61)
-), caption = "First 5 Items of the Simulated Item Pool.")
+kable(items_mini[1:5, ],
+      caption = "Erste fünf Items des simulierten Itempools.")
 ```
 
 ## Minimalbeispiel: Spezifikationen
@@ -320,9 +315,9 @@ kable(data.frame(
 -   1 Block
 -   Minimale durchschnittliche Blockzeit
 -   Exakt 10 Items im Block
--   Durchschnittliche Schwierigkeit von ca. 0 (logit-Skala)
+-   4 MC-Items, 3 offene Items, 3 Zuordnungsitems
 
-## Minimalbeispiel: Decision Variables
+## Minimalbeispiel: Decision Variables {.smaller}
 
 **Decision Variables**
 
@@ -334,7 +329,7 @@ $$
     i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
 $$
 
-## Minimalbeispiel: Objective Function
+## Minimalbeispiel: Objective Function {.smaller}
 
 **Objective Function**
 
@@ -347,7 +342,7 @@ $$
     minimiere \quad  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} 
 $$
 
-## Minimalbeispiel: Constraints
+## Minimalbeispiel: Constraints {.smaller}
 
 **Constraints**
 
@@ -356,13 +351,17 @@ $$
 $$
     i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 
 $$
--   Durchschnittliche Schwierigkeit\
+-   4 MC Items, 3 offene Items, 3 Zuordnungsitems
 $$
-  0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1 
+  1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} = 4 
 $$
 $$
-  0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1 
+  0i_{1, b1} + 0i_{2, b1} + \ldots + 0i_{30, b1} = 3 
 $$
+$$
+  0i_{1, b1} + 0i_{2, b1} + \ldots + 1i_{30, b1} = 3 
+$$
+
 
 ## Übung {.smaller}
 
@@ -370,11 +369,69 @@ Notiert die Decision Variables, Objective Function und Constraints für folgende
 
 - 2 Blöcke
 - beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
-- durschnittliche Schwierigkeit pro Block von ca. 0.3
 - jedes Item darf maximal nur in einem Block vorkommen 
-- [optional:] jedes Itemformat sollte exakt 3 Mal pro Block vorkommen
+- pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden
+
+## Lösung {.smaller}
+
+- Decision Variables für 2 Blöcke und Item-Pool aus 30 Items
+
+$$
+    i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
+$$
+$$
+    i_{1, b2}, i_{2, b2}, i_{3, b2}, \ldots, i_{30, b2}
+$$
+
+## Lösung {.smaller}
+
+- beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
+- Maximin-Ansatz
+
+$$
+  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} + y <= 450
+$$
+$$
+  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} + y >= 450
+$$
+$$
+  27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} + y <= 450
+$$
+$$
+  27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} + y >= 450
+$$
+$$
+ minimiere \quad y
+$$
+
+## Lösung {.smaller}
+
+- jedes Item darf maximal nur in einem Block vorkommen 
+
+$$
+    i_{1, b1} + i_{1, b2} <= 1 
+$$
+$$
+    i_{2, b1} + i_{2, b2} <= 1 
+$$
+$$
+    \ldots 
+$$
 
 
+## Lösung {.smaller}
+
+- jedes Itemformat sollte mindestens 3 Mal pro Block vorkommen
+
+$$
+    1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} >= 3 
+$$
+$$
+    1i_{1, b2} + 1i_{2, b2} + \ldots + 0i_{30, b2} >= 3 
+$$
+$$
+    \ldots
+$$
 
 
 # Umsetzung in eatATA
@@ -383,13 +440,13 @@ Notiert die Decision Variables, Objective Function und Constraints für folgende
 
 Entwickelt basierend auf Feedback von: 
 
-- Pauline Kohrt (VERA 3 Math) 
-- Simone Dubiel (VERA 8 German) 
-- Karoline Sachse (BT)
+- Pauline Kohrt (ehemals VERA 3 Math) 
+- Simone Dubiel (ehemals VERA 8 German) 
+- Karoline Sachse (BT/Methoden)
 
 Paketautoren:
 
-- Dries Debeer (KU Leuven) 
+- [Dries Debeer (Ghent University)](https://research.ugent.be/web/person/dries-debeer-0/en) 
 - Benjamin Becker (IQB)
 
 ## eatATA: Resources I
@@ -438,15 +495,14 @@ Blength <- itemsPerFormConstraint(
 
 ## Code: Constraint 2
 
-Durchschnittliche Schwierigkeit
+Itemformate
 
 ```{r}
-Bdiff <- itemValuesRangeConstraint(
-	nForms = 1, 
-	itemValues = items_mini$difficulty, 
-	range = c(-0.1, 0.1), 
-	itemIDs = items_mini$item
-)
+Bcat <- itemCategoryConstraint(
+  nForms = 1, 
+  as.factor(items_mini$format),
+  targetValues = c(4, 3, 3),
+  itemIDs = items_mini$item)
 ```
 
 ## Code: Solver Call
@@ -455,7 +511,7 @@ Solver Call
 
 ```{r}
 solver_out <- useSolver(
-	list(Btime, Blength, Bdiff),
+	list(Btime, Blength, Bcat),
 	solver = "GLPK"
 )
 ```
@@ -507,11 +563,10 @@ item_mini_out[1:10, ]
 Itemverwendung 
 
 * [`depletePoolConstraint()`](https://beckerbenj.github.io/eatATA/reference/depletePoolConstraint.html) - Erschöpfung des Itempools
-* [`itemUsageConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html) - Anzahl Items pro Form
+* [`itemUsageConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html) - Itemnutzung
 
 Anzahl Items pro Form
 
-* [`itemUsageConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html) - Anzahl Items pro Form
 * [`itemsPerFormConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemsPerFormConstraint.html) - Anzahl Items pro Form
 
 
@@ -556,22 +611,30 @@ Vorbereitung von Iteminklusionen und -exklusionen
 
 ## Übung {.smaller}
 
-Erstellt 2 Bloecke mit folgenden Testspezifikationen mithilfe von `eatATA`:
+Erstellt Blöcke mit folgenden Testspezifikationen mithilfe von `eatATA` (siehe auch letzte Übung):
 
-- beide Blöcke Testzeit so nah wie moeglich an 450 Sekunden (via `minimaxObjective()` Funktion)
-- durschnittliche Schwierigkeit pro Block von ca. 0.3
+- 2 Blöcke
+- beide Blöcke Testzeit so nah wie möglich an 450 Sekunden (via `minimaxObjective()` Funktion)
 - jedes Item darf maximal nur in einem Block vorkommen (via `itemUsageConstraint()` Funktion)
-- optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen
+- pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden (via `itemCategoryMinConstraint()` Funktion)
 
 Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!
+
+## Lösung
+
+Siehe R-Syntax
 
 
 ## Praktische Tipps
 
 - ATA ist ein Skill für sich
-- Es gibt häufig mehrere Wege zum Ziel
-- Pragmatisches Vorgehen: Häufig muss die Lösung nicht perfekt sein
-- Schrittweises Vorgehen: ATA-Problem aufbauen [@Proietti.2020]
+- Es gibt immer mehrere Wege zum Ziel
+- Pragmatisches Vorgehen: 
+  - Häufig muss die Lösung nicht perfekt sein
+  - Der Weg zum Ziel ist irrelevant
+- Schrittweises Vorgehen [@Proietti.2020]
+  - Problem schrittweise aufbauen oder
+  - Problem schrittweise vereinfachen
 
 
 

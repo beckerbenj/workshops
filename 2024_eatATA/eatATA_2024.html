@@ -430,15 +430,25 @@ Benjamin Becker
 <p><strong>Blockbesetzung</strong></p>
 <p>Zuordnung von Items zu Blöcken aus einem Itempool unter Berücksichtigung von Testspezifikationen</p>
 <p><strong>Automatisiert</strong></p>
-<p>Nicht händisch, sondern Verwendung von Optimierungsalgorithmen</p>
+<p>Nicht händisch, sondern unter Verwendung von Optimierungsalgorithmen</p>
+</section>
+<section id="vorstellungsrunde" class="slide level2">
+<h2>Vorstellungsrunde</h2>
+<p>30 Sekunden pro Person:</p>
+<ul>
+<li>Name</li>
+<li>Projekt</li>
+<li>Habt ihr schon mal selbst eine Blockbesetzung umgesetzt?</li>
+<li>Wenn ja, händisch oder mit eatATA?</li>
+</ul>
 </section>
 <section id="agenda" class="slide level2">
 <h2>Agenda</h2>
 <ol type="1">
 <li>Hintergrund: Wofür?</li>
-<li>Mathematical Programming</li>
-<li>Automated Test Assembly/Automatisierte Blockbesetzung</li>
-<li>eatATA</li>
+<li>Grundlagen: Mathematical Programming</li>
+<li>Theorie: Automated Test Assembly/Automatisierte Blockbesetzung</li>
+<li>Praxis: eatATA</li>
 </ol>
 </section>
 <section>
@@ -485,19 +495,7 @@ Benjamin Becker
 <li>Linking</li>
 </ul>
 </section>
-<section id="iqb-anwendungen" class="slide level2">
-<h2>IQB-Anwendungen</h2>
-<p><strong>Blockbesetzung</strong></p>
-<ul>
-<li>Bildungstrend</li>
-<li>VERA Module</li>
-<li>(Prä)-Pilotierungen<br>
-→ Bildungstrend<br>
-→ VERA</li>
-<li>…</li>
-</ul>
-</section>
-<section id="parallele-blöcke" class="slide level2">
+<section id="parallele-blöcke" class="slide level2 smaller">
 <h2>Parallele Blöcke</h2>
 <p><strong>Hinsichtlich?</strong></p>
 <ul>
@@ -512,7 +510,7 @@ Benjamin Becker
 <li>Itemunverträglichkeiten</li>
 </ul>
 </section>
-<section id="blockbesetzung" class="slide level2">
+<section id="blockbesetzung" class="slide level2 smaller">
 <h2>Blockbesetzung</h2>
 <p><strong>Häufig händisch (via Excel), aber:</strong></p>
 <ul>
@@ -557,8 +555,8 @@ Benjamin Becker
 <li>Objective Function</li>
 </ul>
 </section>
-<section id="beispiel-produzentenproblem" class="slide level2 smaller">
-<h2>Beispiel: Produzentenproblem</h2>
+<section id="beispiel-variiertes-rucksackproblem" class="slide level2 smaller">
+<h2>Beispiel: Variiertes Rucksackproblem</h2>
 <ul>
 <li>Anstellungsoptionen StuMis, Docs, Postdocs</li>
 <li>Maximal 8 Büroplätze</li>
@@ -569,8 +567,8 @@ Benjamin Becker
 </ul>
 <p><strong>Frage:</strong> Welche Kombination aus Personen soll eingestellt werden?</p>
 </section>
-<section id="beispiel-produzentenproblem-1" class="slide level2 smaller">
-<h2>Beispiel: Produzentenproblem</h2>
+<section id="beispiel-variiertes-rucksackproblem-1" class="slide level2 smaller">
+<h2>Beispiel: Variiertes Rucksackproblem</h2>
 <p><strong>Decision Variables:</strong></p>
 <ul>
 <li>Anstellungsoptionen <strong>S</strong>tuMis, <strong>D</strong>ocs, <strong>P</strong>ostdocs</li>
@@ -585,8 +583,8 @@ S + D + P \leq 8
 \]</span></li>
 </ul>
 </section>
-<section id="beispiel-produzentenproblem-2" class="slide level2 smaller">
-<h2>Beispiel: Produzentenproblem</h2>
+<section id="beispiel-variiertes-rucksackproblem-2" class="slide level2 smaller">
+<h2>Beispiel: Variiertes Rucksackproblem</h2>
 <p><strong>Decision Variables:</strong></p>
 <ul>
 <li>Anstellungsoptionen <strong>S</strong>tuMis, <strong>D</strong>ocs, <strong>P</strong>ostdocs</li>
@@ -602,8 +600,8 @@ P \geq 2
 \]</span></li>
 </ul>
 </section>
-<section id="beispiel-produzentenproblem-3" class="slide level2 smaller">
-<h2>Beispiel: Produzentenproblem</h2>
+<section id="beispiel-variiertes-rucksackproblem-3" class="slide level2 smaller">
+<h2>Beispiel: Variiertes Rucksackproblem</h2>
 <p><strong>Decision Variables:</strong></p>
 <ul>
 <li>Anstellungsoptionen <strong>S</strong>tuMis, <strong>D</strong>ocs, <strong>P</strong>ostdocs</li>
@@ -635,7 +633,7 @@ Maximiere \quad  1S + 2D + 3P
 <section id="übung" class="slide level2">
 <h2>Übung</h2>
 <ul>
-<li>Löst das vorgestellte Produzentenproblem händisch!</li>
+<li>Versucht das vorgestellte Beispiel händisch zu lösen!</li>
 </ul>
 </section>
 <section id="lösung-mithilfe-von-rglpk" class="slide level2">
@@ -738,51 +736,45 @@ $sensitivity_report
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
-<caption>First 5 Items of the Simulated Item Pool.</caption>
+<caption>Erste fünf Items des simulierten Itempools.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;">item</th>
 <th style="text-align: left;">format</th>
 <th style="text-align: right;">time</th>
 <th style="text-align: right;">difficulty</th>
-<th style="text-align: right;">IIF_0</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">mc</td>
-<td style="text-align: right;">27.79</td>
-<td style="text-align: right;">-1.88</td>
-<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">27.78586</td>
+<td style="text-align: right;">-1.8809028</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">mc</td>
-<td style="text-align: right;">15.45</td>
-<td style="text-align: right;">0.84</td>
-<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">15.45258</td>
+<td style="text-align: right;">0.8429586</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
 <td style="text-align: left;">mc</td>
-<td style="text-align: right;">31.02</td>
-<td style="text-align: right;">1.12</td>
-<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">31.01590</td>
+<td style="text-align: right;">1.1188154</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
 <td style="text-align: left;">mc</td>
-<td style="text-align: right;">29.87</td>
-<td style="text-align: right;">0.73</td>
-<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">29.87421</td>
+<td style="text-align: right;">0.7286774</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
 <td style="text-align: left;">mc</td>
-<td style="text-align: right;">23.13</td>
-<td style="text-align: right;">-0.49</td>
-<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">23.13401</td>
+<td style="text-align: right;">-0.4887099</td>
 </tr>
 </tbody>
 </table>
@@ -796,10 +788,10 @@ $sensitivity_report
 <li>1 Block</li>
 <li>Minimale durchschnittliche Blockzeit</li>
 <li>Exakt 10 Items im Block</li>
-<li>Durchschnittliche Schwierigkeit von ca. 0 (logit-Skala)</li>
+<li>4 MC-Items, 3 offene Items, 3 Zuordnungsitems</li>
 </ul>
 </section>
-<section id="minimalbeispiel-decision-variables" class="slide level2">
+<section id="minimalbeispiel-decision-variables" class="slide level2 smaller">
 <h2>Minimalbeispiel: Decision Variables</h2>
 <p><strong>Decision Variables</strong></p>
 <ul>
@@ -813,7 +805,7 @@ $sensitivity_report
 \]</span></li>
 </ul>
 </section>
-<section id="minimalbeispiel-objective-function" class="slide level2">
+<section id="minimalbeispiel-objective-function" class="slide level2 smaller">
 <h2>Minimalbeispiel: Objective Function</h2>
 <p><strong>Objective Function</strong></p>
 <ul>
@@ -826,7 +818,7 @@ minimiere \quad  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1}
 \]</span></li>
 </ul>
 </section>
-<section id="minimalbeispiel-constraints" class="slide level2">
+<section id="minimalbeispiel-constraints" class="slide level2 smaller">
 <h2>Minimalbeispiel: Constraints</h2>
 <p><strong>Constraints</strong></p>
 <ul>
@@ -834,11 +826,12 @@ minimiere \quad  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1}
 <li>Genau 10 Items pro Block <span class="math display">\[
 i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10
 \]</span></li>
-<li>Durchschnittliche Schwierigkeit<br>
-<span class="math display">\[
-  0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \leq 0.1
+<li>4 MC Items, 3 offene Items, 3 Zuordnungsitems <span class="math display">\[
+  1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} = 4
 \]</span> <span class="math display">\[
-  0.11i_{1, b1} + 0.45i_{2, b1} + \ldots + i_{30, b1} \geq -0.1
+  0i_{1, b1} + 0i_{2, b1} + \ldots + 0i_{30, b1} = 3
+\]</span> <span class="math display">\[
+  0i_{1, b1} + 0i_{2, b1} + \ldots + 1i_{30, b1} = 3
 \]</span></li>
 </ul>
 </section>
@@ -848,10 +841,64 @@ i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10
 <ul>
 <li>2 Blöcke</li>
 <li>beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden</li>
-<li>durschnittliche Schwierigkeit pro Block von ca. 0.3</li>
 <li>jedes Item darf maximal nur in einem Block vorkommen</li>
-<li>[optional:] jedes Itemformat sollte exakt 3 Mal pro Block vorkommen</li>
+<li>pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden</li>
 </ul>
+</section>
+<section id="lösung" class="slide level2 smaller">
+<h2>Lösung</h2>
+<ul>
+<li>Decision Variables für 2 Blöcke und Item-Pool aus 30 Items</li>
+</ul>
+<p><span class="math display">\[
+    i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
+\]</span> <span class="math display">\[
+    i_{1, b2}, i_{2, b2}, i_{3, b2}, \ldots, i_{30, b2}
+\]</span></p>
+</section>
+<section id="lösung-1" class="slide level2 smaller">
+<h2>Lösung</h2>
+<ul>
+<li>beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden</li>
+<li>Maximin-Ansatz</li>
+</ul>
+<p><span class="math display">\[
+  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} + y &lt;= 450
+\]</span> <span class="math display">\[
+  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} + y &gt;= 450
+\]</span> <span class="math display">\[
+  27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} + y &lt;= 450
+\]</span> <span class="math display">\[
+  27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} + y &gt;= 450
+\]</span> <span class="math display">\[
+minimiere \quad y
+\]</span></p>
+</section>
+<section id="lösung-2" class="slide level2 smaller">
+<h2>Lösung</h2>
+<ul>
+<li>jedes Item darf maximal nur in einem Block vorkommen</li>
+</ul>
+<p><span class="math display">\[
+    i_{1, b1} + i_{1, b2} &lt;= 1
+\]</span> <span class="math display">\[
+    i_{2, b1} + i_{2, b2} &lt;= 1
+\]</span> <span class="math display">\[
+    \ldots
+\]</span></p>
+</section>
+<section id="lösung-3" class="slide level2 smaller">
+<h2>Lösung</h2>
+<ul>
+<li>jedes Itemformat sollte mindestens 3 Mal pro Block vorkommen</li>
+</ul>
+<p><span class="math display">\[
+    1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} &gt;= 3
+\]</span> <span class="math display">\[
+    1i_{1, b2} + 1i_{2, b2} + \ldots + 0i_{30, b2} &gt;= 3
+\]</span> <span class="math display">\[
+    \ldots
+\]</span></p>
 </section></section>
 <section>
 <section id="umsetzung-in-eatata" class="title-slide slide level1 center">
@@ -862,13 +909,13 @@ i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10
 <h2>eatATA</h2>
 <p>Entwickelt basierend auf Feedback von:</p>
 <ul>
-<li>Pauline Kohrt (VERA 3 Math)</li>
-<li>Simone Dubiel (VERA 8 German)</li>
-<li>Karoline Sachse (BT)</li>
+<li>Pauline Kohrt (ehemals VERA 3 Math)</li>
+<li>Simone Dubiel (ehemals VERA 8 German)</li>
+<li>Karoline Sachse (BT/Methoden)</li>
 </ul>
 <p>Paketautoren:</p>
 <ul>
-<li>Dries Debeer (KU Leuven)</li>
+<li><a href="https://research.ugent.be/web/person/dries-debeer-0/en">Dries Debeer (Ghent University)</a></li>
 <li>Benjamin Becker (IQB)</li>
 </ul>
 </section>
@@ -912,14 +959,13 @@ i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10
 </section>
 <section id="code-constraint-2" class="slide level2">
 <h2>Code: Constraint 2</h2>
-<p>Durchschnittliche Schwierigkeit</p>
+<p>Itemformate</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>Bdiff <span class="ot">&lt;-</span> <span class="fu">itemValuesRangeConstraint</span>(</span>
-<span id="cb6-2"><a href=""></a>    <span class="at">nForms =</span> <span class="dv">1</span>, </span>
-<span id="cb6-3"><a href=""></a>    <span class="at">itemValues =</span> items_mini<span class="sc">$</span>difficulty, </span>
-<span id="cb6-4"><a href=""></a>    <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>), </span>
-<span id="cb6-5"><a href=""></a>    <span class="at">itemIDs =</span> items_mini<span class="sc">$</span>item</span>
-<span id="cb6-6"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>Bcat <span class="ot">&lt;-</span> <span class="fu">itemCategoryConstraint</span>(</span>
+<span id="cb6-2"><a href=""></a>  <span class="at">nForms =</span> <span class="dv">1</span>, </span>
+<span id="cb6-3"><a href=""></a>  <span class="fu">as.factor</span>(items_mini<span class="sc">$</span>format),</span>
+<span id="cb6-4"><a href=""></a>  <span class="at">targetValues =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb6-5"><a href=""></a>  <span class="at">itemIDs =</span> items_mini<span class="sc">$</span>item)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-solver-call" class="slide level2">
@@ -927,27 +973,24 @@ i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10
 <p>Solver Call</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>solver_out <span class="ot">&lt;-</span> <span class="fu">useSolver</span>(</span>
-<span id="cb7-2"><a href=""></a>    <span class="fu">list</span>(Btime, Blength, Bdiff),</span>
+<span id="cb7-2"><a href=""></a>    <span class="fu">list</span>(Btime, Blength, Bcat),</span>
 <span id="cb7-3"><a href=""></a>    <span class="at">solver =</span> <span class="st">"GLPK"</span></span>
 <span id="cb7-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GLPK Simplex Optimizer 5.0
-4 rows, 31 columns, 121 non-zeros
+5 rows, 31 columns, 91 non-zeros
       0: obj =   0.000000000e+00 inf =   1.000e+01 (1)
-     18: obj =   2.283735458e+02 inf =   0.000e+00 (0)
+     14: obj =   2.758548505e+02 inf =   0.000e+00 (0)
+*    15: obj =   2.758548505e+02 inf =   0.000e+00 (0)
 OPTIMAL LP SOLUTION FOUND
 GLPK Integer Optimizer 5.0
-4 rows, 31 columns, 121 non-zeros
+5 rows, 31 columns, 91 non-zeros
 30 integer variables, all of which are binary
 Integer optimization begins...
 Long-step dual simplex will be used
-+    18: mip =     not found yet &gt;=              -inf        (1; 0)
-+    66: &gt;&gt;&gt;&gt;&gt;   2.494710399e+02 &gt;=   2.313811729e+02   7.3% (25; 1)
-+    76: &gt;&gt;&gt;&gt;&gt;   2.410827539e+02 &gt;=   2.315084708e+02   4.0% (16; 24)
-+    89: &gt;&gt;&gt;&gt;&gt;   2.354497227e+02 &gt;=   2.322712563e+02   1.3% (13; 36)
-+    98: &gt;&gt;&gt;&gt;&gt;   2.349852125e+02 &gt;=   2.345426175e+02   0.2% (3; 56)
-+    99: &gt;&gt;&gt;&gt;&gt;   2.345426175e+02 &gt;=   2.345426175e+02 &lt; 0.1% (2; 61)
-+    99: mip =   2.345426175e+02 &gt;=     tree is empty   0.0% (0; 69)
++    15: mip =     not found yet &gt;=              -inf        (1; 0)
++    15: &gt;&gt;&gt;&gt;&gt;   2.758548505e+02 &gt;=   2.758548505e+02   0.0% (1; 0)
++    15: mip =   2.758548505e+02 &gt;=     tree is empty   0.0% (0; 1)
 INTEGER OPTIMAL SOLUTION FOUND</code></pre>
 </div>
 </div>
@@ -963,18 +1006,18 @@ INTEGER OPTIMAL SOLUTION FOUND</code></pre>
 <span id="cb9-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$form_1
-    item format      time  difficulty
-1      1     mc  27.78586 -1.88090278
-2      2     mc  15.45258  0.84295865
-4      4     mc  29.87421  0.72867743
-5      5     mc  23.13401 -0.48870993
-6      6     mc  25.19305  0.47273874
-8      8     mc  30.21856 -0.36707654
-10    10     mc  15.35510  1.35397237
-21    21  order  22.47400 -0.43147145
-29    29  order  25.55363  0.24091747
-30    30  order  19.50162 -0.51434114
-Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
+    item format      time difficulty
+2      2     mc  15.45258  0.8429586
+5      5     mc  23.13401 -0.4887099
+6      6     mc  25.19305  0.4727387
+10    10     mc  15.35510  1.3539724
+12    12   open  35.94400  2.4992738
+16    16   open  45.12778 -1.2862969
+17    17   open  48.11908 -0.8612431
+21    21  order  22.47400 -0.4314714
+29    29  order  25.55363  0.2409175
+30    30  order  19.50162 -0.5143411
+Sum  148   &lt;NA&gt; 275.85485  1.8277985</code></pre>
 </div>
 </div>
 </section>
@@ -990,14 +1033,14 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 <span id="cb11-6"><a href=""></a>item_mini_out[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   item format     time difficulty form_1
-1     1     mc 27.78586 -1.8809028      1
+1     1     mc 27.78586 -1.8809028      0
 2     2     mc 15.45258  0.8429586      1
 3     3     mc 31.01590  1.1188154      0
-4     4     mc 29.87421  0.7286774      1
+4     4     mc 29.87421  0.7286774      0
 5     5     mc 23.13401 -0.4887099      1
 6     6     mc 25.19305  0.4727387      1
 7     7     mc 25.66340 -1.1805427      0
-8     8     mc 30.21856 -0.3670765      1
+8     8     mc 30.21856 -0.3670765      0
 9     9     mc 26.61642 -0.5687943      0
 10   10     mc 15.35510  1.3539724      1</code></pre>
 </div>
@@ -1032,11 +1075,10 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 <p>Itemverwendung</p>
 <ul>
 <li><a href="https://beckerbenj.github.io/eatATA/reference/depletePoolConstraint.html"><code>depletePoolConstraint()</code></a> - Erschöpfung des Itempools</li>
-<li><a href="https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html"><code>itemUsageConstraint()</code></a> - Anzahl Items pro Form</li>
+<li><a href="https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html"><code>itemUsageConstraint()</code></a> - Itemnutzung</li>
 </ul>
 <p>Anzahl Items pro Form</p>
 <ul>
-<li><a href="https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html"><code>itemUsageConstraint()</code></a> - Anzahl Items pro Form</li>
 <li><a href="https://beckerbenj.github.io/eatATA/reference/itemsPerFormConstraint.html"><code>itemsPerFormConstraint()</code></a> - Anzahl Items pro Form</li>
 </ul>
 </section>
@@ -1083,22 +1125,34 @@ Sum  116   &lt;NA&gt; 234.54262 -0.04323719</code></pre>
 </section>
 <section id="übung-2" class="slide level2 smaller">
 <h2>Übung</h2>
-<p>Erstellt 2 Bloecke mit folgenden Testspezifikationen mithilfe von <code>eatATA</code>:</p>
+<p>Erstellt Blöcke mit folgenden Testspezifikationen mithilfe von <code>eatATA</code> (siehe auch letzte Übung):</p>
 <ul>
-<li>beide Blöcke Testzeit so nah wie moeglich an 450 Sekunden (via <code>minimaxObjective()</code> Funktion)</li>
-<li>durschnittliche Schwierigkeit pro Block von ca. 0.3</li>
+<li>2 Blöcke</li>
+<li>beide Blöcke Testzeit so nah wie möglich an 450 Sekunden (via <code>minimaxObjective()</code> Funktion)</li>
 <li>jedes Item darf maximal nur in einem Block vorkommen (via <code>itemUsageConstraint()</code> Funktion)</li>
-<li>optional: jedes Itemformat sollte exakt 3 Mal pro Block vorkommen</li>
+<li>pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden (via <code>itemCategoryMinConstraint()</code> Funktion)</li>
 </ul>
 <p>Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!</p>
+</section>
+<section id="lösung-4" class="slide level2">
+<h2>Lösung</h2>
+<p>Siehe R-Syntax</p>
 </section>
 <section id="praktische-tipps" class="slide level2">
 <h2>Praktische Tipps</h2>
 <ul>
 <li>ATA ist ein Skill für sich</li>
-<li>Es gibt häufig mehrere Wege zum Ziel</li>
-<li>Pragmatisches Vorgehen: Häufig muss die Lösung nicht perfekt sein</li>
-<li>Schrittweises Vorgehen: ATA-Problem aufbauen <span class="citation" data-cites="Proietti.2020">(<a href="#/references" role="doc-biblioref" onclick="">Spaccapanico Proietti et al., 2020</a>)</span></li>
+<li>Es gibt immer mehrere Wege zum Ziel</li>
+<li>Pragmatisches Vorgehen:
+<ul>
+<li>Häufig muss die Lösung nicht perfekt sein</li>
+<li>Der Weg zum Ziel ist irrelevant</li>
+</ul></li>
+<li>Schrittweises Vorgehen <span class="citation" data-cites="Proietti.2020">(<a href="#/references" role="doc-biblioref" onclick="">Spaccapanico Proietti et al., 2020</a>)</span>
+<ul>
+<li>Problem schrittweise aufbauen oder</li>
+<li>Problem schrittweise vereinfachen</li>
+</ul></li>
 </ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">

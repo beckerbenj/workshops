@@ -3,7 +3,7 @@ library(Rglpk)
 ?Rglpk::Rglpk_solve_LP
 
 
-## maximize:   1 S + 2 D + 3 P
+## maximize:    1 S + 2 D + 3 P        (Output)
 ## subject to:    S +   D +   P <= 8   (Arbeitsplätze)
 ##              5 S +18 D +25 P <= 120 (Finanzen)
 ##                S + 0 D + 0 P >= 2   (Mindestanzahl Studis)
