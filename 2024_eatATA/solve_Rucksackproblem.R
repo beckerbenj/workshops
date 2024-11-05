@@ -23,4 +23,4 @@ Rglpk_solve_LP(obj, mat, dir, rhs,
                control = list("verbose" = TRUE, "canonicalize_status" = FALSE))
 
 ## Lösung
-# 3 S, 2 D, 2 P
+# 3 S, 3 D, 2 P; insgesamt 15 Publikationen

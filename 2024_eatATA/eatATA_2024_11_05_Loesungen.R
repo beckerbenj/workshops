@@ -40,9 +40,6 @@ appendSolution(solver_out,
 # haeufig genutzte Konstanten
 nForms2 <- 2
 
-# Itemschwierigkeiten zentrieren
-items_mini$difficulty_centered <- items_mini$difficulty - 0.3 + mean(items_mini$difficulty)
-
 # Objective Function
 Btime2 <- minimaxObjective(nForms2, itemValues = items_mini$time,
                           targetValue = 450, itemIDs = items_mini$item)
