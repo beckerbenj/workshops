@@ -97,6 +97,7 @@
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="quarto_eatGADS_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="logo.css">
   <link href="quarto_eatGADS_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="quarto_eatGADS_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="quarto_eatGADS_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -391,7 +392,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="eatGADS.png" data-background-position="95% 5%" data-background-repeat="no-repeat" data-background-size="20%" class="quarto-title-block center">
+<section id="title-slide" data-background-image="Figures/eatGADS.png" data-background-position="95% 5%" data-background-repeat="no-repeat" data-background-size="20%" class="quarto-title-block center">
   <h1 class="title">eatGADS - Datenaufbereitung</h1>
 
 <div class="quarto-title-authors">
@@ -403,6 +404,28 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 </div>
 
   <p class="date">2024-11-12</p>
+</section>
+<section id="agenda" class="slide level2 smaller">
+<h2>Agenda</h2>
+<ul>
+<li>eatGADS - Basics
+<ul>
+<li>Hintergrund</li>
+<li>Grundlegendes</li>
+<li>Übersicht Funktionalität</li>
+</ul></li>
+<li>eatGADS im BT-Kontext
+<ul>
+<li>Aufbereitungsziel</li>
+<li>Häufig verwendete Funktionen</li>
+<li>Best Practices</li>
+</ul></li>
+</ul>
+</section>
+<section>
+<section id="eatgads-hintergrund" class="title-slide slide level1 center">
+<h1>eatGADS: Hintergrund</h1>
+
 </section>
 <section id="eatgads---scope" class="slide level2">
 <h2>eatGADS - Scope</h2>
@@ -431,7 +454,7 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <section id="eatgads" class="slide level2">
 <h2>eatGADS</h2>
 
-<img data-src="eatGADS_CRAN.jpg" class="r-stretch"><div class="cell">
+<img data-src="Figures/eatGADS_CRAN.jpg" class="r-stretch"><div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Stabile Version</span></span>
 <span id="cb1-2"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"eatGADS"</span>)</span>
 <span id="cb1-3"><a href=""></a></span>
@@ -442,14 +465,14 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <section id="ressourcen" class="slide level2">
 <h2>Ressourcen</h2>
 <ul>
-<li><a href="https://beckerbenj.github.io/eatGADS/articles/data_cleaning.html">Comprehensive Data Cleaning Guide (BT-Perspektive)</a></li>
-<li><a href="https://beckerbenj.github.io/eatFDZ/articles/FDZ_Data_Cleaning.html">FDZ Data Cleaning</a></li>
+<li><a href="https://beckerbenj.github.io/eatGADS/articles/data_cleaning.html">Vignette: Comprehensive Data Cleaning Guide (BT-Perspektive)</a></li>
+<li><a href="https://beckerbenj.github.io/eatFDZ/articles/FDZ_Data_Cleaning.html">Vignette: FDZ Data Cleaning</a></li>
 <li><a href="https://beckerbenj.github.io/eatGADS/reference/index.html">komplette Funktionsübersicht</a></li>
 </ul>
-</section>
+</section></section>
 <section>
-<section id="grundlegendes" class="title-slide slide level1 center">
-<h1>Grundlegendes</h1>
+<section id="eatgads-grundlegendes" class="title-slide slide level1 center">
+<h1>eatGADS: Grundlegendes</h1>
 
 </section>
 <section id="gadsdat-objekte" class="slide level2">
@@ -471,22 +494,24 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 </ul></li>
 <li>Meta-Daten (<code>labels</code>)
 <ul>
-<li>Variablenlabel</li>
-<li>SPSS-Format</li>
-<li>Wertelabel</li>
-<li>Missingtags</li>
+<li><code>varName</code> - Variablenname</li>
+<li><code>varLabel</code> - Variablenlabel</li>
+<li><code>format</code> - SPSS-Format</li>
+<li><code>value</code> - numerischer Wert</li>
+<li><code>valLabel</code> - Wertelabel</li>
+<li><code>missings</code> - Missingtags (<code>miss</code> oder <code>valid</code>)</li>
 </ul></li>
 </ul>
 </section>
 <section id="gadsdat-objekte-2" class="slide level2">
 <h2>GADSdat-Objekte</h2>
 <p><strong>Daten</strong></p>
-<p><img data-src="GADSdat_dat.jpg" style="height:50.0%"></p>
+<p><img data-src="Figures/GADSdat_dat.jpg" style="height:50.0%"></p>
 </section>
 <section id="gadsdat-objekte-3" class="slide level2">
 <h2>GADSdat-Objekte</h2>
 <p><strong>Meta-Daten</strong></p>
-<p><img data-src="GADSdat_labels.jpg" style="height:50.0%"></p>
+<p><img data-src="Figures/GADSdat_labels.jpg" style="height:50.0%"></p>
 </section>
 <section id="gadsdat-objekte-4" class="slide level2">
 <h2>GADSdat-Objekte</h2>
@@ -516,13 +541,15 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <h2>Meta-Daten</h2>
 <p>Extraktion von Meta-Daten via <code>extractMeta()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">extractMeta</span>(pisa, <span class="at">vars =</span> <span class="st">"schtype"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">extractMeta</span>(pisa, <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"idstud"</span>, <span class="st">"schtype"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  varName     varLabel format display_width labeled value
+2  idstud   Student-ID   F8.0            NA      no    NA
 5 schtype School track   F8.0            NA     yes     1
 6 schtype School track   F8.0            NA     yes     2
 7 schtype School track   F8.0            NA     yes     3
                                    valLabel missings
+2                                      &lt;NA&gt;     &lt;NA&gt;
 5                Gymnasium (academic track)    valid
 6                                Realschule    valid
 7 schools with several courses of education    valid</code></pre>
@@ -533,30 +560,36 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <h2>Meta-Daten</h2>
 <p>Änderung von Meta-Daten</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Variablenlabel</span></span>
-<span id="cb7-2"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeVarLabels</span>(pisa, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
-<span id="cb7-3"><a href=""></a>                         <span class="at">varLabel =</span> <span class="st">"Schulart"</span>)</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Variablenname</span></span>
+<span id="cb7-2"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeVarNames</span>(pisa, <span class="at">oldNames =</span> <span class="st">"idstud"</span>,</span>
+<span id="cb7-3"><a href=""></a>                         <span class="at">newNames =</span> <span class="st">"IDSTUD"</span>)</span>
 <span id="cb7-4"><a href=""></a></span>
-<span id="cb7-5"><a href=""></a><span class="co"># Wertelabel</span></span>
-<span id="cb7-6"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeValLabels</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
-<span id="cb7-7"><a href=""></a>                         <span class="at">value =</span> <span class="dv">1</span>, <span class="at">valLabel =</span> <span class="st">"Gymnasium"</span>)</span>
+<span id="cb7-5"><a href=""></a><span class="co"># Variablenlabel</span></span>
+<span id="cb7-6"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeVarLabels</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
+<span id="cb7-7"><a href=""></a>                         <span class="at">varLabel =</span> <span class="st">"Schulart"</span>)</span>
 <span id="cb7-8"><a href=""></a></span>
-<span id="cb7-9"><a href=""></a><span class="co"># Missingtag</span></span>
-<span id="cb7-10"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeMissings</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
-<span id="cb7-11"><a href=""></a>                         <span class="at">value =</span> <span class="sc">-</span><span class="dv">99</span>, <span class="at">missings =</span> <span class="st">"miss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-9"><a href=""></a><span class="co"># Wertelabel</span></span>
+<span id="cb7-10"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeValLabels</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
+<span id="cb7-11"><a href=""></a>                         <span class="at">value =</span> <span class="dv">1</span>, <span class="at">valLabel =</span> <span class="st">"Gymnasium"</span>)</span>
+<span id="cb7-12"><a href=""></a></span>
+<span id="cb7-13"><a href=""></a><span class="co"># Missingtag</span></span>
+<span id="cb7-14"><a href=""></a>pisa2 <span class="ot">&lt;-</span> <span class="fu">changeMissings</span>(pisa2, <span class="at">varName =</span> <span class="st">"schtype"</span>,</span>
+<span id="cb7-15"><a href=""></a>                         <span class="at">value =</span> <span class="sc">-</span><span class="dv">99</span>, <span class="at">missings =</span> <span class="st">"miss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="meta-daten-2" class="slide level2">
 <h2>Meta-Daten</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">extractMeta</span>(pisa2, <span class="at">vars =</span> <span class="st">"schtype"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">extractMeta</span>(pisa2, <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"IDSTUD"</span>, <span class="st">"schtype"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  varName varLabel format display_width labeled value
-4 schtype Schulart   F8.0            NA     yes   -99
-5 schtype Schulart   F8.0            NA     yes     1
-6 schtype Schulart   F8.0            NA     yes     2
-7 schtype Schulart   F8.0            NA     yes     3
+<pre><code>  varName   varLabel format display_width labeled value
+1  IDSTUD Student-ID   F8.0            NA      no    NA
+4 schtype   Schulart   F8.0            NA     yes   -99
+5 schtype   Schulart   F8.0            NA     yes     1
+6 schtype   Schulart   F8.0            NA     yes     2
+7 schtype   Schulart   F8.0            NA     yes     3
                                    valLabel missings
+1                                      &lt;NA&gt;     &lt;NA&gt;
 4                                      &lt;NA&gt;     miss
 5                                 Gymnasium    valid
 6                                Realschule    valid
@@ -599,10 +632,10 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 </div>
 </div>
 </section>
-<section id="übung" class="slide level2">
+<section id="übung" class="slide level2 smaller">
 <h2>Übung</h2>
 <ul>
-<li>Lade den Datensatz <code>example_data.sav</code> aus dem <a href="https://github.com/beckerbenj/eatFDZ">eatFDZ</a> Paket (© <a href="https://github.com/ruckeran">Annegret Rucker</a>).</li>
+<li>Ladet den Datensatz <code>example_data.sav</code> aus dem <a href="https://github.com/beckerbenj/eatFDZ">eatFDZ</a> Paket (© <a href="https://github.com/ruckeran">Annegret Rucker</a>).</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"beckerbenj/eatFDZ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -612,8 +645,9 @@ Benjamin Becker, Annika Liebelt &amp; Jule Burblies
 <span id="cb14-2"><a href=""></a>example_gads <span class="ot">&lt;-</span> <span class="fu">import_spss</span>(sav_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>Inspiziere die Meta-Daten der Variable <code>"books"</code>.</li>
-<li>Vergebe sinnvolle Wertelabel und Missingtags, wo diese bisher fehlen.</li>
+<li>Inspiziert die Meta-Daten der Variable <code>"books"</code>.</li>
+<li>Vergebt sinnvolle Wertelabel und Missingtags, wo diese bisher fehlen.</li>
+<li>Bildet eine neue, dichotome Schulvariable (<code>"school_dich"</code>) mit <code>1 = "nicht-Gymnasium"</code> und <code>2 = "Gymnasium"</code>.</li>
 </ul>
 </section></section>
 <section>
@@ -889,8 +923,9 @@ $Ae_Qualitaet$missing_labels
 <a href="https://github.com/beckerbenj/eatFDZ" class="uri">https://github.com/beckerbenj/eatFDZ</a></p>
 </div>
 <div class="quarto-auto-generated-content">
+<p><img src="Figures/eatGADS.png" class="slide-logo"></p>
 <div class="footer footer-default">
-
+<p>Datenaufbereitung</p>
 </div>
 </div>
 </section></section>

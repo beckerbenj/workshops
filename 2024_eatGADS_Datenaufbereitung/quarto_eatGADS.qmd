@@ -3,28 +3,45 @@ title: "eatGADS - Datenaufbereitung"
 author: "Benjamin Becker, Annika Liebelt & Jule Burblies"
 date: "2024-11-12"
 title-slide-attributes:
-  data-background-image: eatGADS.png
+  data-background-image: Figures/eatGADS.png
   data-background-size: 20%
   data-background-repeat: no-repeat
   data-background-position: 95% 5%
-format: revealjs
-editor: visual
+format: 
+  revealjs:
+    logo: Figures/eatGADS.png
+    footer: "Datenaufbereitung"
+    toc: false
+    theme: default
+    css: logo.css
+editor: source
 execute:
   echo: true
 ---
+
+## Agenda {.smaller}
+
+- eatGADS - Basics
+  - Hintergrund
+  - Grundlegendes
+  - Übersicht Funktionalität
+- eatGADS im BT-Kontext
+  - Aufbereitungsziel
+  - Häufig verwendete Funktionen
+  - Best Practices
+
+# eatGADS: Hintergrund
 
 ## eatGADS - Scope
 
 -   Datenbankerstellung
 -   Datenbanknutzung
-
 
 ## eatGADS - Scope
 
 -   Datenbankerstellung
 -   Datenbanknutzung
 -   **(teil-automatisierte) Datenaufbereitung**
-
 
 ## Ursprüngliche Idee
 
@@ -43,7 +60,7 @@ library(eatGADS)
 
 ## eatGADS
 
-![](eatGADS_CRAN.jpg)
+![](Figures/eatGADS_CRAN.jpg)
 
 ```{r}
 #| eval: false
@@ -58,11 +75,11 @@ remotes::install_github("beckerbenj/eatGADS")
 
 ## Ressourcen
 
--   [Comprehensive Data Cleaning Guide (BT-Perspektive)](https://beckerbenj.github.io/eatGADS/articles/data_cleaning.html)
--   [FDZ Data Cleaning](https://beckerbenj.github.io/eatFDZ/articles/FDZ_Data_Cleaning.html)
+-   [Vignette: Comprehensive Data Cleaning Guide (BT-Perspektive)](https://beckerbenj.github.io/eatGADS/articles/data_cleaning.html)
+-   [Vignette: FDZ Data Cleaning](https://beckerbenj.github.io/eatFDZ/articles/FDZ_Data_Cleaning.html)
 -   [komplette Funktionsübersicht](https://beckerbenj.github.io/eatGADS/reference/index.html)
 
-# Grundlegendes
+# eatGADS: Grundlegendes
 
 ## GADSdat-Objekte
 
@@ -75,28 +92,28 @@ Liste bestehend aus
 
 Liste bestehend aus
 
-* rohen Daten (`dat`)
-  + numerische Variablen
-  + character Variablen (Zeichenfolgen)
-  
-* Meta-Daten (`labels`)
-  + Variablenlabel
-  + SPSS-Format
-  + Wertelabel
-  + Missingtags
-  
+-   rohen Daten (`dat`)
+    -   numerische Variablen
+    -   character Variablen (Zeichenfolgen)
+-   Meta-Daten (`labels`)
+    -   `varName` - Variablenname
+    -   `varLabel` - Variablenlabel
+    -   `format` - SPSS-Format
+    -   `value` - numerischer Wert
+    -   `valLabel` - Wertelabel
+    -   `missings` - Missingtags (`miss` oder `valid`)
 
 ## GADSdat-Objekte
 
 **Daten**
 
-![](GADSdat_dat.jpg){height="50%"}
+![](Figures/GADSdat_dat.jpg){height="50%"}
 
 ## GADSdat-Objekte
 
 **Meta-Daten**
 
-![](GADSdat_labels.jpg){height="50%"}
+![](Figures/GADSdat_labels.jpg){height="50%"}
 
 ## GADSdat-Objekte
 
@@ -133,7 +150,7 @@ Extraktion von Meta-Daten via `extractMeta()`
 ```{r}
 #| eval: true
 
-extractMeta(pisa, vars = "schtype")
+extractMeta(pisa, vars = c("idstud", "schtype"))
 
 ```
 
@@ -144,8 +161,12 @@ extractMeta(pisa, vars = "schtype")
 ```{r}
 #| eval: true
 
+# Variablenname
+pisa2 <- changeVarNames(pisa, oldNames = "idstud",
+                         newNames = "IDSTUD")
+
 # Variablenlabel
-pisa2 <- changeVarLabels(pisa, varName = "schtype",
+pisa2 <- changeVarLabels(pisa2, varName = "schtype",
                          varLabel = "Schulart")
 
 # Wertelabel
@@ -163,7 +184,7 @@ pisa2 <- changeMissings(pisa2, varName = "schtype",
 ```{r}
 #| eval: true
 
-extractMeta(pisa2, vars = "schtype")
+extractMeta(pisa2, vars = c("IDSTUD", "schtype"))
 
 ```
 
@@ -198,22 +219,23 @@ extractMeta(pisa3, vars = "schtype_dich")
 
 ```
 
-## Übung
+## Übung {.smaller}
 
--   Lade den Datensatz `example_data.sav` aus dem [eatFDZ](https://github.com/beckerbenj/eatFDZ) Paket (© [Annegret Rucker](https://github.com/ruckeran)).
+-   Ladet den Datensatz `example_data.sav` aus dem [eatFDZ](https://github.com/beckerbenj/eatFDZ) Paket (© [Annegret Rucker](https://github.com/ruckeran)).
 
 ```{r}
 #| eval: false
 remotes::install_github("beckerbenj/eatFDZ")
 ```
 
-```{r}  
+```{r}
 sav_path <- system.file("extdata", "example_data.sav", package = "eatFDZ")
 example_gads <- import_spss(sav_path)
 ```
 
--   Inspiziere die Meta-Daten der Variable `"books"`.
--   Vergebe sinnvolle Wertelabel und Missingtags, wo diese bisher fehlen.
+-   Inspiziert die Meta-Daten der Variable `"books"`.
+-   Vergebt sinnvolle Wertelabel und Missingtags, wo diese bisher fehlen.
+-   Bildet eine neue, dichotome Schulvariable (`"school_dich"`) mit `1 = "nicht-Gymnasium"` und `2 = "Gymnasium"`.
 
 # Übersicht Funktionalität
 
@@ -221,16 +243,15 @@ example_gads <- import_spss(sav_path)
 
 Import-Funktionen
 
--   [`import_spss()`](https://beckerbenj.github.io/eatGADS/reference/import_spss.html) - Import von `.sav` 
--   [`import_stata()`](https://beckerbenj.github.io/eatGADS/reference/import_stata.html) - Import von `.dta` 
+-   [`import_spss()`](https://beckerbenj.github.io/eatGADS/reference/import_spss.html) - Import von `.sav`
+-   [`import_stata()`](https://beckerbenj.github.io/eatGADS/reference/import_stata.html) - Import von `.dta`
 -   [`import_DF()`](https://beckerbenj.github.io/eatGADS/reference/import_DF.html) - Import von `data.frames`
--   [`import_RDS()`](https://beckerbenj.github.io/eatGADS/reference/import_RDS.html) - Import von `.RDS` Dateien 
+-   [`import_RDS()`](https://beckerbenj.github.io/eatGADS/reference/import_RDS.html) - Import von `.RDS` Dateien
 -   [`import_raw()`](https://beckerbenj.github.io/eatGADS/reference/import_raw.html) - Direkt-Import von Rohdaten & Metadaten
-
 
 Export-Funktionen
 
--   [`write_spss()`](https://beckerbenj.github.io/eatGADS/reference/write_spss.html) - Export von `.sav` 
+-   [`write_spss()`](https://beckerbenj.github.io/eatGADS/reference/write_spss.html) - Export von `.sav`
 -   [`write_spss2()`](https://beckerbenj.github.io/eatGADS/reference/write_spss2.html) - Alternativer Export von `.sav`
 -   [`write_stata()`](https://beckerbenj.github.io/eatGADS/reference/write_stata.html) - Export von `.dta`
 -   [`extractData2()`](https://beckerbenj.github.io/eatGADS/reference/extractData2.html) - Extraktion von Datensätzen innerhalb `R`
@@ -249,7 +270,6 @@ Export-Funktionen
 -   [`reuseMeta()`](https://beckerbenj.github.io/eatGADS/reference/reuseMeta.html) - Wiederverwendung von Meta-Daten
 -   [`updateMeta()`](https://beckerbenj.github.io/eatGADS/reference/updateMeta.html) - Aktualisiert Meta-Daten im Datensatz
 
-
 ## Übersicht Funktionalität III {.smaller}
 
 ### Grundlegende Daten-Struktur bearbeiten
@@ -261,19 +281,18 @@ Export-Funktionen
 -   [`orderLike()`](https://beckerbenj.github.io/eatGADS/reference/orderLike.html) - Anordnung aller Variablen
 -   [`insertVariable()`](https://beckerbenj.github.io/eatGADS/reference/insertVariable.html) - Fügt eine neue Variable in den Datensatz ein
 
-
 ## Übersicht Funktionalität IV {.smaller}
 
 Semi-automatisierte Funktionen
 
 -   [`calculateScale()`](https://beckerbenj.github.io/eatGADS/reference/calculateScale.html) - Erstellen einer Skala
--   [`collapseMC_Text()`](https://beckerbenj.github.io/eatGADS/reference/collapseMC_Text.html) - Rekodierung eines forced Choice Items mit Freitextmöglichkeit 
--   [`collapseMultiMC_Text()`](https://beckerbenj.github.io/eatGADS/reference/collapseMultiMC_Text().html) - Rekodierung eines multiple Choice Items mit Freitextmöglichkeit 
+-   [`collapseMC_Text()`](https://beckerbenj.github.io/eatGADS/reference/collapseMC_Text.html) - Rekodierung eines forced Choice Items mit Freitextmöglichkeit
+-   [`collapseMultiMC_Text()`](https://beckerbenj.github.io/eatGADS/reference/collapseMultiMC_Text().html) - Rekodierung eines multiple Choice Items mit Freitextmöglichkeit
 -   [`composeVar()`](https://beckerbenj.github.io/eatGADS/reference/composeVar.html) - Kombination unterschiedlicher Informationsquellen
 -   [`convertCase()`](https://beckerbenj.github.io/eatGADS/reference/convertCase.html) - Änderung Groß-/Kleinschreibung
--   [`dummies2char()`](https://beckerbenj.github.io/eatGADS/reference/dummies2char.html) 
--   [`fac2dummies()`](https://beckerbenj.github.io/eatGADS/reference/fac2dummies.html) 
--   [`multiChar2fac()`](https://beckerbenj.github.io/eatGADS/reference/multiChar2fac.html) 
+-   [`dummies2char()`](https://beckerbenj.github.io/eatGADS/reference/dummies2char.html)
+-   [`fac2dummies()`](https://beckerbenj.github.io/eatGADS/reference/fac2dummies.html)
+-   [`multiChar2fac()`](https://beckerbenj.github.io/eatGADS/reference/multiChar2fac.html)
 -   ...
 
 ## Übung

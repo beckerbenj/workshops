@@ -16,7 +16,7 @@ format:
     toc: false
     theme: default
     css: logo.css
-editor: visual
+editor: source
 execute:
   echo: true
 ---
@@ -31,23 +31,21 @@ Zuordnung von Items zu Blöcken aus einem Itempool unter Berücksichtigung von T
 
 Nicht händisch, sondern unter Verwendung von Optimierungsalgorithmen
 
-
 ## Vorstellungsrunde
 
 30 Sekunden pro Person:
 
-- Name
-- Projekt
-- Habt ihr schon mal selbst eine Blockbesetzung umgesetzt?
-- Wenn ja, händisch oder mit eatATA?
-
+-   Name
+-   Projekt
+-   Habt ihr schon mal selbst eine Blockbesetzung umgesetzt?
+-   Wenn ja, händisch oder mit eatATA?
 
 ## Agenda
 
-1. Hintergrund: Wofür?
-2. Grundlagen: Mathematical Programming
-3. Theorie: Automated Test Assembly/Automatisierte Blockbesetzung
-4. Praxis: eatATA
+1.  Hintergrund: Wofür?
+2.  Grundlagen: Mathematical Programming
+3.  Theorie: Automated Test Assembly/Automatisierte Blockbesetzung
+4.  Praxis: eatATA
 
 # Wofür?
 
@@ -94,7 +92,6 @@ library(eatATA)
 
 -   Parallelität
 -   Linking
-
 
 ## Parallele Blöcke {.smaller}
 
@@ -168,14 +165,12 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 
 **Constraints:**
 
--   Maximal 8 Büroplätze
-$$
-S + D + P \leq 8 
-$$
--   Maximale Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$)
-$$
+-   Maximal 8 Büroplätze $$
+    S + D + P \leq 8 
+    $$
+-   Maximale Kosten 120\$: StuMis (5\$), Docs (18\$), Postdocs (25\$) $$
     5S + 18D + 25P \leq 120
-$$
+    $$
 
 ## Beispiel: Variiertes Rucksackproblem {.smaller}
 
@@ -185,16 +180,13 @@ $$
 
 **Constraints:**
 
--   Es braucht von jeder Statusgruppe mindestens 2 Personen
-$$
+-   Es braucht von jeder Statusgruppe mindestens 2 Personen $$
     S \geq 2  
-$$
-$$
+    $$ $$
     D \geq 2
-$$
-$$
+    $$ $$
     P \geq 2 
-$$
+    $$
 
 ## Beispiel: Variiertes Rucksackproblem {.smaller}
 
@@ -205,10 +197,9 @@ $$
 **Objective Function:**
 
 -   Publikationen: StuMis (1), Docs (2), Postdocs (3)
--   Anzahl der Publikationen maximieren
-$$
+-   Anzahl der Publikationen maximieren $$
     Maximiere \quad  1S + 2D + 3P 
-$$
+    $$
 
 ## Solver {.smaller}
 
@@ -227,8 +218,7 @@ $$
 
 ## Übung
 
-- Versucht das vorgestellte Beispiel händisch zu lösen!
-
+-   Versucht das vorgestellte Beispiel händisch zu lösen!
 
 ## Lösung mithilfe von Rglpk
 
@@ -283,7 +273,7 @@ knitr::include_graphics("Graphs/vanderLinden_cover.JPG")
 
 ## Automatisierte Blockbesetzung
 
-Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung [@vanderLinden.2005;@Kuhn.2015]
+Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung [@vanderLinden.2005; @Kuhn.2015]
 
 **Zentrale Konzepte**
 
@@ -321,13 +311,12 @@ kable(items_mini[1:5, ],
 
 **Decision Variables**
 
-- Matrix mit 
-  - Spalten = Anzahl Items (+ 1) 
-  - Zeilen = Anzahl Blöcke
-- 30 Items, 1 Block
-$$
-    i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
-$$
+-   Matrix mit
+    -   Spalten = Anzahl Items (+ 1)
+    -   Zeilen = Anzahl Blöcke
+-   30 Items, 1 Block $$
+      i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
+    $$
 
 ## Minimalbeispiel: Objective Function {.smaller}
 
@@ -337,117 +326,100 @@ $$
 -   so viel/wenig/nah wie möglich (an) ...
 -   Wichtig: Exakt eine Testspezifikation muss hierfür ausgewählt werden
 -   Min/Max/Minimax/Maximin
--   Minimale Blockzeit
-$$
+-   Minimale Blockzeit $$
     minimiere \quad  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} 
-$$
+    $$
 
 ## Minimalbeispiel: Constraints {.smaller}
 
 **Constraints**
 
 -   Alle anderen Testspezifikationen
--   Genau 10 Items pro Block
-$$
+-   Genau 10 Items pro Block $$
     i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 
-$$
--   4 MC Items, 3 offene Items, 3 Zuordnungsitems
-$$
-  1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} = 4 
-$$
-$$
-  0i_{1, b1} + 0i_{2, b1} + \ldots + 0i_{30, b1} = 3 
-$$
-$$
-  0i_{1, b1} + 0i_{2, b1} + \ldots + 1i_{30, b1} = 3 
-$$
-
+    $$
+-   4 MC Items, 3 offene Items, 3 Zuordnungsitems $$
+      1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} = 4 
+    $$ $$
+      0i_{1, b1} + 0i_{2, b1} + \ldots + 0i_{30, b1} = 3 
+    $$ $$
+      0i_{1, b1} + 0i_{2, b1} + \ldots + 1i_{30, b1} = 3 
+    $$
 
 ## Übung {.smaller}
 
 Notiert die Decision Variables, Objective Function und Constraints für folgendes ATA-Problem:
 
-- 2 Blöcke
-- beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
-- jedes Item darf maximal nur in einem Block vorkommen 
-- pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden
+-   2 Blöcke
+-   beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
+-   jedes Item darf maximal nur in einem Block vorkommen
+-   pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden
 
 ## Lösung {.smaller}
 
-- Decision Variables für 2 Blöcke und Item-Pool aus 30 Items
+-   Decision Variables für 2 Blöcke und Item-Pool aus 30 Items
 
 $$
     i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
-$$
-$$
+$$ $$
     i_{1, b2}, i_{2, b2}, i_{3, b2}, \ldots, i_{30, b2}
 $$
 
 ## Lösung {.smaller}
 
-- beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
-- Maximin-Ansatz
+-   beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
+-   Maximin-Ansatz
 
 $$
   27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} - y <= 450
-$$
-$$
+$$ $$
   27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} + y >= 450
-$$
-$$
+$$ $$
   27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} - y <= 450
-$$
-$$
+$$ $$
   27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} + y >= 450
-$$
-$$
+$$ $$
  minimiere \quad y
 $$
 
 ## Lösung {.smaller}
 
-- jedes Item darf maximal nur in einem Block vorkommen 
+-   jedes Item darf maximal nur in einem Block vorkommen
 
 $$
     i_{1, b1} + i_{1, b2} <= 1 
-$$
-$$
+$$ $$
     i_{2, b1} + i_{2, b2} <= 1 
-$$
-$$
+$$ $$
     \ldots 
 $$
 
-
 ## Lösung {.smaller}
 
-- jedes Itemformat sollte mindestens 3 Mal pro Block vorkommen
+-   jedes Itemformat sollte mindestens 3 Mal pro Block vorkommen
 
 $$
     1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} >= 3 
-$$
-$$
+$$ $$
     1i_{1, b2} + 1i_{2, b2} + \ldots + 0i_{30, b2} >= 3 
-$$
-$$
+$$ $$
     \ldots
 $$
-
 
 # Umsetzung in eatATA
 
 ## eatATA
 
-Entwickelt basierend auf Feedback von: 
+Entwickelt basierend auf Feedback von:
 
-- Pauline Kohrt (ehemals VERA 3 Math) 
-- Simone Dubiel (ehemals VERA 8 German) 
-- Karoline Sachse (BT/Methoden)
+-   Pauline Kohrt (ehemals VERA 3 Math)
+-   Simone Dubiel (ehemals VERA 8 German)
+-   Karoline Sachse (BT/Methoden)
 
 Paketautoren:
 
-- [Dries Debeer (Ghent University)](https://research.ugent.be/web/person/dries-debeer-0/en) 
-- Benjamin Becker (IQB)
+-   [Dries Debeer (Ghent University)](https://research.ugent.be/web/person/dries-debeer-0/en)
+-   Benjamin Becker (IQB)
 
 ## eatATA: Resources I
 
@@ -460,7 +432,6 @@ Vignettes available on [CRAN](https://CRAN.R-project.org/package=eatATA)
 or on [pkgdown](https://beckerbenj.github.io/eatATA/)
 
 ![](Graphs/eatATA_pkgdown.JPG)
-
 
 ## eatATA: Resources III
 
@@ -545,78 +516,76 @@ item_mini_out[1:10, ]
 
 ## Itempool vorbereiten {.smaller}
 
-* [`calculateIIF()`](https://beckerbenj.github.io/eatATA/reference/calculateIIF.html) - Berechnung Item-Informationsfunktion
-* [`calculatExpectedRT()`](https://beckerbenj.github.io/eatATA/reference/calculateIIF.html) - Berechnung erwarteter Antwortzeiten
-* [`dummiesToFactor()`](https://beckerbenj.github.io/eatATA/reference/dummiesToFactor.html) - Transformation von Dummy-Variablen in Faktoren
-* [`computeTargetValues()`](https://beckerbenj.github.io/eatATA/reference/computeTargetValues.html) - Berechnung von sinnvollen Zielwerten
+-   [`calculateIIF()`](https://beckerbenj.github.io/eatATA/reference/calculateIIF.html) - Berechnung Item-Informationsfunktion
+-   [`calculatExpectedRT()`](https://beckerbenj.github.io/eatATA/reference/calculateIIF.html) - Berechnung erwarteter Antwortzeiten
+-   [`dummiesToFactor()`](https://beckerbenj.github.io/eatATA/reference/dummiesToFactor.html) - Transformation von Dummy-Variablen in Faktoren
+-   [`computeTargetValues()`](https://beckerbenj.github.io/eatATA/reference/computeTargetValues.html) - Berechnung von sinnvollen Zielwerten
 
 ## Objective Function {.smaller}
 
-* [`maxObjective()`](https://beckerbenj.github.io/eatATA/reference/maxObjective.html) - Maximieren
-* [`minObjective()`](https://beckerbenj.github.io/eatATA/reference/minObjective.html) - Minimieren
-* [`maximinObjective()`](https://beckerbenj.github.io/eatATA/reference/maximinObjective.html) - Maximieren eines Minimums
-* [`minimaxObjective()`](https://beckerbenj.github.io/eatATA/reference/minimaxObjective.html) - Minimieren eines Maximums
-* [`cappedMaximinObjective()`](https://beckerbenj.github.io/eatATA/reference/cappedMaximinObjective.html) - Capped Maximin
+-   [`maxObjective()`](https://beckerbenj.github.io/eatATA/reference/maxObjective.html) - Maximieren
+-   [`minObjective()`](https://beckerbenj.github.io/eatATA/reference/minObjective.html) - Minimieren
+-   [`maximinObjective()`](https://beckerbenj.github.io/eatATA/reference/maximinObjective.html) - Maximieren eines Minimums
+-   [`minimaxObjective()`](https://beckerbenj.github.io/eatATA/reference/minimaxObjective.html) - Minimieren eines Maximums
+-   [`cappedMaximinObjective()`](https://beckerbenj.github.io/eatATA/reference/cappedMaximinObjective.html) - Capped Maximin
 
 ## Constraints {.smaller}
 
-Itemverwendung 
+Itemverwendung
 
-* [`depletePoolConstraint()`](https://beckerbenj.github.io/eatATA/reference/depletePoolConstraint.html) - Erschöpfung des Itempools
-* [`itemUsageConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html) - Itemnutzung
+-   [`depletePoolConstraint()`](https://beckerbenj.github.io/eatATA/reference/depletePoolConstraint.html) - Erschöpfung des Itempools
+-   [`itemUsageConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemUsageConstraint.html) - Itemnutzung
 
 Anzahl Items pro Form
 
-* [`itemsPerFormConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemsPerFormConstraint.html) - Anzahl Items pro Form
-
+-   [`itemsPerFormConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemsPerFormConstraint.html) - Anzahl Items pro Form
 
 ## Constraints {.smaller}
 
 Kategoriale Constraints
 
-* [`itemCategoryConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryConstraint.html) - Kategoriale Constraints
-* [`itemCategoryDeviationConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryDeviationConstraint.html) - Abweichung von Zielwert
-* [`itemCategoryMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryMaxConstraint.html) - Maximum
-* [`itemCategoryMinConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryMinConstraint.html) - Minimum
-* [`itemCategoryRangeConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryRangeConstraint.html) - Maximum und Minimum
+-   [`itemCategoryConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryConstraint.html) - Kategoriale Constraints
+-   [`itemCategoryDeviationConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryDeviationConstraint.html) - Abweichung von Zielwert
+-   [`itemCategoryMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryMaxConstraint.html) - Maximum
+-   [`itemCategoryMinConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryMinConstraint.html) - Minimum
+-   [`itemCategoryRangeConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemCategoryRangeConstraint.html) - Maximum und Minimum
 
 ## Constraints {.smaller}
 
 Metrische Constraints
 
-* [`autoItemValuesMinMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/autoItemValuesMinMaxConstraint.html) - Automatische Min/Max-Berechnung
-* [`itemValuesConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesConstraint.html) - Metrische Constraints
-* [`itemValuesDeviationConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesDeviationConstraint.html) - Abweichung von Zielwert
-* [`itemValuesMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesMaxConstraint.html) - Maximum
-* [`itemValuesMinConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesMinConstraint.html) - Minimum
-* [`itemValuesRangeConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesRangeConstraint.html) - Maximum und Minimum
+-   [`autoItemValuesMinMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/autoItemValuesMinMaxConstraint.html) - Automatische Min/Max-Berechnung
+-   [`itemValuesConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesConstraint.html) - Metrische Constraints
+-   [`itemValuesDeviationConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesDeviationConstraint.html) - Abweichung von Zielwert
+-   [`itemValuesMaxConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesMaxConstraint.html) - Maximum
+-   [`itemValuesMinConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesMinConstraint.html) - Minimum
+-   [`itemValuesRangeConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemValuesRangeConstraint.html) - Maximum und Minimum
 
 ## Constraints {.smaller}
 
 Metrische Constraints über Testformen
 
-* [`acrossFormsConstraint()`](https://beckerbenj.github.io/eatATA/reference/acrossFormsConstraint.html) - Über Testformen
+-   [`acrossFormsConstraint()`](https://beckerbenj.github.io/eatATA/reference/acrossFormsConstraint.html) - Über Testformen
 
 Iteminklusionen und -exklusionen
 
-* [`itemExclusionConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemExclusionConstraint.html) - Itemexklusionen
-* [`itemInclusionConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemInclusionConstraint.html) - Iteminklusionen
+-   [`itemExclusionConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemExclusionConstraint.html) - Itemexklusionen
+-   [`itemInclusionConstraint()`](https://beckerbenj.github.io/eatATA/reference/itemInclusionConstraint.html) - Iteminklusionen
 
 Vorbereitung von Iteminklusionen und -exklusionen
 
-* [`itemTuples()`](https://beckerbenj.github.io/eatATA/reference/itemTuples.html) - Vorbereitung von Iteminklusionen und -exklusionen
-* [`matrixExclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/matrixExclusionTuples.html) - Vorbereitung von Itemexklusionen
-* [`stemInclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/stemInclusionTuples.html) - Vorbereitung von Iteminklusionen
-
+-   [`itemTuples()`](https://beckerbenj.github.io/eatATA/reference/itemTuples.html) - Vorbereitung von Iteminklusionen und -exklusionen
+-   [`matrixExclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/matrixExclusionTuples.html) - Vorbereitung von Itemexklusionen
+-   [`stemInclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/stemInclusionTuples.html) - Vorbereitung von Iteminklusionen
 
 ## Übung {.smaller}
 
 Erstellt Blöcke mit folgenden Testspezifikationen mithilfe von `eatATA` (siehe auch letzte Übung):
 
-- 2 Blöcke
-- beide Blöcke Testzeit so nah wie möglich an 450 Sekunden (via `minimaxObjective()` Funktion)
-- jedes Item darf maximal nur in einem Block vorkommen (via `itemUsageConstraint()` Funktion)
-- pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden (via `itemCategoryMinConstraint()` Funktion)
+-   2 Blöcke
+-   beide Blöcke Testzeit so nah wie möglich an 450 Sekunden (via `minimaxObjective()` Funktion)
+-   jedes Item darf maximal nur in einem Block vorkommen (via `itemUsageConstraint()` Funktion)
+-   pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden (via `itemCategoryMinConstraint()` Funktion)
 
 Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!
 
@@ -624,24 +593,21 @@ Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!
 
 Siehe R-Syntax
 
-
 ## Praktische Tipps
 
-- ATA ist ein Skill für sich
-- Es gibt immer mehrere Wege zum Ziel
-- Pragmatisches Vorgehen: 
-  - Häufig muss die Lösung nicht perfekt sein
-  - Der Weg zum Ziel ist irrelevant
-- Schrittweises Vorgehen [@Proietti.2020]
-  - Problem schrittweise aufbauen oder
-  - Problem schrittweise vereinfachen
-
-
+-   ATA ist ein Skill für sich
+-   Es gibt immer mehrere Wege zum Ziel
+-   Pragmatisches Vorgehen:
+    -   Häufig muss die Lösung nicht perfekt sein
+    -   Der Weg zum Ziel ist irrelevant
+-   Schrittweises Vorgehen [@Proietti.2020]
+    -   Problem schrittweise aufbauen oder
+    -   Problem schrittweise vereinfachen
 
 ## References
+
 ::: {#refs}
 :::
-
 
 # Danke für Eure Aufmerksamkeit!
 
@@ -651,25 +617,25 @@ Siehe R-Syntax
 
 Gründe
 
-- Gemeinsamer Stimulus ('Aufgabe') 
-- andere Gründe
+-   Gemeinsamer Stimulus ('Aufgabe')
+-   andere Gründe
 
-Umsetzung 
+Umsetzung
 
-- Aufgaben und nicht Items als Assembling Unit (e.g., VERA 3 Math) 
-- explizite Item Inclusion (siehe eatATA Tutorial)
+-   Aufgaben und nicht Items als Assembling Unit (e.g., VERA 3 Math)
+-   explizite Item Inclusion (siehe eatATA Tutorial)
 
 ## Item Exclusions
 
 Gründe
 
-- Item beinhaltet Info zu Lösung eines anderen Items
-- Items inhaltlich zu ähnlich
-- ...
+-   Item beinhaltet Info zu Lösung eines anderen Items
+-   Items inhaltlich zu ähnlich
+-   ...
 
 Umsetzung
 
-- Explizite Item Exclusions
+-   Explizite Item Exclusions
 
 ## Code: Item Inclusions (Input)
 
