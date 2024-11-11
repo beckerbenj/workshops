@@ -241,7 +241,7 @@ example_gads <- import_spss(sav_path)
 
 ## Übersicht Funktionalität I {.smaller}
 
-Import-Funktionen
+**Import-Funktionen**
 
 -   [`import_spss()`](https://beckerbenj.github.io/eatGADS/reference/import_spss.html) - Import von `.sav`
 -   [`import_stata()`](https://beckerbenj.github.io/eatGADS/reference/import_stata.html) - Import von `.dta`
@@ -249,7 +249,7 @@ Import-Funktionen
 -   [`import_RDS()`](https://beckerbenj.github.io/eatGADS/reference/import_RDS.html) - Import von `.RDS` Dateien
 -   [`import_raw()`](https://beckerbenj.github.io/eatGADS/reference/import_raw.html) - Direkt-Import von Rohdaten & Metadaten
 
-Export-Funktionen
+**Export-Funktionen**
 
 -   [`write_spss()`](https://beckerbenj.github.io/eatGADS/reference/write_spss.html) - Export von `.sav`
 -   [`write_spss2()`](https://beckerbenj.github.io/eatGADS/reference/write_spss2.html) - Alternativer Export von `.sav`
@@ -258,7 +258,7 @@ Export-Funktionen
 
 ## Übersicht Funktionalität II {.smaller}
 
-### Meta-Daten bearbeiten
+**Meta-Daten bearbeiten**
 
 -   [`getChangeMeta()`](https://beckerbenj.github.io/eatGADS/reference/getChangeMeta.html) - Extrahiert Änderungen in den Meta-Daten
 -   [`applyChangeMeta()`](https://beckerbenj.github.io/eatGADS/reference/applyChangeMeta.html) - Wendet Änderungen in den Meta-Daten an
@@ -272,18 +272,19 @@ Export-Funktionen
 
 ## Übersicht Funktionalität III {.smaller}
 
-### Grundlegende Daten-Struktur bearbeiten
+**Grundlegende Daten-Struktur bearbeiten**
 
 -   [`extractVars()`](https://beckerbenj.github.io/eatGADS/reference/extractVars.html) - Extraktion ausgewählter Variablen
 -   [`removeVars()`](https://beckerbenj.github.io/eatGADS/reference/removeVars.html) - Entfernen bestimmter Variablen
 -   [`cloneVar()`](https://beckerbenj.github.io/eatGADS/reference/cloneVar.html) - Kopiert eine Variable
 -   [`relocateVariable()`](https://beckerbenj.github.io/eatGADS/reference/relocateVariable.html) - Verschiebt eine Variable an eine neue Position
 -   [`orderLike()`](https://beckerbenj.github.io/eatGADS/reference/orderLike.html) - Anordnung aller Variablen
--   [`insertVariable()`](https://beckerbenj.github.io/eatGADS/reference/insertVariable.html) - Fügt eine neue Variable in den Datensatz ein
+-   ...
+
 
 ## Übersicht Funktionalität IV {.smaller}
 
-Semi-automatisierte Funktionen
+**Semi-automatisierte Funktionen**
 
 -   [`calculateScale()`](https://beckerbenj.github.io/eatGADS/reference/calculateScale.html) - Erstellen einer Skala
 -   [`collapseMC_Text()`](https://beckerbenj.github.io/eatGADS/reference/collapseMC_Text.html) - Rekodierung eines forced Choice Items mit Freitextmöglichkeit
@@ -297,27 +298,30 @@ Semi-automatisierte Funktionen
 
 ## Übung
 
--   Entferne die Variablen `"ID_name"` und `"info"` aus Anonymisierungsgründen vollständig aus dem Datensatz.
--   Bilde den Notendurchschnitt aus den bestehenden Notenvariablen (`"grade_<fach>"`).
+-   Entfernt die Variablen `"ID_name"` und `"info"` aus Anonymisierungsgründen vollständig aus dem Datensatz.
+-   Bildet den Notendurchschnitt aus den bestehenden Notenvariablen (`"grade_<fach>"`).
 
 ## Übersicht Funktionalität V {.smaller}
 
-Vergleichs-Funktionen
+**Vergleichs-Funktionen**
 
--   [`equalGADS()`](https://beckerbenj.github.io/eatGADS/reference/equalGADS.html) - tbd
--   [`compareGADS()`](https://beckerbenj.github.io/eatGADS/reference/compareGADS.html) - tbd
--   [`inspectDifferences()`](https://beckerbenj.github.io/eatGADS/reference/inspectDifferences.html) - tbd
--   [`inspectMetaDifferences()`](https://beckerbenj.github.io/eatGADS/reference/inspectMetaDifferences.html) - tbd
+-   [`equalGADS()`](https://beckerbenj.github.io/eatGADS/reference/equalGADS.html) - Abgleich zweier `GADSdat` Objekte
+-   [`inspectDifferences()`](https://beckerbenj.github.io/eatGADS/reference/inspectDifferences.html) - Datenunterschiede zweier Variablen
+-   [`inspectMetaDifferences()`](https://beckerbenj.github.io/eatGADS/reference/inspectMetaDifferences.html) - Meta-Datenunterschiede zweier Variablen
+-   [`compareGADS()`](https://beckerbenj.github.io/eatGADS/reference/compareGADS.html)
 
 ## Übersicht Funktionalität VI {.smaller}
 
-Check-Funktionen
+**Check-Funktionen**
 
--   [`import_spss()`](https://beckerbenj.github.io/eatGADS/reference/import_spss.html) - Konventionen Variablennamen
+-   [`checkVarNames()`](https://beckerbenj.github.io/eatGADS/reference/import_spss.html) - Konventionen Variablennamen
 -   [`fixEncoding()`](https://beckerbenj.github.io/eatGADS/reference/fixEncoding.html) - Umlaute & Sonderzeichen
 -   [`checkMissings()`](https://beckerbenj.github.io/eatGADS/reference/checkMissings.html) - Abgleich Wertelabels & Missingtags
+-   [`checkMissingsByValues()`](https://beckerbenj.github.io/eatGADS/reference/checkMissingsByValues.html) - Abgleich gelabelte numerische Werte & Missingtags
 -   [`checkEmptyValLabels()`](https://beckerbenj.github.io/eatGADS/reference/checkEmptyValLabels.html) - Abgleich Wertelabels & Daten
 -   [`checkMissingValLabels()`](https://beckerbenj.github.io/eatGADS/reference/checkMissingValLabels.html) - Abgleich Daten & Wertelabels
+
+# Check-Funktionen
 
 ## Variablennamen
 
@@ -343,7 +347,7 @@ aepfel <- import_spss("aepfel.sav")
 
 ```
 
-## Test-Datensatz
+## Variablennamen
 
 **Test-Daten**
 
@@ -352,7 +356,7 @@ aepfel <- import_spss("aepfel.sav")
 aepfel$dat
 ```
 
-## Test-Datensatz
+## Variablennamen
 
 **Test-Daten**
 
@@ -405,6 +409,20 @@ aepfel$labels[, c("varName", "varLabel", "value", "valLabel", "missings")]
 aepfel <- checkMissings(aepfel, missingLabel = "Missing|missing")
 ```
 
+## Abgleich Missingtags
+
+**Abgleich gelabelte numerische Werte und Missingtags**
+
+-   Alle gelabelten Werte in spezifischem numerischen Range auch als Missing getagged?
+
+→ Reporting und/oder Anpassung
+
+```{r}
+# Check and adjust missing tags
+aepfel <- checkMissingsByValues(aepfel, missingValues = -50:-99)
+```
+
+
 ## Abgleich Wertelabels
 
 **Abgleich Daten und Wertelabels**
@@ -427,6 +445,13 @@ checkEmptyValLabels(aepfel)
 checkMissingValLabels(aepfel, vars = c("Ae_Groesse", "Ae_Qualitaet"))
 ```
 
+## Übung {.smaller}
+
+-   Überprüft die Vergabe von Missingtags im Beispieldatensatz mithilfe der Funktionen `checkMissings()` und `checkMissingsByValues()`.
+-   Überprüft, ob alle Wertelabels auch tatsächlich in den Daten vorkommen (`checkEmptyValLabels()`). Sollten diese Wertelabel aus den Daten entfernt werden?
+-   Überprüft, ob alle Werte auch tatsächlich gelabelet sind (`checkMissingValLabels()`).
+
+
 ## 
 
 ::: {style="text-align: center;"}
@@ -443,9 +468,3 @@ Aufmerksamkeit!
 </h1>
 :::
 
-\vspace{2cm}
-
-::: {style="font-size: small;"}
-<https://CRAN.R-project.org/package=eatGADS>\
-<https://github.com/beckerbenj/eatFDZ>
-:::
