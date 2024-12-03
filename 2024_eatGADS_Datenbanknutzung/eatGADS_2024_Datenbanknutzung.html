@@ -403,13 +403,14 @@ Benjamin Becker
 </div>
 
 </section>
-<section id="agenda" class="slide level2 smaller">
+<section id="agenda" class="slide level2">
 <h2>Agenda</h2>
 <ul>
 <li>Hintergrund</li>
 <li>Grundlegendes</li>
 <li>Übersicht Funktionalität</li>
-<li>Anwendungsbeispiele</li>
+<li>Übung</li>
+<li>Praxis-Tipps</li>
 </ul>
 </section>
 <section>
@@ -420,22 +421,22 @@ Benjamin Becker
 <section id="eatgads---scope" class="slide level2">
 <h2>eatGADS - Scope</h2>
 <ul>
+<li>(teil-automatisierte) Datenaufbereitung</li>
 <li>Datenbankerstellung</li>
 <li>Datenbanknutzung</li>
-<li>(teil-automatisierte) Datenaufbereitung</li>
 </ul>
 </section>
 <section id="eatgads---scope-1" class="slide level2">
 <h2>eatGADS - Scope</h2>
 <ul>
+<li>(teil-automatisierte) Datenaufbereitung</li>
 <li>Datenbankerstellung</li>
 <li><strong>Datenbanknutzung</strong></li>
-<li>(teil-automatisierte) Datenaufbereitung</li>
 </ul>
 </section>
 <section id="was-ist-ein-gads" class="slide level2">
 <h2>Was ist ein GADS?</h2>
-<p><strong>G</strong>enereller <strong>A</strong>nalyse-<strong>D</strong>atensatz</p>
+<p><strong>G</strong>enereller/<strong>G</strong>esamt- <strong>A</strong>nalyse-<strong>D</strong>atensatz</p>
 <ul>
 <li>Berichts-GADS</li>
 <li>nach-Berichts-GADS</li>
@@ -457,16 +458,24 @@ Benjamin Becker
 </section>
 <section id="gads-ordner" class="slide level2">
 <h2>GADS-Ordner</h2>
+<p>BT22 nach-Berichts-GADS</p>
 
 <img data-src="Figures/GADS_folder.png" class="r-stretch"></section>
-<section id="warum-ist-es-jetzt-besser" class="slide level2">
-<h2>Warum ist es jetzt besser?</h2>
+<section id="warum-machen-wir-das" class="slide level2">
+<h2>Warum machen wir das?</h2>
 <ul>
 <li>.db (SQLite3) benötigt weniger Speicherplatz</li>
 <li>Zugriff auf Metadaten ohne Daten laden zu müssen</li>
 <li>Daten müssen für Analysen nicht gereshaped werden</li>
 <li>Variablenselektion beim Laden der Daten (weniger Arbeitsspeicher-Überlastung)</li>
 <li>flexibels Anwenden von Wertelabeln und Missingtags</li>
+</ul>
+</section>
+<section id="warum-braucht-ihr-das" class="slide level2">
+<h2>Warum braucht ihr das?</h2>
+<ul>
+<li>Alle BT-Daten seit BT18 intern nur noch als Datenbank verfügbar</li>
+<li>FDZ-Daten (SPSS, wide-Format) nutzbar, aber für IQB-relevante Analysen (z.B. mit eatRep) nicht optimal</li>
 </ul>
 </section>
 <section id="eatgads" class="slide level2">
@@ -497,12 +506,9 @@ Benjamin Becker
 <li>numerische Variablen</li>
 <li>character Variablen (Zeichenfolgen)</li>
 </ul>
-<p><img data-src="Figures/GADSdat_dat.jpg" style="height:50.0%"></p>
 </section>
 <section id="meta-daten-in-datenbank" class="slide level2">
 <h2>Meta-Daten in Datenbank</h2>
-<ul>
-<li>Meta-Daten (<code>labels</code>)
 <ul>
 <li><code>varName</code> - Variablenname</li>
 <li><code>varLabel</code> - Variablenlabel</li>
@@ -510,25 +516,112 @@ Benjamin Becker
 <li><code>value</code> - numerischer Wert</li>
 <li><code>valLabel</code> - Wertelabel</li>
 <li><code>missings</code> - Missingtags (<code>miss</code> oder <code>valid</code>)</li>
-</ul></li>
+<li><code>data_table</code> - Datenblatt</li>
 </ul>
 </section>
 <section id="meta-daten-in-datenbank-1" class="slide level2">
 <h2>Meta-Daten in Datenbank</h2>
-<p><img data-src="Figures/GADSdat_labels.jpg" style="height:50.0%"></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         varName                                         varLabel format
+165 computer_age                           First use of computers   F8.0
+166 computer_age                           First use of computers   F8.0
+167 computer_age                           First use of computers   F8.0
+168 computer_age                           First use of computers   F8.0
+169 computer_age                           First use of computers   F8.0
+331      norms_f Subjective Norms - Parents Like Mathematics (T1)   F8.0
+332      norms_f Subjective Norms - Parents Like Mathematics (T1)   F8.0
+333      norms_f Subjective Norms - Parents Like Mathematics (T1)   F8.0
+334      norms_f Subjective Norms - Parents Like Mathematics (T1)   F8.0
+356     repeated                                 Grade repetition   F8.0
+357     repeated                                 Grade repetition   F8.0
+    display_width labeled value               valLabel missings data_table
+165            NA     yes     1 6 years old or younger    valid      noImp
+166            NA     yes     2          7-9 years old    valid      noImp
+167            NA     yes     3        10-12 years old    valid      noImp
+168            NA     yes     4 13 years old  or older    valid      noImp
+169            NA     yes     5                  Never    valid      noImp
+331            NA     yes     1      Strongly disagree    valid      noImp
+332            NA     yes     2               Disagree    valid      noImp
+333            NA     yes     3                  Agree    valid      noImp
+334            NA     yes     4         Strongly agree    valid      noImp
+356            NA     yes     1 Did not repeat a grade    valid      noImp
+357            NA     yes     2       Repeated a grade    valid      noImp</code></pre>
+</div>
+</div>
+</section>
+<section id="übliche-bt-struktur" class="slide level2 smaller">
+<h2>Übliche BT-Struktur</h2>
+<ul>
+<li><code>noImp</code></li>
+<li><code>imp</code></li>
+<li><code>PVs</code></li>
+<li><code>wgts</code></li>
+</ul>
+</section>
+<section id="übliche-bt-struktur-1" class="slide level2 smaller">
+<h2>Übliche BT-Struktur</h2>
+<ul>
+<li><code>noImp</code>
+<ul>
+<li>unimputierter Datensatz auf SuS-Ebene</li>
+<li>Quellen: SFB, EFB, Tracking</li>
+<li>1 Zeile pro SuS</li>
+</ul></li>
+<li><code>imp</code>
+<ul>
+<li>imputierter Datensatz auf SuS-Ebene</li>
+<li>Quelle: Imputationen</li>
+<li>1 Zeile pro Imputation x SuS (= 15 Zeilen pro SuS)</li>
+</ul></li>
+</ul>
+</section>
+<section id="übliche-bt-struktur-2" class="slide level2 smaller">
+<h2>Übliche BT-Struktur</h2>
+<ul>
+<li><code>PVs</code>
+<ul>
+<li>Kompetenzdaten</li>
+<li>Quelle: PV-Ziehung</li>
+<li>1 Zeile pro Kompetenzbereich x Imputation x SuS (&gt; 75 Zeilen pro SuS)</li>
+</ul></li>
+<li><code>wgts</code>
+<ul>
+<li>bereichs-/fachspezifische Gewichte</li>
+<li>Quelle: Gewichtsdaten</li>
+<li>1 Zeile pro Kompetenzbereich x Imputation x SuS (&gt; 75 Zeilen pro SuS)</li>
+</ul></li>
+</ul>
 </section></section>
 <section>
 <section id="übersicht-funktionalität" class="title-slide slide level1 center">
 <h1>Übersicht Funktionalität</h1>
 
 </section>
+<section id="übersicht-funktionalität-1" class="slide level2">
+<h2>Übersicht Funktionalität</h2>
+<ul>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/namesGADS.html"><code>namesGADS()</code></a> - Variablennamen und Datenbankstruktur</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/extractMeta.html"><code>extractMeta()</code></a> - Extraktion Metadaten</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/getGADS.html"><code>getGADS()</code></a> - Extraktion aus DB</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/getGADS_fast.html"><code>getGADS_fast()</code></a> - Extraktion aus DB mit Caching</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/getTrendGADS.html"><code>getTrendGADS()</code></a> - Extraktion Trend-GADSe aus DB</li>
+<li><a href="https://beckerbenj.github.io/eatGADS/reference/extractData2.html"><code>extractData2()</code></a> - Extraktion Daten</li>
+</ul>
+</section>
+<section id="beispiel-datenbank" class="slide level2">
+<h2>Beispiel-Datenbank</h2>
+<p><a href="https://www.iqb.hu-berlin.de/fdz/studies/PISA_Plus_2012-13">PISA-Plus Daten</a> (FDZ Campus Files)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>db_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"pisa.db"</span>, <span class="at">package =</span> <span class="st">"eatGADS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="datenbank-struktur" class="slide level2">
 <h2>Datenbank-Struktur</h2>
 <p>Datenbankstruktur und Variablennamen inspizieren</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>db_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"pisa.db"</span>, <span class="at">package =</span> <span class="st">"eatGADS"</span>)</span>
-<span id="cb2-2"><a href=""></a>nam <span class="ot">&lt;-</span> <span class="fu">namesGADS</span>(db_path)</span>
-<span id="cb2-3"><a href=""></a>nam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>nam <span class="ot">&lt;-</span> <span class="fu">namesGADS</span>(db_path)</span>
+<span id="cb4-2"><a href=""></a>nam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$noImp
   [1] "idstud"       "idschool"     "idclass"      "schtype"      "sameteach"   
@@ -565,7 +658,8 @@ $PVs
 <h2>Metadaten</h2>
 <p>Metadaten extrahieren</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">extractMeta</span>(<span class="at">GADSobject =</span> db_path, <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"repeated"</span>, <span class="st">"norms_f"</span>, <span class="st">"computer_age"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">extractMeta</span>(<span class="at">GADSobject =</span> db_path, </span>
+<span id="cb6-2"><a href=""></a>            <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"repeated"</span>, <span class="st">"norms_f"</span>, <span class="st">"computer_age"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         varName                                         varLabel format
 165 computer_age                           First use of computers   F8.0
@@ -598,117 +692,16 @@ $PVs
 <h2>Metadaten</h2>
 <p>Metadaten extrahieren</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>all_meta <span class="ot">&lt;-</span> <span class="fu">extractMeta</span>(db_path)</span>
-<span id="cb6-2"><a href=""></a><span class="fu">str</span>(all_meta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>all_meta <span class="ot">&lt;-</span> <span class="fu">extractMeta</span>(db_path)</span>
+<span id="cb8-2"><a href=""></a><span class="fu">unique</span>(all_meta[<span class="fu">grep</span>(<span class="st">"grade"</span>, all_meta<span class="sc">$</span>varLabel), <span class="fu">c</span>(<span class="st">"varName"</span>, <span class="st">"varLabel"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   456 obs. of  9 variables:
- $ varName      : chr  "age" "anxiety_a" "anxiety_a" "anxiety_a" ...
- $ varLabel     : chr  "Age of student at T1" "Math Anxiety - Worry That It Will Be Difficult (T1)" "Math Anxiety - Worry That It Will Be Difficult (T1)" "Math Anxiety - Worry That It Will Be Difficult (T1)" ...
- $ format       : chr  "F8.2" "F8.0" "F8.0" "F8.0" ...
- $ display_width: num  NA NA NA NA NA NA NA NA NA NA ...
- $ labeled      : chr  "no" "yes" "yes" "yes" ...
- $ value        : num  NA 1 2 3 4 1 2 3 4 1 ...
- $ valLabel     : chr  NA "Strongly disagree" "Disagree" "Agree" ...
- $ missings     : chr  NA "valid" "valid" "valid" ...
- $ data_table   : chr  "noImp" "noImp" "noImp" "noImp" ...</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">grep</span>(<span class="st">"grade"</span>, <span class="at">value =</span> <span class="cn">TRUE</span>, all_meta<span class="sc">$</span>varLabel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "School grade in biology (First school semester) (T1)"    
- [2] "School grade in biology (First school semester) (T1)"    
- [3] "School grade in biology (First school semester) (T1)"    
- [4] "School grade in biology (First school semester) (T1)"    
- [5] "School grade in biology (First school semester) (T1)"    
- [6] "School grade in chemistry (First school semester) (T1)"  
- [7] "School grade in chemistry (First school semester) (T1)"  
- [8] "School grade in chemistry (First school semester) (T1)"  
- [9] "School grade in chemistry (First school semester) (T1)"  
-[10] "School grade in chemistry (First school semester) (T1)"  
-[11] "School grade in German (First school semester) (T1)"     
-[12] "School grade in German (First school semester) (T1)"     
-[13] "School grade in German (First school semester) (T1)"     
-[14] "School grade in German (First school semester) (T1)"     
-[15] "School grade in German (First school semester) (T1)"     
-[16] "School grade in mathematics (First school semester) (T1)"
-[17] "School grade in mathematics (First school semester) (T1)"
-[18] "School grade in mathematics (First school semester) (T1)"
-[19] "School grade in mathematics (First school semester) (T1)"
-[20] "School grade in mathematics (First school semester) (T1)"
-[21] "School grade in physics (First school semester) (T1)"    
-[22] "School grade in physics (First school semester) (T1)"    
-[23] "School grade in physics (First school semester) (T1)"    
-[24] "School grade in physics (First school semester) (T1)"    
-[25] "School grade in physics (First school semester) (T1)"    
-[26] "School grade in science (First school semester) (T1)"    
-[27] "School grade in science (First school semester) (T1)"    
-[28] "School grade in science (First school semester) (T1)"    
-[29] "School grade in science (First school semester) (T1)"    
-[30] "School grade in science (First school semester) (T1)"    </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>all_meta[<span class="fu">grep</span>(<span class="st">"grade"</span>, all_meta<span class="sc">$</span>varLabel), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      varName                                                 varLabel format
-196 grade_bio     School grade in biology (First school semester) (T1)   F8.0
-197 grade_bio     School grade in biology (First school semester) (T1)   F8.0
-198 grade_bio     School grade in biology (First school semester) (T1)   F8.0
-199 grade_bio     School grade in biology (First school semester) (T1)   F8.0
-200 grade_bio     School grade in biology (First school semester) (T1)   F8.0
-201 grade_che   School grade in chemistry (First school semester) (T1)   F8.0
-202 grade_che   School grade in chemistry (First school semester) (T1)   F8.0
-203 grade_che   School grade in chemistry (First school semester) (T1)   F8.0
-204 grade_che   School grade in chemistry (First school semester) (T1)   F8.0
-205 grade_che   School grade in chemistry (First school semester) (T1)   F8.0
-206  grade_de      School grade in German (First school semester) (T1)   F8.0
-207  grade_de      School grade in German (First school semester) (T1)   F8.0
-208  grade_de      School grade in German (First school semester) (T1)   F8.0
-209  grade_de      School grade in German (First school semester) (T1)   F8.0
-210  grade_de      School grade in German (First school semester) (T1)   F8.0
-211  grade_ma School grade in mathematics (First school semester) (T1)   F8.0
-212  grade_ma School grade in mathematics (First school semester) (T1)   F8.0
-213  grade_ma School grade in mathematics (First school semester) (T1)   F8.0
-214  grade_ma School grade in mathematics (First school semester) (T1)   F8.0
-215  grade_ma School grade in mathematics (First school semester) (T1)   F8.0
-216 grade_phy     School grade in physics (First school semester) (T1)   F8.0
-217 grade_phy     School grade in physics (First school semester) (T1)   F8.0
-218 grade_phy     School grade in physics (First school semester) (T1)   F8.0
-219 grade_phy     School grade in physics (First school semester) (T1)   F8.0
-220 grade_phy     School grade in physics (First school semester) (T1)   F8.0
-221 grade_sci     School grade in science (First school semester) (T1)   F8.0
-222 grade_sci     School grade in science (First school semester) (T1)   F8.0
-223 grade_sci     School grade in science (First school semester) (T1)   F8.0
-224 grade_sci     School grade in science (First school semester) (T1)   F8.0
-225 grade_sci     School grade in science (First school semester) (T1)   F8.0
-    display_width labeled value     valLabel missings data_table
-196            NA     yes     1    very good    valid      noImp
-197            NA     yes     2         good    valid      noImp
-198            NA     yes     3 satisfactory    valid      noImp
-199            NA     yes     4   sufficient    valid      noImp
-200            NA     yes     5    deficient    valid      noImp
-201            NA     yes     1    very good    valid      noImp
-202            NA     yes     2         good    valid      noImp
-203            NA     yes     3 satisfactory    valid      noImp
-204            NA     yes     4   sufficient    valid      noImp
-205            NA     yes     5    deficient    valid      noImp
-206            NA     yes     1    very good    valid      noImp
-207            NA     yes     2         good    valid      noImp
-208            NA     yes     3 satisfactory    valid      noImp
-209            NA     yes     4   sufficient    valid      noImp
-210            NA     yes     5    deficient    valid      noImp
-211            NA     yes     1    very good    valid      noImp
-212            NA     yes     2         good    valid      noImp
-213            NA     yes     3 satisfactory    valid      noImp
-214            NA     yes     4   sufficient    valid      noImp
-215            NA     yes     5    deficient    valid      noImp
-216            NA     yes     1    very good    valid      noImp
-217            NA     yes     2         good    valid      noImp
-218            NA     yes     3 satisfactory    valid      noImp
-219            NA     yes     4   sufficient    valid      noImp
-220            NA     yes     5    deficient    valid      noImp
-221            NA     yes     1    very good    valid      noImp
-222            NA     yes     2         good    valid      noImp
-223            NA     yes     3 satisfactory    valid      noImp
-224            NA     yes     4   sufficient    valid      noImp
-225            NA     yes     5    deficient    valid      noImp</code></pre>
+<pre><code>      varName                                                 varLabel
+196 grade_bio     School grade in biology (First school semester) (T1)
+201 grade_che   School grade in chemistry (First school semester) (T1)
+206  grade_de      School grade in German (First school semester) (T1)
+211  grade_ma School grade in mathematics (First school semester) (T1)
+216 grade_phy     School grade in physics (First school semester) (T1)
+221 grade_sci     School grade in science (First school semester) (T1)</code></pre>
 </div>
 </div>
 </section>
@@ -716,17 +709,15 @@ $PVs
 <h2>GADSdat</h2>
 <p>GADSdat aus Datenbank ziehen</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># getGADS_fast legt temporaere lokale Kopie an, die nach Beendigung der R-Session automatisch geloescht wird</span></span>
-<span id="cb12-2"><a href=""></a><span class="co"># hier nicht notwendig, da Datenbank eh lokal vorliegt (und klein ist)</span></span>
-<span id="cb12-3"><a href=""></a>pisa_gads <span class="ot">&lt;-</span> <span class="fu">getGADS</span>(db_path, <span class="at">vSelect =</span> <span class="fu">c</span>(<span class="st">"schtype"</span>, <span class="st">"sameteach"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>pisa_gads <span class="ot">&lt;-</span> <span class="fu">getGADS</span>(db_path, <span class="at">vSelect =</span> <span class="fu">c</span>(<span class="st">"schtype"</span>, <span class="st">"sameteach"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="gadsdat-1" class="slide level2">
 <h2>GADSdat</h2>
 <p>GADSdat aus Datenbank ziehen</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># resultierendes "GADSdat"-Objekt</span></span>
-<span id="cb13-2"><a href=""></a><span class="fu">str</span>(pisa_gads)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># resultierendes "GADSdat"-Objekt</span></span>
+<span id="cb11-2"><a href=""></a><span class="fu">str</span>(pisa_gads)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 2
  $ dat   :'data.frame': 500 obs. of  3 variables:
@@ -750,9 +741,8 @@ $PVs
 <h2>Daten</h2>
 <p>Daten extrahieren</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="do">### d) Daten für Analysen extrahieren</span></span>
-<span id="cb15-2"><a href=""></a>pisa_dat <span class="ot">&lt;-</span> <span class="fu">extractData2</span>(pisa_gads, <span class="at">labels2character =</span> <span class="st">"sameteach"</span>)</span>
-<span id="cb15-3"><a href=""></a><span class="fu">str</span>(pisa_dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>pisa_dat <span class="ot">&lt;-</span> <span class="fu">extractData2</span>(pisa_gads, <span class="at">labels2character =</span> <span class="st">"sameteach"</span>)</span>
+<span id="cb13-2"><a href=""></a><span class="fu">str</span>(pisa_dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   500 obs. of  3 variables:
  $ idstud   : num  1 2 3 4 5 6 7 9 10 11 ...
@@ -762,50 +752,15 @@ $PVs
  $ sameteach: chr  "Yes" "No" "No" "Yes" ...
   ..- attr(*, "label")= chr "Same math teacher in both school years"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="do">### e) Analysen (mit eatRep etc.)</span></span>
-<span id="cb17-2"><a href=""></a><span class="fu">table</span>(pisa_dat<span class="sc">$</span>sameteach)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- No Yes 
-209 288 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">table</span>(pisa_dat<span class="sc">$</span>schtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  1   2   3 
-221 168 111 </code></pre>
-</div>
 </div>
 </section>
 <section id="daten-1" class="slide level2">
 <h2>Daten</h2>
-<p>Daten extrahieren</p>
+<p>Kompetenz-Daten extrahieren (Long-Format)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="do">### f) Kompetenzdaten extrahieren (Long-Format)</span></span>
-<span id="cb21-2"><a href=""></a>pisa_gads2 <span class="ot">&lt;-</span> <span class="fu">getGADS</span>(db_path, <span class="at">vSelect =</span> <span class="fu">c</span>(<span class="st">"schtype"</span>, <span class="st">"sameteach"</span>, nam<span class="sc">$</span>PVs))</span>
-<span id="cb21-3"><a href=""></a><span class="fu">str</span>(pisa_gads2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>List of 2
- $ dat   :'data.frame': 7500 obs. of  6 variables:
-  ..$ idstud   : num [1:7500] 1 1 1 1 1 1 1 1 1 1 ...
-  ..$ schtype  : num [1:7500] 2 2 2 2 2 2 2 2 2 2 ...
-  ..$ sameteach: num [1:7500] 2 2 2 2 2 2 2 2 2 2 ...
-  ..$ dimension: num [1:7500] 1 2 3 1 2 3 1 2 3 1 ...
-  ..$ imp      : num [1:7500] 1 1 1 2 2 2 3 3 3 4 ...
-  ..$ value    : num [1:7500] 0.1537 0.4391 0.1318 -0.0412 0.0199 ...
- $ labels:'data.frame': 11 obs. of  8 variables:
-  ..$ varName      : chr [1:11] "idstud" "sameteach" "sameteach" "schtype" ...
-  ..$ varLabel     : chr [1:11] "Student-ID" "Same math teacher in both school years" "Same math teacher in both school years" "School track" ...
-  ..$ format       : chr [1:11] "F8.0" "F8.0" "F8.0" "F8.0" ...
-  ..$ display_width: num [1:11] NA NA NA NA NA NA NA NA NA NA ...
-  ..$ labeled      : chr [1:11] "no" "yes" "yes" "yes" ...
-  ..$ value        : num [1:11] NA 1 2 1 2 3 1 2 3 NA ...
-  ..$ valLabel     : chr [1:11] NA "No" "Yes" "Gymnasium (academic track)" ...
-  ..$ missings     : chr [1:11] NA "valid" "valid" "valid" ...
- - attr(*, "class")= chr [1:2] "GADSdat" "list"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>pisa_dat2 <span class="ot">&lt;-</span> <span class="fu">extractData2</span>(pisa_gads2, <span class="at">labels2character =</span> <span class="fu">c</span>(<span class="st">"sameteach"</span>, <span class="st">"dimension"</span>))</span>
-<span id="cb23-2"><a href=""></a><span class="fu">str</span>(pisa_dat2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>pisa_gads2 <span class="ot">&lt;-</span> <span class="fu">getGADS</span>(db_path, <span class="at">vSelect =</span> <span class="fu">c</span>(<span class="st">"schtype"</span>, <span class="st">"sameteach"</span>, nam<span class="sc">$</span>PVs))</span>
+<span id="cb15-2"><a href=""></a>pisa_dat2 <span class="ot">&lt;-</span> <span class="fu">extractData2</span>(pisa_gads2, <span class="at">labels2character =</span> <span class="fu">c</span>(<span class="st">"sameteach"</span>, <span class="st">"dimension"</span>))</span>
+<span id="cb15-3"><a href=""></a><span class="fu">str</span>(pisa_dat2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   7500 obs. of  6 variables:
  $ idstud   : num  1 1 1 1 1 1 1 1 1 1 ...
@@ -821,23 +776,107 @@ $PVs
  $ value    : num  0.1537 0.4391 0.1318 -0.0412 0.0199 ...
   ..- attr(*, "label")= chr "Plausible Value"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">View</span>(pisa_dat2)</span>
-<span id="cb25-2"><a href=""></a><span class="fu">table</span>(pisa_dat2<span class="sc">$</span>dimension)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  ma  rea  sci 
-2500 2500 2500 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">table</span>(pisa_dat2<span class="sc">$</span>imp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-   1    2    3    4    5 
-1500 1500 1500 1500 1500 </code></pre>
-</div>
 </div>
 </section></section>
-<section id="anwendungsbeispieleübung" class="title-slide slide level1 center">
-<h1>Anwendungsbeispiele/Übung</h1>
+<section>
+<section id="übung" class="title-slide slide level1 center">
+<h1>Übung</h1>
+
+</section>
+<section id="übung-1" class="slide level2 smaller">
+<h2>Übung</h2>
+<ul>
+<li>Welche Variablen zum Thema elterliche Bildung sind in der Beispiel-DB enthalten?</li>
+<li>Wie sind die Metadaten dieser Variablen strukturiert? (Wertelabel, Fehlende Werte, etc.)</li>
+<li>Zieht diese Variablen zusammen mit der Geschlechtervariable ‘gender’ aus der Datenbank und betrachtet ihre univariaten und bivariaten Verteilungen.</li>
+<li>Zieht nun diese drei Variablen zusammen mit dem Kompetenzschätzer (‘value’) aus der Datenbank.</li>
+<li>Können wir mithilfe der elterlichen Bildung die Mathematik-Kompetenz der Schüler:innen vorhersagen?</li>
+</ul>
+</section></section>
+<section>
+<section id="praxis-tipps" class="title-slide slide level1 center">
+<h1>Praxis-Tipps</h1>
+
+</section>
+<section id="warum-machen-wir-das-1" class="slide level2">
+<h2>Warum machen wir das?</h2>
+<ul>
+<li>.db (SQLite3) benötigt weniger Speicherplatz</li>
+<li>Zugriff auf Metadaten ohne Daten laden zu müssen</li>
+<li>Daten müssen für Analysen nicht gereshaped werden</li>
+<li>Variablenselektion beim Laden der Daten (weniger Arbeitsspeicher-Überlastung)</li>
+<li>flexibels Anwenden von Wertelabeln und Missingtags</li>
+</ul>
+</section>
+<section id="praxis-tipps-1" class="slide level2 smaller">
+<h2>Praxis-Tipps</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Für Datenbanken, die auf den Netzlaufkwerken liegen, <code>getGADS_fast()</code> und <code>getTrendGADS(..., fast = TRUE)</code> nutzen.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="praxis-tipps-2" class="slide level2 smaller">
+<h2>Praxis-Tipps</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Für konkrete Analysen passende Daten aus der Datenbank ziehen.</p>
+</div>
+</div>
+</div>
+<p><strong>don’t:</strong></p>
+<ul>
+<li>einfach mal alle Daten aus Datenbank ziehen und dann schauen, was man braucht</li>
+</ul>
+<p><strong>do</strong></p>
+<ul>
+<li>anhand Meta-Daten Variablenauswahl treffen</li>
+<li>für verschiedene Analyselevel verschiedene Datensätze ziehen</li>
+</ul>
+</section>
+<section id="praxis-tipps-3" class="slide level2 smaller">
+<h2>Praxis-Tipps</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><code>extractData2()</code> nutzen um Anwendung von Wertelabels und Missingstags bewusst zu steuern.</p>
+</div>
+</div>
+</div>
+<p><strong>don’t</strong></p>
+<ul>
+<li>alle Variablen als numerisch extrahieren und dann mühsam Wertelabel wiederherstellen</li>
+<li>alle Variablen als character extrahieren und dann Variablen mühsam in numerisch umwandeln</li>
+</ul>
+<p><strong>do</strong></p>
+<ul>
+<li>vorab überlegen: Welche Variablen brauche ich numerisch, welche als character?</li>
+<li><code>extractData2()</code> nutzen um das umzusetzen</li>
+</ul>
+</section></section>
+<section id="danke-für-eure-aufmerksamkeit" class="title-slide slide level1 center">
+<h1>Danke für Eure Aufmerksamkeit!</h1>
 <div class="quarto-auto-generated-content">
 <p><img src="Figures/eatGADS.png" class="slide-logo"></p>
 <div class="footer footer-default">

@@ -22,37 +22,41 @@ execute:
 
 ------------------------------------------------------------------------
 
-## Agenda {.smaller}
+## Agenda
 
 -   Hintergrund
 -   Grundlegendes
 -   Übersicht Funktionalität
--   Anwendungsbeispiele
+-   Übung
+-   Praxis-Tipps
 
 ```{r}
 #| eval: true
 #| echo: false
 #| 
 library(eatGADS)
+db_path <- system.file("extdata", "pisa.db", package = "eatGADS")
 ```
 
 # Hintergrund
 
 ## eatGADS - Scope
 
+-   (teil-automatisierte) Datenaufbereitung
 -   Datenbankerstellung
 -   Datenbanknutzung
--   (teil-automatisierte) Datenaufbereitung
+
 
 ## eatGADS - Scope
 
+-   (teil-automatisierte) Datenaufbereitung
 -   Datenbankerstellung
 -   **Datenbanknutzung**
--   (teil-automatisierte) Datenaufbereitung
+
 
 ## Was ist ein GADS?
 
-**G**enereller **A**nalyse-**D**atensatz
+**G**enereller/**G**esamt- **A**nalyse-**D**atensatz
 
 - Berichts-GADS
 - nach-Berichts-GADS
@@ -72,10 +76,12 @@ Daten-Format
 
 ## GADS-Ordner
 
+BT22 nach-Berichts-GADS
+
 ![](Figures/GADS_folder.png)
 
 
-## Warum ist es jetzt besser?
+## Warum machen wir das?
 
 - .db (SQLite3) benötigt weniger Speicherplatz
 - Zugriff auf Metadaten ohne Daten laden zu müssen
@@ -83,6 +89,10 @@ Daten-Format
 - Variablenselektion beim Laden der Daten (weniger Arbeitsspeicher-Überlastung)
 - flexibels Anwenden von Wertelabeln und Missingtags
 
+## Warum braucht ihr das?
+
+- Alle BT-Daten seit BT18 intern nur noch als Datenbank verfügbar
+- FDZ-Daten (SPSS, wide-Format) nutzbar, aber für IQB-relevante Analysen (z.B. mit eatRep) nicht optimal
 
 ## eatGADS
 
@@ -110,30 +120,83 @@ remotes::install_github("beckerbenj/eatGADS")
 -   numerische Variablen
 -   character Variablen (Zeichenfolgen)
 
-![](Figures/GADSdat_dat.jpg){height="50%"}
 
 ## Meta-Daten in Datenbank
 
--   Meta-Daten (`labels`)
-    -   `varName` - Variablenname
-    -   `varLabel` - Variablenlabel
-    -   `format` - SPSS-Format
-    -   `value` - numerischer Wert
-    -   `valLabel` - Wertelabel
-    -   `missings` - Missingtags (`miss` oder `valid`)
+-   `varName` - Variablenname
+-   `varLabel` - Variablenlabel
+-   `format` - SPSS-Format
+-   `value` - numerischer Wert
+-   `valLabel` - Wertelabel
+-   `missings` - Missingtags (`miss` oder `valid`)
+-   `data_table` - Datenblatt
 
 ## Meta-Daten in Datenbank
 
-![](Figures/GADSdat_labels.jpg){height="50%"}
-    
+```{r}
+#| eval: true
+#| echo: false
+
+extractMeta(GADSobject = db_path, vars = c("repeated", "norms_f", "computer_age"))
+```
+
+## Übliche BT-Struktur {.smaller}
+
+- `noImp` 
+- `imp` 
+- `PVs` 
+- `wgts`
+
+
+## Übliche BT-Struktur {.smaller}
+
+- `noImp` 
+  - unimputierter Datensatz auf SuS-Ebene 
+  - Quellen: SFB, EFB, Tracking
+  - 1 Zeile pro SuS
+- `imp` 
+  - imputierter Datensatz auf SuS-Ebene 
+  - Quelle: Imputationen
+  - 1 Zeile pro Imputation x SuS (= 15 Zeilen pro SuS)
+
+
+## Übliche BT-Struktur {.smaller}
+
+- `PVs` 
+  - Kompetenzdaten
+  - Quelle: PV-Ziehung
+  - 1 Zeile pro Kompetenzbereich x Imputation x SuS (> 75 Zeilen pro SuS)
+- `wgts`
+  - bereichs-/fachspezifische Gewichte
+  - Quelle: Gewichtsdaten
+  - 1 Zeile pro Kompetenzbereich x Imputation x SuS (> 75 Zeilen pro SuS)
+
+
+
 # Übersicht Funktionalität
+
+## Übersicht Funktionalität
+
+-   [`namesGADS()`](https://beckerbenj.github.io/eatGADS/reference/namesGADS.html) - Variablennamen und Datenbankstruktur
+-   [`extractMeta()`](https://beckerbenj.github.io/eatGADS/reference/extractMeta.html) - Extraktion Metadaten
+-   [`getGADS()`](https://beckerbenj.github.io/eatGADS/reference/getGADS.html) - Extraktion aus DB
+-   [`getGADS_fast()`](https://beckerbenj.github.io/eatGADS/reference/getGADS_fast.html) - Extraktion aus DB mit Caching
+-   [`getTrendGADS()`](https://beckerbenj.github.io/eatGADS/reference/getTrendGADS.html) - Extraktion Trend-GADSe aus DB
+-   [`extractData2()`](https://beckerbenj.github.io/eatGADS/reference/extractData2.html) - Extraktion Daten
+
+## Beispiel-Datenbank
+
+[PISA-Plus Daten](https://www.iqb.hu-berlin.de/fdz/studies/PISA_Plus_2012-13) (FDZ Campus Files)
+```{r}
+db_path <- system.file("extdata", "pisa.db", package = "eatGADS")
+```
+
 
 ## Datenbank-Struktur
 
 Datenbankstruktur und Variablennamen inspizieren
 
 ```{r}
-db_path <- system.file("extdata", "pisa.db", package = "eatGADS")
 nam <- namesGADS(db_path)
 nam
 
@@ -144,7 +207,8 @@ nam
 Metadaten extrahieren
 
 ```{r}
-extractMeta(GADSobject = db_path, vars = c("repeated", "norms_f", "computer_age"))
+extractMeta(GADSobject = db_path, 
+            vars = c("repeated", "norms_f", "computer_age"))
 ```
 
 ## Metadaten
@@ -153,9 +217,7 @@ Metadaten extrahieren
 
 ```{r}
 all_meta <- extractMeta(db_path)
-str(all_meta)
-grep("grade", value = TRUE, all_meta$varLabel)
-all_meta[grep("grade", all_meta$varLabel), ]
+unique(all_meta[grep("grade", all_meta$varLabel), c("varName", "varLabel")])
 ```
 
 
@@ -164,8 +226,6 @@ all_meta[grep("grade", all_meta$varLabel), ]
 GADSdat aus Datenbank ziehen
 
 ```{r}
-# getGADS_fast legt temporaere lokale Kopie an, die nach Beendigung der R-Session automatisch geloescht wird
-# hier nicht notwendig, da Datenbank eh lokal vorliegt (und klein ist)
 pisa_gads <- getGADS(db_path, vSelect = c("schtype", "sameteach"))
 ```
 
@@ -176,7 +236,6 @@ GADSdat aus Datenbank ziehen
 ```{r}
 # resultierendes "GADSdat"-Objekt
 str(pisa_gads)
-
 ```
 
 
@@ -185,31 +244,82 @@ str(pisa_gads)
 Daten extrahieren
 
 ```{r}
-### d) Daten für Analysen extrahieren
 pisa_dat <- extractData2(pisa_gads, labels2character = "sameteach")
 str(pisa_dat)
-
-### e) Analysen (mit eatRep etc.)
-table(pisa_dat$sameteach)
-table(pisa_dat$schtype)
-
 ```
 
 ## Daten
 
-Daten extrahieren
+Kompetenz-Daten extrahieren (Long-Format)
 
 ```{r}
-### f) Kompetenzdaten extrahieren (Long-Format)
 pisa_gads2 <- getGADS(db_path, vSelect = c("schtype", "sameteach", nam$PVs))
-str(pisa_gads2)
 pisa_dat2 <- extractData2(pisa_gads2, labels2character = c("sameteach", "dimension"))
 str(pisa_dat2)
-View(pisa_dat2)
-table(pisa_dat2$dimension)
-table(pisa_dat2$imp)
-
 ```
 
 
-# Anwendungsbeispiele/Übung
+# Übung
+
+## Übung {.smaller}
+
+- Welche Variablen zum Thema elterliche Bildung sind in der Beispiel-DB enthalten?
+- Wie sind die Metadaten dieser Variablen strukturiert? (Wertelabel, Fehlende Werte, etc.)
+- Zieht diese Variablen zusammen mit der Geschlechtervariable 'gender' aus der Datenbank und betrachtet ihre univariaten und bivariaten Verteilungen.
+- Zieht nun diese drei Variablen zusammen mit dem Kompetenzschätzer ('value') aus der Datenbank.
+- Können wir mithilfe der elterlichen Bildung die Mathematik-Kompetenz der Schüler:innen vorhersagen?
+
+
+# Praxis-Tipps
+
+## Warum machen wir das?
+
+- .db (SQLite3) benötigt weniger Speicherplatz
+- Zugriff auf Metadaten ohne Daten laden zu müssen
+- Daten müssen für Analysen nicht gereshaped werden
+- Variablenselektion beim Laden der Daten (weniger Arbeitsspeicher-Überlastung)
+- flexibels Anwenden von Wertelabeln und Missingtags
+
+## Praxis-Tipps {.smaller}
+
+::: {.callout-tip}
+Für Datenbanken, die auf den Netzlaufkwerken liegen, `getGADS_fast()` und `getTrendGADS(..., fast = TRUE)` nutzen. 
+:::
+
+
+## Praxis-Tipps {.smaller}
+
+::: {.callout-tip}
+Für konkrete Analysen passende Daten aus der Datenbank ziehen.
+:::
+
+**don't:**
+
+- einfach mal alle Daten aus Datenbank ziehen und dann schauen, was man braucht
+
+**do**
+
+- anhand Meta-Daten Variablenauswahl treffen
+- für verschiedene Analyselevel verschiedene Datensätze ziehen
+
+
+## Praxis-Tipps {.smaller}
+
+::: {.callout-tip}
+`extractData2()` nutzen um Anwendung von Wertelabels und Missingstags bewusst zu steuern.
+:::
+
+**don't**
+
+- alle Variablen als numerisch extrahieren und dann mühsam Wertelabel wiederherstellen
+- alle Variablen als character extrahieren und dann Variablen mühsam in numerisch umwandeln
+
+**do**
+
+- vorab überlegen: Welche Variablen brauche ich numerisch, welche als character?
+- `extractData2()` nutzen um das umzusetzen
+
+
+# Danke für Eure Aufmerksamkeit!
+
+
