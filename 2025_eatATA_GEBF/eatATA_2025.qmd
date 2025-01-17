@@ -1,5 +1,5 @@
 ---
-title: "eatATA - Automatisierte Blockbesetzung"
+title: "eatATA - Automated Test Assembly"
 author: "Benjamin Becker"
 date: "2025-01-29"
 title-slide-attributes:
@@ -21,6 +21,27 @@ execute:
   echo: true
 ---
 
+## Automated Test Assembly
+
+Auf Deutsch
+
+- automatisierte Testformerstellung
+- automatisierte Blockbesetzung
+
+```{R}
+#| echo: false
+#| eval: true
+library(eatATA)
+
+```
+
+## Automated Test Assembly
+
+Auf Deutsch
+
+- automatisierte Testformerstellung
+- **automatisierte Blockbesetzung**
+
 ## Automatisierte Blockbesetzung
 
 **Blockbesetzung**
@@ -31,33 +52,45 @@ Zuordnung von Items zu Blöcken aus einem Itempool unter Berücksichtigung von T
 
 Nicht händisch, sondern unter Verwendung von Optimierungsalgorithmen
 
+## Automatisierte Blockbesetzung
 
-## Agenda
 
-1.  Hintergrund: Wofür?
-2.  Grundlagen: Mathematical Programming
-3.  Theorie: Automated Test Assembly/Automatisierte Blockbesetzung
-4.  Praxis: eatATA
+![](Graphs/puzzle_assembly.PNG)
+
+
+## Automatisierte Blockbesetzung
+
+
+![](Graphs/flower_assembly.PNG)
+
+
 
 # Wofür?
 
-## Begrifflichkeiten {.smaller}
 
--   **Item**\
-    → Eine Frage (kleinste Einheit)
--   **Aufgabe/Unit**\
-    → Set von Items mit gemeinsamem Stimulus
--   **Block/Cluster**\
-    → Zusammenstellung von Aufgaben, meist als fixer Kontext, ca. 20 Minuten
--   **Testform/Testheft**\
-    → Zusammenstellung von Blöcken, eine Person bearbeitet eine Testform
+## Kontext 
 
-```{R}
-#| echo: false
-#| eval: true
-library(eatATA)
+Kompetenztests
 
-```
+- parallele Testformen
+
+Fragebögen
+
+- Skalen
+- Fragebogenrotationen
+
+## Kontext 
+
+Kompetenztests
+
+- **parallele Testformen**
+
+Fragebögen
+
+- Skalen
+- Fragebogenrotationen
+
+
 
 ## Parallele Testformen {.smaller}
 
@@ -132,27 +165,13 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 -   Effiziente Reduktion des Lösungsraumes
 -   Kombinieren von Constraints
 
-## Zentrale Konzepte
-
--   Decision Variables
--   Constraints
--   Objective Function
+## Anwendungsgebiete
 
 
-## Solver {.smaller}
+![](Graphs/mp_applications.PNG)
 
-**Open Source**
 
--   GLPK
--   lpSolve
--   Symphony
--   ...
 
-**Kommerziell**
-
--   Gurobi
--   CPLEX
--   ...
 
 
 # Automatisierte Blockbesetzung
@@ -393,6 +412,29 @@ item_mini_out <- appendSolution(
 item_mini_out[1:10, ]
 ```
 
+
+
+## Praktische Tipps {.smaller}
+
+-   ATA ist ein Skill für sich
+-   Der nicht häufig gebraucht wird!
+-   Es gibt immer mehrere Wege zum Ziel
+-   Pragmatisches Vorgehen:
+    -   Häufig muss die Lösung nicht perfekt sein
+    -   Der Weg zum Ziel ist irrelevant
+-   Schrittweises Vorgehen [@Proietti.2020]
+    -   Problem schrittweise aufbauen oder
+    -   Problem schrittweise vereinfachen
+
+## References
+
+::: {#refs}
+:::
+
+# Danke für Ihre Aufmerksamkeit!
+
+# Appendix
+
 # Überblick Funktionalität
 
 ## Itempool vorbereiten {.smaller}
@@ -459,37 +501,6 @@ Vorbereitung von Iteminklusionen und -exklusionen
 -   [`matrixExclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/matrixExclusionTuples.html) - Vorbereitung von Itemexklusionen
 -   [`stemInclusionTuples()`](https://beckerbenj.github.io/eatATA/reference/stemInclusionTuples.html) - Vorbereitung von Iteminklusionen
 
-## Übung {.smaller}
-
-Erstellt Blöcke mit folgenden Testspezifikationen mithilfe von `eatATA` (siehe auch letzte Übung):
-
--   2 Blöcke
--   beide Blöcke Testzeit so nah wie möglich an 450 Sekunden (via `minimaxObjective()` Funktion)
--   jedes Item darf maximal nur in einem Block vorkommen (via `itemUsageConstraint()` Funktion)
--   pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden (via `itemCategoryMinConstraint()` Funktion)
-
-Setzt für die Lösung des Problems dem Solver ein Zeitlimit von 10 Sekunden!
-
-
-## Praktische Tipps
-
--   ATA ist ein Skill für sich
--   Es gibt immer mehrere Wege zum Ziel
--   Pragmatisches Vorgehen:
-    -   Häufig muss die Lösung nicht perfekt sein
-    -   Der Weg zum Ziel ist irrelevant
--   Schrittweises Vorgehen [@Proietti.2020]
-    -   Problem schrittweise aufbauen oder
-    -   Problem schrittweise vereinfachen
-
-## References
-
-::: {#refs}
-:::
-
-# Danke für Eure Aufmerksamkeit!
-
-# Appendix
 
 ## Item Inclusions
 
