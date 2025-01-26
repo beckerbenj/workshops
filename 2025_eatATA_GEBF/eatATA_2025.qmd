@@ -12,7 +12,7 @@ csl: apa.csl
 format: 
   revealjs:
     logo: eatATA.png
-    footer: "Automatisierte Blockbesetzung"
+    footer: "Automatisierte Testformerstellung"
     toc: false
     theme: default
     css: logo.css
@@ -21,12 +21,8 @@ execute:
   echo: true
 ---
 
-## Automated Test Assembly
 
-Auf Deutsch
-
-- automatisierte Testformerstellung
-- automatisierte Blockbesetzung
+## Automatisierte Testformerstellung
 
 ```{R}
 #| echo: false
@@ -35,66 +31,42 @@ library(eatATA)
 
 ```
 
-## Automated Test Assembly
+**Testformerstellung**
 
-Auf Deutsch
-
-- automatisierte Testformerstellung
-- **automatisierte Blockbesetzung**
-
-## Automatisierte Blockbesetzung
-
-**Blockbesetzung**
-
-Zuordnung von Items zu Blöcken aus einem Itempool unter Berücksichtigung von Testspezifikationen
+- Itempool
+- Testspezifikationen
+- Zuordnung von Items zu Testformen
 
 **Automatisiert**
 
-Nicht händisch, sondern unter Verwendung von Optimierungsalgorithmen
-
-## Automatisierte Blockbesetzung
-
-
-![](Graphs/puzzle_assembly.PNG)
+- Nicht händisch
+- Unter Verwendung von Optimierungsalgorithmen
 
 
-## Automatisierte Blockbesetzung
+## Automatisierte Testformerstellung
 
 
 ![](Graphs/flower_assembly.PNG)
 
 
-
 # Wofür?
 
 
-## Kontext 
+## Anwendungsfelder 
 
 Kompetenztests
 
-- parallele Testformen
+- (parallele) Testform(en) aus Itempool
 
 Fragebögen
 
-- Skalen
-- Fragebogenrotationen
-
-## Kontext 
-
-Kompetenztests
-
-- **parallele Testformen**
-
-Fragebögen
-
-- Skalen
+- Skalen aus Itempool
 - Fragebogenrotationen
 
 
 
-## Parallele Testformen {.smaller}
+## Parallele Testformen: Wieso? {.smaller}
 
-**Wieso?**
 
 -   **Low-stakes Assessments**\
     → Breite inhaltliche Abdeckung\
@@ -107,18 +79,8 @@ Fragebögen
 -   **Pilotierungen**\
     → Testung großer Itemzahlen
 
-## Block vs. Testform {.smaller}
 
-**Anforderungen Blockbesetzung**
-
--   Parallelität (inhaltlich, Formate, ...)
-
-**Anforderungen Testformen**
-
--   Parallelität
--   Linking
-
-## Parallele Blöcke {.smaller}
+## Testspezifikationen {.smaller}
 
 **Hinsichtlich?**
 
@@ -131,15 +93,6 @@ Fragebögen
 **zusätzlich**
 
 -   Itemunverträglichkeiten
-
-## Blockbesetzung {.smaller}
-
-**Häufig händisch (via Excel), aber:**
-
--   viele Items
--   viele Constraints\
-    → z.B. viele Unverträglichkeiten
--   hoher Aufwand/kognitiver Load!
 
 # Mathematical Programming
 
@@ -174,22 +127,22 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 
 
 
-# Automatisierte Blockbesetzung
+# Automatisierte Testformerstellung
 
-## Automatisierte Blockbesetzung
+## Automatisierte Testformerstellung
 
 ```{r}
 #| echo: false
 knitr::include_graphics("Graphs/vanderLinden_cover.JPG")
 ```
 
-## Automatisierte Blockbesetzung
+## Automatisierte Testformerstellung
 
 Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung [@vanderLinden.2005; @Kuhn.2015]
 
 **Zentrale Konzepte**
 
--   Decision Variables (0/1, Item x Block)
+-   Decision Variables (0/1, Item x Testform)
 -   Constraints (Testspezifikationen)
 -   Objective Function (wichtigste relative Testspezifikation)
 
@@ -214,9 +167,9 @@ kable(items_mini[1:5, ],
 
 **Spezifikationen**
 
--   1 Block
--   Minimale durchschnittliche Blockzeit
--   Exakt 10 Items im Block
+-   1 Testform
+-   Minimale durchschnittliche Bearbeitungszeit
+-   Exakt 10 Items in Testform
 -   4 MC-Items, 3 offene Items, 3 Zuordnungsitems
 
 ## Minimalbeispiel: Decision Variables {.smaller}
@@ -225,8 +178,8 @@ kable(items_mini[1:5, ],
 
 -   Matrix mit
     -   Spalten = Anzahl Items (+ 1)
-    -   Zeilen = Anzahl Blöcke
--   30 Items, 1 Block $$
+    -   Zeilen = Anzahl Testformen
+-   30 Items, 1 Testform $$
       i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
     $$
 
@@ -238,7 +191,7 @@ kable(items_mini[1:5, ],
 -   so viel/wenig/nah wie möglich (an) ...
 -   Wichtig: Exakt eine Testspezifikation muss hierfür ausgewählt werden
 -   Min/Max/Minimax/Maximin
--   Minimale Blockzeit $$
+-   Minimale Testzeit $$
     minimiere \quad  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} 
     $$
 
@@ -247,7 +200,7 @@ kable(items_mini[1:5, ],
 **Constraints**
 
 -   Alle anderen Testspezifikationen
--   Genau 10 Items pro Block $$
+-   Genau 10 Items pro Testform $$
     i_{1, b1} + i_{2, b1} + \ldots + i_{30, b1} = 10 
     $$
 -   4 MC Items, 3 offene Items, 3 Zuordnungsitems $$
@@ -258,78 +211,19 @@ kable(items_mini[1:5, ],
       0i_{1, b1} + 0i_{2, b1} + \ldots + 1i_{30, b1} = 3 
     $$
 
-## Übung {.smaller}
-
-Notiert die Decision Variables, Objective Function und Constraints für folgendes ATA-Problem:
-
--   2 Blöcke
--   beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
--   jedes Item darf maximal nur in einem Block vorkommen
--   pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden
-
-## Lösung {.smaller}
-
--   Decision Variables für 2 Blöcke und Item-Pool aus 30 Items
-
-$$
-    i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
-$$ $$
-    i_{1, b2}, i_{2, b2}, i_{3, b2}, \ldots, i_{30, b2}
-$$
-
-## Lösung {.smaller}
-
--   beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
--   Maximin-Ansatz
-
-$$
-  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} - y <= 450
-$$ $$
-  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} + y >= 450
-$$ $$
-  27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} - y <= 450
-$$ $$
-  27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} + y >= 450
-$$ $$
- minimiere \quad y
-$$
-
-## Lösung {.smaller}
-
--   jedes Item darf maximal nur in einem Block vorkommen
-
-$$
-    i_{1, b1} + i_{1, b2} <= 1 
-$$ $$
-    i_{2, b1} + i_{2, b2} <= 1 
-$$ $$
-    \ldots 
-$$
-
-## Lösung {.smaller}
-
--   jedes Itemformat sollte mindestens 3 Mal pro Block vorkommen
-
-$$
-    1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} >= 3 
-$$ $$
-    1i_{1, b2} + 1i_{2, b2} + \ldots + 0i_{30, b2} >= 3 
-$$ $$
-    \ldots
-$$
 
 # Umsetzung in eatATA
 
 
 ## eatATA: Resources I
 
-Vignettens verfügbar auf [CRAN](https://CRAN.R-project.org/package=eatATA)
+Paket verfügbar auf [CRAN](https://CRAN.R-project.org/package=eatATA)
 
 ![](Graphs/eatATA_cran.JPG)
 
 ## eatATA: Resources II
 
-oder auf [pkgdown](https://beckerbenj.github.io/eatATA/)
+Vignetten und Übersicht Funktionalität auf [pkgdown](https://beckerbenj.github.io/eatATA/)
 
 ![](Graphs/eatATA_pkgdown.JPG)
 
@@ -434,6 +328,27 @@ item_mini_out[1:10, ]
 # Danke für Ihre Aufmerksamkeit!
 
 # Appendix
+
+## Block vs. Testform {.smaller}
+
+**Anforderungen Blockbesetzung**
+
+-   Parallelität (inhaltlich, Formate, ...)
+
+**Anforderungen Testformen**
+
+-   Parallelität
+-   Linking
+
+## Händische Blockbesetzung {.smaller}
+
+**Häufig händisch (via Excel), aber:**
+
+-   viele Items
+-   viele Constraints\
+    → z.B. viele Unverträglichkeiten
+-   hoher Aufwand/kognitiver Load!
+
 
 # Überblick Funktionalität
 
@@ -580,3 +495,64 @@ excl_constraints <- itemExclusionConstraint(
 	itemIDs = items_pilot$item
 )
 ```
+
+## Übung {.smaller}
+
+Notiert die Decision Variables, Objective Function und Constraints für folgendes ATA-Problem:
+
+-   2 Blöcke
+-   beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
+-   jedes Item darf maximal nur in einem Block vorkommen
+-   pro Block müssen alle 3 Itemformate mindestens 3 mal verwendet werden
+
+## Lösung {.smaller}
+
+-   Decision Variables für 2 Blöcke und Item-Pool aus 30 Items
+
+$$
+    i_{1, b1}, i_{2, b1}, i_{3, b1}, \ldots, i_{30, b1}
+$$ $$
+    i_{1, b2}, i_{2, b2}, i_{3, b2}, \ldots, i_{30, b2}
+$$
+
+## Lösung {.smaller}
+
+-   beide Blöcke bzgl. Testzeit so nah wie möglich an 450 Sekunden
+-   Maximin-Ansatz
+
+$$
+  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} - y <= 450
+$$ $$
+  27.79i_{1, b1} + 15.45i_{2, b1} + \ldots + 19.50i_{30, b1} + y >= 450
+$$ $$
+  27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} - y <= 450
+$$ $$
+  27.79i_{1, b2} + 15.45i_{2, b2} + \ldots + 19.50i_{30, b2} + y >= 450
+$$ $$
+ minimiere \quad y
+$$
+
+## Lösung {.smaller}
+
+-   jedes Item darf maximal nur in einem Block vorkommen
+
+$$
+    i_{1, b1} + i_{1, b2} <= 1 
+$$ $$
+    i_{2, b1} + i_{2, b2} <= 1 
+$$ $$
+    \ldots 
+$$
+
+## Lösung {.smaller}
+
+-   jedes Itemformat sollte mindestens 3 Mal pro Block vorkommen
+
+$$
+    1i_{1, b1} + 1i_{2, b1} + \ldots + 0i_{30, b1} >= 3 
+$$ $$
+    1i_{1, b2} + 1i_{2, b2} + \ldots + 0i_{30, b2} >= 3 
+$$ $$
+    \ldots
+$$
+
