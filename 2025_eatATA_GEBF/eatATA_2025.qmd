@@ -1,6 +1,11 @@
 ---
-title: "eatATA - Automated Test Assembly"
-author: "Benjamin Becker"
+title: "eatATA - Ein R-Paket zur automatisierten Testzusammenstellung"
+author: 
+  - Benjamin Becker 
+  - Dries Debeer
+#institute:
+#  - \inst{1} Institut für Qualitätsentwicklung im Bildungswesen (IQB)
+#  - \inst{2} Ghent University
 date: "2025-01-29"
 title-slide-attributes:
   data-background-image: eatATA.png
@@ -12,17 +17,18 @@ csl: apa.csl
 format: 
   revealjs:
     logo: eatATA.png
-    footer: "Automatisierte Testformerstellung"
+    footer: "Automatisierte Testzusammenstellung"
     toc: false
     theme: default
     css: logo.css
+    embed-resources: true
 editor: source
 execute:
   echo: true
 ---
 
 
-## Automatisierte Testformerstellung
+## Automatisierte Testzusammenstellung
 
 ```{R}
 #| echo: false
@@ -31,7 +37,7 @@ library(eatATA)
 
 ```
 
-**Testformerstellung**
+**Testzusammenstellung**
 
 - Itempool
 - Testspezifikationen
@@ -43,7 +49,7 @@ library(eatATA)
 - Unter Verwendung von Optimierungsalgorithmen
 
 
-## Automatisierte Testformerstellung
+## Automatisierte Testzusammenstellung
 
 
 ![](Graphs/flower_assembly.PNG)
@@ -54,30 +60,33 @@ library(eatATA)
 
 ## Anwendungsfelder 
 
-Kompetenztests
+**Kompetenztests**
 
 - (parallele) Testform(en) aus Itempool
 
-Fragebögen
+**Fragebögen**
 
 - Skalen aus Itempool
 - Fragebogenrotationen
 
 
-
 ## Parallele Testformen: Wieso? {.smaller}
 
 
--   **Low-stakes Assessments**\
-    → Breite inhaltliche Abdeckung\
-    → Messgenauigkeit auf Gruppenebene
+**Large-scale Assessments**
 
--   **High-stakes Assessments**\
-    → Abschreiben/Betrugsversuche verhindern\
-    → Weitergabe Testinhalte verhindern
+- Breite inhaltliche Abdeckung
+- Messgenauigkeit auf Gruppenebene
 
--   **Pilotierungen**\
-    → Testung großer Itemzahlen
+**High-stakes Assessments**
+
+- Abschreiben/Betrugsversuche verhindern
+- Weitergabe Testinhalte verhindern
+
+**Pilotierungen**
+
+- Testung großer Itemzahlen
+
 
 
 ## Testspezifikationen {.smaller}
@@ -127,18 +136,18 @@ Maximierungs- oder Minimierungsproblem, wobei Lösungsraum durch (Ung-)Gleichung
 
 
 
-# Automatisierte Testformerstellung
+# Automatisierte Testzusammenstellung
 
-## Automatisierte Testformerstellung
+## Automatisierte Testzusammenstellung
 
 ```{r}
 #| echo: false
 knitr::include_graphics("Graphs/vanderLinden_cover.JPG")
 ```
 
-## Automatisierte Testformerstellung
+## Automatisierte Testzusammenstellung
 
-Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Blockbesetzung [@vanderLinden.2005; @Kuhn.2015]
+Verwendet Konzepte der Mathematical Optimization (Mixed Integer Programming) zur Testzusammenstellung [@vanderLinden.2005; @Kuhn.2015]
 
 **Zentrale Konzepte**
 
@@ -350,7 +359,7 @@ item_mini_out[1:10, ]
 -   hoher Aufwand/kognitiver Load!
 
 
-# Überblick Funktionalität
+## Überblick Funktionalität
 
 ## Itempool vorbereiten {.smaller}
 
